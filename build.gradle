@@ -3,6 +3,8 @@ plugins {
     id 'application'
     // add lombok plugin
     id 'io.freefair.lombok' version '8.4'
+    // add shadow plugin
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 // configure application

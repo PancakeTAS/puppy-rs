@@ -1,0 +1,13 @@
+# Gradle files
+.gradle/
+build/
+
+# IntelliJ files
+.idea/
+out/
+
+# Eclipse files
+.settings/
+.classpath
+.project
+.metadata

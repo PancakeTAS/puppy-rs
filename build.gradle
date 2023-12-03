@@ -1,0 +1,34 @@
+plugins {
+    // add application plugin
+    id 'application'
+    // add lombok plugin
+    id 'io.freefair.lombok' version '8.4'
+}
+
+// configure application
+application {
+    mainClass = "gay.pancake.purrify.Purrify"
+}
+
+// configure project
+base {
+    group = 'gay.pancake'
+    version = '1.0.0-SNAPSHOT'
+}
+
+java {
+    // configure java compatibility
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    // add maven central repository
+    mavenCentral()
+}
+
+dependencies {
+    // add gson dependency
+    implementation 'com.google.code.gson:gson:2.8.6'
+    // add jda dependency
+    implementation 'net.dv8tion:JDA:5.0.0-beta.18'
+}

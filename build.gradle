@@ -34,3 +34,19 @@ dependencies {
     // add jda dependency
     implementation 'net.dv8tion:JDA:5.0.0-beta.18'
 }
+
+// upload purrify to server [login via key]
+tasks.register("uploadPurrify", Exec) {
+    workingDir "${buildDir}/libs"
+    commandLine "cmd.exe /k echo put ${project.name}-${project.version}-all.jar | sftp mgnetwork:/home/private/purrify/".split(" ")
+}
+
+// restart purrify
+tasks.register("restartPurrify", Exec) {
+    workingDir "${buildDir}/libs"
+    commandLine "ssh mgnetwork purrify restart".split(" ")
+}
+
+uploadPurrify.dependsOn shadowJar
+uploadPurrify.finalizedBy restartPurrify
+uploadPurrify.group = "purrify"

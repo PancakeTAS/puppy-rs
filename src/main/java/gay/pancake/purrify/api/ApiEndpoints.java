@@ -16,7 +16,7 @@ public enum ApiEndpoints {
     KITSUNE(Type.IMAGE, "kitsune", true, "Get a random kitsune image", "Here's a kitsune for you %SENDER%!", null),
     NEKO(Type.IMAGE, "neko", true, "Get a random neko image", "Here's a neko for you %SENDER%!", null),
     WAIFU(Type.IMAGE, "waifu", true, "Get a random waifu image", "Here's a waifu for you %SENDER%!", null),
-    BAKA(Type.GIF, "baka", false, "Get a random baka gif", null, "%TARGET BAKA! %SENDER% is calling you a baka!"),
+    BAKA(Type.GIF, "baka", false, "Get a random baka gif", null, "%TARGET% BAKA! %SENDER% is calling you a baka!"),
     BITE(Type.GIF, "bite", false, "Get a random bite gif", null, "%SENDER% bit %TARGET%!"),
     BLUSH(Type.GIF, "blush", true, "Get a random blush gif", "%SENDER% is blushing!", "%SENDER% is blushing at %TARGET%!"),
     BORED(Type.GIF, "bored", true, "Get a random bored gif", "%SENDER% is bored!", "%SENDER% is bored! %TARGET%!"),

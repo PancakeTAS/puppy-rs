@@ -15,7 +15,7 @@ application {
 // configure project
 base {
     group = 'gay.pancake'
-    version = '1.0.0-SNAPSHOT'
+    version = '1.0.0'
 }
 
 java {
@@ -30,7 +30,7 @@ repositories {
 
 dependencies {
     // add gson dependency
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.10.1'
     // add jda dependency
     implementation 'net.dv8tion:JDA:5.0.0-beta.18'
 }

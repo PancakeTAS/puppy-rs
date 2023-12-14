@@ -1,0 +1,52 @@
+plugins {
+    // add application plugin
+    id 'application'
+    // add lombok plugin
+    id 'io.freefair.lombok' version '8.4'
+    // add shadow plugin
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+// configure application
+application {
+    mainClass = "gay.pancake.purrify.Purrify"
+}
+
+// configure project
+base {
+    group = 'gay.pancake'
+    version = '1.0.0'
+}
+
+java {
+    // configure java compatibility
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    // add maven central repository
+    mavenCentral()
+}
+
+dependencies {
+    // add gson dependency
+    implementation 'com.google.code.gson:gson:2.10.1'
+    // add jda dependency
+    implementation 'net.dv8tion:JDA:5.0.0-beta.18'
+}
+
+// upload purrify to server [login via key]
+tasks.register("uploadPurrify", Exec) {
+    workingDir "${buildDir}/libs"
+    commandLine "cmd.exe /k echo put ${project.name}-${project.version}-all.jar | sftp mgnetwork:/home/private/purrify/".split(" ")
+}
+
+// restart purrify
+tasks.register("restartPurrify", Exec) {
+    workingDir "${buildDir}/libs"
+    commandLine "ssh mgnetwork purrify restart".split(" ")
+}
+
+uploadPurrify.dependsOn shadowJar
+uploadPurrify.finalizedBy restartPurrify
+uploadPurrify.group = "purrify"

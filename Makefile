@@ -3,8 +3,8 @@ OBJECTS := $(SOURCES:.c=.o)
 TARGET = purrify
 
 CC = gcc
-CFLAGS = -Wno-unused-parameter -Wall -Wextra -Werror -std=c99 -pedantic -g
-LDFLAGS = -pthread -ldiscord -lcurl
+CFLAGS = -Wno-unused-parameter -Wall -Wextra -Werror -std=c99 -pedantic -g -Inekos-best.c/src
+LDFLAGS = -pthread -ldiscord -lcurl -lcjson
 
 .ONESHELL:
 

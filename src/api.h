@@ -1,6 +1,6 @@
 /**
  * \file
- * This class interfaces with the nekos.best api to fetch images and gifs.
+ * This file interfaces with the nekos.best api to fetch images and gifs.
  */
 
 #pragma once
@@ -45,8 +45,6 @@ typedef struct {
  * Fetch all endpoints from nekos.best and register them as commands.
  * 
  * \param register_callback Callback to register commands
- * \return
- *  0 Success \n
- *  1 Failure
+ * \return 0 on success, 1 on failure
  */
 int fetch_endpoints(void (*register_callback)(command_data*));

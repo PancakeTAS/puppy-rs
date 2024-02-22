@@ -1,13 +1,5 @@
-# Gradle files
-.gradle/
-build/
+# VSCode files
+.vscode/
 
-# IntelliJ files
-.idea/
-out/
-
-# Eclipse files
-.settings/
-.classpath
-.project
-.metadata
+# Build files
+*.o

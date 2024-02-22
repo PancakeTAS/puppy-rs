@@ -3,21 +3,32 @@ OBJECTS := $(SOURCES:.c=.o)
 TARGET = purrify
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -std=c99 -pedantic -g
-LDFLAGS =
+CFLAGS = -Wno-unused-parameter -Wall -Wextra -Werror -std=c99 -pedantic -g
+LDFLAGS = -pthread -ldiscord -lcurl
+
+.ONESHELL:
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJECTS) -o $@
+build/$(TARGET): $(OBJECTS)
+	$(CC) $(OBJECTS) $(CFLAGS) $(LDFLAGS) -o $@
 
-all: $(TARGET)
+all: build/$(TARGET)
 
-run: $(TARGET)
+run: build/$(TARGET)
+	cd build
 	./$(TARGET)
 
-clean:
-	rm -f $(TARGET) $(OBJECTS)
+debug: build/$(TARGET)
+	cd build
+	gdb -q ./$(TARGET)
 
-.PHONY: all run clean
+leaks: build/$(TARGET)
+	cd build
+	valgrind ./$(TARGET)
+
+clean:
+	rm -f build/$(TARGET) build/*.log $(OBJECTS)
+
+.PHONY: all run debug clean

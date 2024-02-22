@@ -7,18 +7,18 @@
 #include <stdlib.h>
 #include <signal.h>
 
-#include <concord/discord.h>
-#include <concord/log.h>
+#include "bot.h"
 
 /**
  * Configuration file for the bot
  */
 #define CONFIG_FILE "config.json"
 
+
 /**
  * Discord client instance
  */
-struct discord *discord_client;
+discord *discord_client;
 
 /**
  * Launch the bot. Called when bot is ready.
@@ -26,8 +26,8 @@ struct discord *discord_client;
  * \param client Discord client
  * \param event Ready event
  */
-void on_ready(struct discord *client, const struct discord_ready *event) {
-    log_info("Bot is ready");
+void on_ready(discord *client, const struct discord_ready *event) {
+    init(client);
 }
 
 /**
@@ -59,7 +59,7 @@ int main() {
     }
 
     // initialize discord client
-    struct discord *client = discord_client = discord_config_init(CONFIG_FILE);
+    discord *client = discord_client = discord_config_init(CONFIG_FILE);
     if (!client) {
         log_fatal("Failed to initialize discord client");
         return EXIT_FAILURE;

@@ -45,8 +45,8 @@ void sigint_handler(int signum) {
  * Main entry point for bot
  * 
  * \return
- *   ::EXIT_SUCCESS Bot ran successfully \n
- *   ::EXIT_FAILURE Bot failed to run
+ *   EXIT_SUCCESS Bot ran successfully \n
+ *   EXIT_FAILURE Bot failed to run
  */
 int main() {
     signal(SIGINT, sigint_handler);

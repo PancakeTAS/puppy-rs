@@ -18,7 +18,7 @@
 /**
  * Discord client instance
  */
-discord *discord_client;
+struct discord *discord_client;
 
 /**
  * Launch the bot. Called when bot is ready.
@@ -26,8 +26,8 @@ discord *discord_client;
  * \param client Discord client
  * \param event Ready event
  */
-void on_ready(discord *client, const struct discord_ready *event) {
-    init(client);
+void on_ready(struct discord *client, const struct discord_ready *event) {
+    init(client, event->application->id);
 }
 
 /**
@@ -59,7 +59,7 @@ int main() {
     }
 
     // initialize discord client
-    discord *client = discord_client = discord_config_init(CONFIG_FILE);
+    struct discord *client = discord_client = discord_config_init(CONFIG_FILE);
     if (!client) {
         log_fatal("Failed to initialize discord client");
         return EXIT_FAILURE;

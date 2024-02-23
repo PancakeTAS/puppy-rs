@@ -6,11 +6,14 @@
 #pragma once
 
 #include <concord/discord.h>
-typedef struct discord discord;
 #include <concord/log.h>
 #include "api.h"
+#include "commands.h"
 
 /**
- * Initialize the discord bot 
+ * Initialize the discord bot
+ * 
+ * \param client Discord client
+ * \param app_id Application ID
  */
-void init(discord *client);
+void init(struct discord *client, u64snowflake app_id);

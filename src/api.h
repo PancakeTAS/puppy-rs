@@ -6,45 +6,81 @@
 #pragma once
 
 #include <nekosbest.h>
+#include <concord/discord.h>
 #include <concord/log.h>
-#define DEFAULT_COMMAND_DESCRIPTION "Get a random %s %s"
+#define DEFAULT_DESCRIPTION "Get a random %s %s"
 
 /**
- * Data required for creating a command
+ * Type of endpoint
+ */
+typedef enum {
+
+    /**
+     * Endpoint returns one or more pngs
+     */
+    PNGS,
+
+    /**
+     * Endpoint returns a gif without a target user
+     */
+    GIF_NO_TARGET,
+
+    /**
+     * Endpoint returns a gif with a target user
+     */
+    GIF_TARGET
+
+} endpoint_type;
+
+/**
+ * Data of an endpoint
  */
 typedef struct {
 
     /**
-     * Endpoint to use for command
+     * Endpoint to fetch
      */
     nekos_endpoint* endpoint;
 
     /**
-     * Description of command. Leave empty to use \link DEFAULT_COMMAND_DESCRIPTION \endlink
+     * Description of endpoint.
      */
-    char* command_description;
+    char* description;
 
     /**
-     * Name of command. Leave empty to use nekos_endpoint->name
+     * Type of endpoint
      */
-    char* command_name;
+    endpoint_type type;
 
     /**
-     * Response message to send. If NULL, then the command is not available without specifying a user.
+     * Message to send when the endpoint is called. 
      */
-    char* response_message;
+    char* message;
 
-    /**
-     * Response message to send when user is specified. If NULL, then the command is not available while specifying a user.
-     */
-    char* response_message_user;
-
-} command_data;
+} endpoint_info;
 
 /**
- * Fetch all endpoints from nekos.best and register them as commands.
- * 
- * \param register_callback Callback to register commands
- * \return 0 on success, 1 on failure
+ * Endpoint list
  */
-int fetch_endpoints(void (*register_callback)(command_data*));
+typedef struct {
+
+    /**
+     * Array of endpoints
+     */
+    endpoint_info** endpoints;
+
+    /**
+     * Length of array 
+     */
+    size_t len;
+    
+} endpoint_list;
+
+/**
+ * Fetch all endpoints from nekos.best.
+ * 
+ * \param client Discord client
+ * \param list List to store endpoints
+ * \return 0 on success, -1 on failure
+ */
+int fetch_endpoints(struct discord *client, endpoint_list *list);

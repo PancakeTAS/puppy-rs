@@ -3,8 +3,16 @@ OBJECTS := $(SOURCES:.c=.o)
 TARGET = purrify
 
 CC = gcc
-CFLAGS = -Wno-unused-parameter -Wall -Wextra -Werror -std=c99 -pedantic -g -Inekos-best.c/src
+CFLAGS = -Wno-unused-parameter -Wall -Wextra -Werror -std=c99 -pedantic -Inekos-best.c/src
 LDFLAGS = -pthread -ldiscord -lcurl -lcjson
+
+ifndef PROD
+CFLAGS += -g
+else
+CFLAGS += -O3 -march=native -mtune=native
+LDLAGS += -flto=auto
+endif
+
 
 .ONESHELL:
 
@@ -26,7 +34,7 @@ debug: build/$(TARGET)
 
 leaks: build/$(TARGET)
 	cd build
-	valgrind ./$(TARGET)
+	valgrind --leak-check=full  ./$(TARGET)
 
 clean:
 	rm -f build/$(TARGET) build/*.log $(OBJECTS)

@@ -3,8 +3,8 @@
 void init(struct discord *client, u64snowflake app_id) {
     // fetch endpoints
     log_info("Fetching endpoints...");
-    endpoint_list endpoints;
-    if (fetch_endpoints(client, &endpoints)) {
+    endpoint_list *endpoints = malloc(sizeof(endpoint_list));
+    if (fetch_endpoints(client, endpoints)) {
         log_fatal("Failed to fetch endpoints");
         discord_shutdown(client);
         return;
@@ -13,7 +13,7 @@ void init(struct discord *client, u64snowflake app_id) {
 
     // prepare commands
     log_info("Preparing commands...");
-    prepare_commands(client, app_id, &endpoints);
+    prepare_commands(client, app_id, endpoints);
     log_info("Commands prepared");
 
 }

@@ -16,9 +16,9 @@
 typedef enum {
 
     /**
-     * Endpoint returns one or more pngs
+     * Endpoint returns a png
      */
-    PNGS,
+    PNG,
 
     /**
      * Endpoint returns a gif without a target user
@@ -60,6 +60,23 @@ typedef struct {
 } endpoint_info;
 
 /**
+ * Endpoint result
+ */
+typedef struct {
+
+    /**
+     * Nekos result
+     */
+    nekos_result *infos;
+
+    /**
+     * Http response
+     */
+    nekos_http_response *results;
+
+} endpoint_result;
+
+/**
  * Endpoint list
  */
 typedef struct {
@@ -72,7 +89,7 @@ typedef struct {
     /**
      * Length of array 
      */
-    size_t len;
+    int len;
     
 } endpoint_list;
 
@@ -84,3 +101,11 @@ typedef struct {
  * \return 0 on success, -1 on failure
  */
 int fetch_endpoints(struct discord *client, endpoint_list *list);
+
+/**
+ * Acquire a random result from an endpoint.
+ * 
+ * \param result Result to store data
+ * \param endpoint Endpoint to fetch
+ */
+void download_picture(endpoint_result *result, endpoint_info *endpoint);

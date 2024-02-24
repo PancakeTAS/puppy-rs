@@ -10,87 +10,31 @@
 #include <concord/log.h>
 #define DEFAULT_DESCRIPTION "Get a random %s %s"
 
-/**
- * Type of endpoint
- */
+/** Type of endpoint */
 typedef enum {
-
-    /**
-     * Endpoint returns a png
-     */
-    PNG,
-
-    /**
-     * Endpoint returns a gif without a target user
-     */
-    GIF_NO_TARGET,
-
-    /**
-     * Endpoint returns a gif with a target user
-     */
-    GIF_TARGET
-
+    PNG, /*!< Endpoint returns a png */
+    GIF_NO_TARGET, /*!< Endpoint returns a gif without a target user */
+    GIF_TARGET /*!< Endpoint returns a gif with a target user */
 } endpoint_type;
 
-/**
- * Data of an endpoint
- */
+/** Data of an endpoint */
 typedef struct {
-
-    /**
-     * Endpoint to fetch
-     */
-    nekos_endpoint* endpoint;
-
-    /**
-     * Description of endpoint.
-     */
-    char* description;
-
-    /**
-     * Type of endpoint
-     */
-    endpoint_type type;
-
-    /**
-     * Message to send when the endpoint is called. 
-     */
-    char* message;
-
+    nekos_endpoint* endpoint; /*!< Endpoint to fetch */
+    endpoint_type type; /*!< Type of endpoint */
+    char* description; /*!< Description of endpoint */
+    char* message; /*!< Message to send when the endpoint is called */
 } endpoint_info;
 
-/**
- * Endpoint result
- */
+/** Endpoint result */
 typedef struct {
-
-    /**
-     * Nekos result
-     */
-    nekos_result *infos;
-
-    /**
-     * Http response
-     */
-    nekos_http_response *results;
-
+    nekos_result *infos; /*!< Result of the request */
+    nekos_http_response *results; /*!< Http response */
 } endpoint_result;
 
-/**
- * Endpoint list
- */
+/** Endpoint list */
 typedef struct {
-
-    /**
-     * Array of endpoints
-     */
-    endpoint_info** endpoints;
-
-    /**
-     * Length of array 
-     */
-    int len;
-    
+    endpoint_info** endpoints; /*!< Array of endpoints */
+    int len; /*!< Length of array */
 } endpoint_list;
 
 /**

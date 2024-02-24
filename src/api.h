@@ -27,8 +27,8 @@ typedef struct {
 
 /** Endpoint result */
 typedef struct {
-    nekos_result *infos; /*!< Result of the request */
-    nekos_http_response *results; /*!< Http response */
+    nekos_result *info; /*!< Result of the request */
+    nekos_http_response *result; /*!< Http response */
 } endpoint_result;
 
 /** Endpoint list */
@@ -40,11 +40,10 @@ typedef struct {
 /**
  * Fetch all endpoints from nekos.best.
  * 
- * \param client Discord client
- * \param list List to store endpoints
+ * \param all_endpoints Endpoint list to store data
  * \return 0 on success, -1 on failure
  */
-int fetch_endpoints(struct discord *client, endpoint_list *list);
+int fetch_endpoints(endpoint_list *all_endpoints);
 
 /**
  * Acquire a random result from an endpoint.

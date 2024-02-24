@@ -18,7 +18,7 @@
 /**
  * Discord client instance
  */
-struct discord *discord_client;
+static struct discord *discord_client;
 
 /**
  * Launch the bot. Called when bot is ready.
@@ -78,6 +78,7 @@ int main() {
 
     // cleanup discord client
     log_info("Closing discord client");
+    deinit();
     discord_cleanup(client);
     ccord_global_cleanup();
     return EXIT_SUCCESS;

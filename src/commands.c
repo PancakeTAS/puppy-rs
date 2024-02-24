@@ -1,6 +1,6 @@
 #include "commands.h"
 
-static endpoint_list *all_endpoints = NULL;
+static endpoint_list *all_endpoints;
 
 static void on_interaction(struct discord *client, const struct discord_interaction *event) {
     // find endpoint
@@ -17,13 +17,13 @@ static void on_interaction(struct discord *client, const struct discord_interact
         return;
     }
 
-    // fetch results
-    endpoint_result results;
-    download_picture(&results, endpoint);
+    // fetch result
+    endpoint_result result;
+    download_picture(&result, endpoint);
 
     struct discord_attachment attachment = {
-        .content = results.results[0].text,
-        .size = results.results[0].len,
+        .content = result.result->text,
+        .size = result.result->len,
         .filename = endpoint->type == PNG ? "x.png" : "x.gif"
     };
 
@@ -36,14 +36,14 @@ static void on_interaction(struct discord *client, const struct discord_interact
     char* text = (char*) malloc(2001);
     char* text_ptr = text;
     if (endpoint->type == GIF_TARGET) {
-        text_ptr += snprintf(text_ptr, 2001, endpoint->message, event->member->user->id, atoll(event->data->options->array[0].value));
-        snprintf(text_ptr, 2001, "\n\nAnime: %s", results.infos[0].source.gif->anime_name);
+        text_ptr += snprintf(text_ptr, 2001, endpoint->message, event->member->user->id, atoll(event->data->options->array->value));
+        snprintf(text_ptr, 2001, "\n\nAnime: %s", result.info->source.gif->anime_name);
     } else if (endpoint->type == GIF_NO_TARGET) {
         text_ptr += snprintf(text_ptr, 2001, endpoint->message, event->member->user->id);
-        snprintf(text_ptr, 2001, "\n\nAnime: %s", results.infos[0].source.gif->anime_name);
+        snprintf(text_ptr, 2001, "\n\nAnime: %s", result.info->source.gif->anime_name);
     } else {
         text_ptr += snprintf(text_ptr, 2001, endpoint->message, event->member->user->id);
-        sprintf(text_ptr, "\n\nArtist:\n%s: <%s>\nSource:\n<%s>", results.infos[0].source.png->artist_name, results.infos[0].source.png->artist_href, results.infos[0].source.png->source_url);
+        sprintf(text_ptr, "\n\nArtist:\n%s: <%s>\n\nSource:\n<%s>", result.info->source.png->artist_name, result.info->source.png->artist_href, result.info->source.png->source_url);
     }
 
     // send response
@@ -57,6 +57,22 @@ static void on_interaction(struct discord *client, const struct discord_interact
         .data = &data,
     };
     discord_create_interaction_response(client, event->id, event->token, &params, NULL);
+
+    // free resources
+    free(text);
+    free(result.info->url);
+    if (endpoint->type == PNG) {
+        free(result.info->source.png->artist_name);
+        free(result.info->source.png->artist_href);
+        free(result.info->source.png->source_url);
+        free(result.info->source.png);
+    } else {
+        free(result.info->source.gif->anime_name);
+        free(result.info->source.gif);
+    }
+    free(result.info);
+    free(result.result->text);
+    free(result.result);
 }
 
 void prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list *endpoints) {

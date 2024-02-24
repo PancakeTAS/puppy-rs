@@ -4,7 +4,7 @@
 #define SET_PNG(endpoint_name, endpoint_description, endpoint_message) \
     if (strcmp(endpoint->name, endpoint_name) == 0) { \
         info->type = PNG; \
-        info->description = endpoint_description; \
+        strcpy(info->description, endpoint_description); \
         info->message = endpoint_message; \
     }
 
@@ -20,7 +20,7 @@
         info->message = endpoint_message; \
     }
 
-int fetch_endpoints(struct discord *client, endpoint_list *list) {
+int fetch_endpoints(endpoint_list *all_endpoints) {
     // fetch all endpoints
     nekos_endpoint_list endpoints;
     nekos_status status = nekos_endpoints(&endpoints);
@@ -30,8 +30,8 @@ int fetch_endpoints(struct discord *client, endpoint_list *list) {
     }
 
     // create commands
-    list->len = 0;
-    list->endpoints = (endpoint_info**) malloc(endpoints.len * sizeof(endpoint_info*));
+    all_endpoints->len = 0;
+    all_endpoints->endpoints = (endpoint_info**) malloc(endpoints.len * sizeof(endpoint_info*));
     for (size_t i = 0; i < endpoints.len; i++) {
         nekos_endpoint *endpoint = endpoints.endpoints[i];
 
@@ -95,9 +95,12 @@ int fetch_endpoints(struct discord *client, endpoint_list *list) {
         }
 
         // add command
-        list->endpoints[list->len] = info;
-        list->len++;
+        all_endpoints->endpoints[all_endpoints->len] = info;
+        all_endpoints->len++;
     }
+
+    // free memory
+    free(endpoints.endpoints);
 
     return 0;
 }
@@ -108,7 +111,10 @@ void download_picture(endpoint_result *result, endpoint_info *endpoint) {
     nekos_category(&api_results, endpoint->endpoint, 1);
 
     // download files
-    result->results = (nekos_http_response*) malloc(sizeof(nekos_http_response));
-    result->infos = api_results.responses[0];
-    nekos_download(&result->results[0], api_results.responses[0]->url);
+    result->result = (nekos_http_response*) malloc(sizeof(nekos_http_response));
+    result->info = api_results.responses[0];
+    nekos_download(result->result, api_results.responses[0]->url);
+
+    // free memory
+    free(api_results.responses);
 }

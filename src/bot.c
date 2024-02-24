@@ -4,18 +4,15 @@ endpoint_list all_endpoints;
 
 void init(struct discord *client, u64snowflake app_id) {
     // fetch endpoints
-    log_info("Fetching endpoints...");
+    log_info("[BOT] Initializing nekos.best API...");
     if (fetch_endpoints(&all_endpoints)) {
-        log_fatal("Failed to fetch endpoints");
         discord_shutdown(client);
         return;
     }
-    log_info("Fetched all available endpoints");
 
     // prepare commands
-    log_info("Preparing commands...");
+    log_info("[BOT] Initializing slash commands...");
     prepare_commands(client, app_id, &all_endpoints);
-    log_info("Commands prepared");
 }
 
 void deinit() {

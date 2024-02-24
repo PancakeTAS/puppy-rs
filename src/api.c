@@ -25,7 +25,7 @@ int fetch_endpoints(endpoint_list *all_endpoints) {
     nekos_endpoint_list endpoints;
     nekos_status status = nekos_endpoints(&endpoints);
     if (status != NEKOS_OK) {
-        log_fatal("Failed to fetch endpoints");
+        log_fatal("[NEKOS_API] Failed to fetch endpoints");
         return 1;
     }
 
@@ -90,7 +90,7 @@ int fetch_endpoints(endpoint_list *all_endpoints) {
 
         // unknown endpoint
         if (!info->message) {
-            log_warn("Unknown endpoint %ld", info->endpoint->name);
+            log_warn("[NEKOS_API] Unknown endpoint %ld", info->endpoint->name);
             continue;
         }
 

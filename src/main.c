@@ -36,7 +36,7 @@ void on_ready(struct discord *client, const struct discord_ready *event) {
  * \param signum Signal number 
  */
 void sigint_handler(int signum) {
-    log_info("Received SIGINT, shutting down");
+    log_info("[MAIN] Received SIGINT, shutting down");
     discord_shutdown(discord_client);
     signal(SIGINT, sigint_handler);
 }
@@ -54,30 +54,30 @@ int main() {
     // initialize concord
     CCORDcode code = ccord_global_init();
     if (code != CCORD_OK) {
-        log_fatal("Failed to initialize global resources");
+        log_fatal("[MAIN] Failed to initialize global resources");
         return EXIT_FAILURE;
     }
 
     // initialize discord client
     struct discord *client = discord_client = discord_config_init(CONFIG_FILE);
     if (!client) {
-        log_fatal("Failed to initialize discord client");
+        log_fatal("[MAIN] Failed to initialize discord client");
         return EXIT_FAILURE;
     }
 
     // start discord client
-    log_info("Starting discord client");
+    log_info("[MAIN] Starting discord client");
     discord_set_on_ready(client, on_ready);
     code = discord_run(client);
     if (code != CCORD_OK) {
-        log_fatal("Failed to start discord client");
+        log_fatal("[MAIN] Failed to start discord client");
         discord_cleanup(client);
         ccord_global_cleanup();
         return EXIT_FAILURE;
     }
 
     // cleanup discord client
-    log_info("Closing discord client");
+    log_info("[MAIN] Closing discord client");
     deinit();
     discord_cleanup(client);
     ccord_global_cleanup();

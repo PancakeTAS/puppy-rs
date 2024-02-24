@@ -13,7 +13,7 @@ static void on_interaction(struct discord *client, const struct discord_interact
     }
 
     if (!endpoint) {
-        log_error("Endpoint not found %s!", event->data->name);
+        log_error("[COMMANDS] Endpoint not found %s!", event->data->name);
         return;
     }
 
@@ -105,7 +105,7 @@ void prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list
         if (info->type == GIF_TARGET)
             command_params[i].options = &options;
 
-        log_info("Created command %s", command_params[i].name);
+        log_info("[COMMANDS] Registering /%s", command_params[i].name);
     }
 
     // create commands
@@ -116,4 +116,5 @@ void prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list
 
     discord_bulk_overwrite_global_application_commands(client, app_id, &commands, NULL);
     discord_set_on_interaction_create(client, on_interaction);
+    log_info("[COMMANDS] SUCCESS - Created all commands");
 }

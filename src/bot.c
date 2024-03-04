@@ -18,9 +18,9 @@ void init(struct discord *client, u64snowflake app_id) {
 void deinit() {
     // free endpoints
     for (int i = 0; i < all_endpoints.len; i++) {
-        free(all_endpoints.endpoints[i]->endpoint->name);
-        free(all_endpoints.endpoints[i]->endpoint);
+        free(all_endpoints.endpoints[i]->name);
         free(all_endpoints.endpoints[i]->description);
+        free(all_endpoints.endpoints[i]->message);
         free(all_endpoints.endpoints[i]);
     }
     free(all_endpoints.endpoints);

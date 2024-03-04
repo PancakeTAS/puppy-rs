@@ -19,17 +19,13 @@ typedef enum {
 
 /** Data of an endpoint */
 typedef struct {
-    nekos_endpoint* endpoint; /*!< Endpoint to fetch */
+    char* name; /*!< Name of endpoint to fetch */
+    nekos_format format; /*!< Format of the endpoint */
+
     endpoint_type type; /*!< Type of endpoint */
     char* description; /*!< Description of endpoint */
     char* message; /*!< Message to send when the endpoint is called */
 } endpoint_info;
-
-/** Endpoint result */
-typedef struct {
-    nekos_result *info; /*!< Result of the request */
-    nekos_http_response *result; /*!< Http response */
-} endpoint_result;
 
 /** Endpoint list */
 typedef struct {
@@ -37,9 +33,16 @@ typedef struct {
     int len; /*!< Length of array */
 } endpoint_list;
 
+/** Endpoint result */
+typedef struct {
+    char* message; /*!< Formatted response message */
+    char* file; /*!< Data of the file */
+    int file_len; /*!< Length of the file */
+} endpoint_result;
+
 /**
  * Fetch all endpoints from nekos.best.
- * 
+ *
  * \param all_endpoints Endpoint list to store data
  * \return 0 on success, -1 on failure
  */
@@ -47,7 +50,7 @@ int fetch_endpoints(endpoint_list *all_endpoints);
 
 /**
  * Acquire a random result from an endpoint.
- * 
+ *
  * \param result Result to store data
  * \param endpoint Endpoint to fetch
  */

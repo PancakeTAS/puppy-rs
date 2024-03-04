@@ -2,45 +2,43 @@
 #include "api.h"
 
 #define SET_PNG(endpoint_name, endpoint_description, endpoint_message) \
-    if (strcmp(endpoint->name, endpoint_name) == 0) { \
-        info->type = PNG; \
-        strcpy(info->description, endpoint_description); \
-        info->message = endpoint_message; \
+    if (strcmp(bot_endpoint->name, endpoint_name) == 0) { \
+        bot_endpoint->type = PNG; \
+        bot_endpoint->description = endpoint_description; \
+        bot_endpoint->message = endpoint_message; \
     }
 
 #define SET_GIF_NO_TARGET(endpoint_name, endpoint_message) \
-    if (strcmp(endpoint->name, endpoint_name) == 0) { \
-        info->type = GIF_NO_TARGET; \
-        info->message = endpoint_message; \
+    if (strcmp(bot_endpoint->name, endpoint_name) == 0) { \
+        bot_endpoint->type = GIF_NO_TARGET; \
+        bot_endpoint->message = endpoint_message; \
     }
 
 #define SET_GIF_TARGET(endpoint_name, endpoint_message) \
-    if (strcmp(endpoint->name, endpoint_name) == 0) { \
-        info->type = GIF_TARGET; \
-        info->message = endpoint_message; \
+    if (strcmp(bot_endpoint->name, endpoint_name) == 0) { \
+        bot_endpoint->type = GIF_TARGET; \
+        bot_endpoint->message = endpoint_message; \
     }
 
-int fetch_endpoints(endpoint_list *all_endpoints) {
+int fetch_endpoints(endpoint_list *bot_endpoint_list) {
     // fetch all endpoints
-    nekos_endpoint_list endpoints;
-    nekos_status status = nekos_endpoints(&endpoints);
-    if (status != NEKOS_OK) {
+    nekos_endpoint_list api_endpoint_list;
+    nekos_status api_status = nekos_endpoints(&api_endpoint_list);
+    if (api_status) {
         log_fatal("[NEKOS_API] Failed to fetch endpoints");
         return 1;
     }
 
     // create commands
-    all_endpoints->len = 0;
-    all_endpoints->endpoints = (endpoint_info**) malloc(endpoints.len * sizeof(endpoint_info*));
-    for (size_t i = 0; i < endpoints.len; i++) {
-        nekos_endpoint *endpoint = endpoints.endpoints[i];
+    bot_endpoint_list->len = 0;
+    bot_endpoint_list->endpoints = (endpoint_info**) calloc(api_endpoint_list.len, sizeof(endpoint_info*));
+    for (size_t i = 0; i < api_endpoint_list.len; i++) {
+        nekos_endpoint *api_endpoint = &api_endpoint_list.endpoints[i];
 
         // create endpoint info
-        endpoint_info* info = (endpoint_info*) malloc(sizeof(endpoint_info));
-        info->endpoint = endpoint;
-        info->message = NULL;
-        info->description = (char*) malloc(64);
-        snprintf(info->description, 64, DEFAULT_DESCRIPTION, endpoint->name, endpoint->format == NEKOS_PNG ? "image" : "gif");
+        endpoint_info* bot_endpoint = (endpoint_info*) calloc(1, sizeof(endpoint_info));
+        bot_endpoint->name = strdup(api_endpoint->name);
+        bot_endpoint->format = api_endpoint->format;
 
         // populate endpoint info
         SET_PNG("husbando", "Get pictures of husbandos", "Here's husbando for you <@%1$ld>!");
@@ -89,32 +87,51 @@ int fetch_endpoints(endpoint_list *all_endpoints) {
         SET_GIF_TARGET("yeet", "<@%1$ld> yeeted <@%2$ld>!");
 
         // unknown endpoint
-        if (!info->message) {
-            log_warn("[NEKOS_API] Unknown endpoint %ld", info->endpoint->name);
+        if (!bot_endpoint->message) {
+            log_warn("[NEKOS_API] Unknown endpoint %ld", bot_endpoint->name);
             continue;
         }
 
+        // set default description
+        if (!bot_endpoint->description) {
+            bot_endpoint->description = (char*) malloc(64);
+            snprintf(bot_endpoint->description, 64, DEFAULT_DESCRIPTION, bot_endpoint->name, bot_endpoint->format == NEKOS_PNG ? "image" : "gif");
+        }
+
         // add command
-        all_endpoints->endpoints[all_endpoints->len] = info;
-        all_endpoints->len++;
+        bot_endpoint_list->endpoints[bot_endpoint_list->len] = bot_endpoint;
+        bot_endpoint_list->len++;
     }
 
     // free memory
-    free(endpoints.endpoints);
+    nekos_free_endpoints(&api_endpoint_list);
 
     return 0;
 }
 
-void download_picture(endpoint_result *result, endpoint_info *endpoint) {
-    // fetch pictures
+void download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
+    // fetch api
     nekos_result_list api_results;
-    nekos_category(&api_results, endpoint->endpoint, 1);
+    nekos_category(&api_results, &(nekos_endpoint) { .name = bot_endpoint->name, .format = bot_endpoint->format }, 1);
+    nekos_http_response api_response;
+    nekos_download(&api_response, api_results.responses[0].url);
+    nekos_result* api_result = &api_results.responses[0];
 
-    // download files
-    result->result = (nekos_http_response*) malloc(sizeof(nekos_http_response));
-    result->info = api_results.responses[0];
-    nekos_download(result->result, api_results.responses[0]->url);
+    // create response message
+    bot_result->message = (char*) malloc(2001);
+    strcpy(bot_result->message, bot_endpoint->message);
+    int base = strlen(bot_result->message);
+    if (bot_endpoint->type == PNG)
+        snprintf(bot_result->message + base, 2000 - base, "\n\nArtist:\n%s: <%s>\n\nSource:\n<%s>", api_result->source.png->artist_name, api_result->source.png->artist_href, api_result->source.png->source_url);
+    else
+        snprintf(bot_result->message + base, 2000 - base, "\n\nAnime: %s", api_result->source.gif->anime_name);
+
+    // create response file
+    bot_result->file = (char*) malloc(api_response.len);
+    memcpy(bot_result->file, api_response.text, api_response.len);
+    bot_result->file_len = api_response.len;
 
     // free memory
-    free(api_results.responses);
+    nekos_free_results(&api_results, bot_endpoint->format);
+    nekos_free_http_response(&api_response);
 }

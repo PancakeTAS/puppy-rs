@@ -1,6 +1,5 @@
 #include "commands.h"
 
-#include <string.h>
 #include <errno.h>
 
 static endpoint_list *all_endpoints;
@@ -108,6 +107,9 @@ int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list 
         .size = endpoints->len,
     }, NULL);
     log_info("[COMMANDS] Successfully created %d commands", endpoints->len);
+
+    // cleanup
+    free(command_params);
 
     return 0;
 }

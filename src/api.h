@@ -6,8 +6,6 @@
 #pragma once
 
 #include <nekosbest.h>
-#include <concord/discord.h>
-#include <concord/log.h>
 #define DEFAULT_DESCRIPTION "Get a random %s %s"
 
 /** Type of endpoint */

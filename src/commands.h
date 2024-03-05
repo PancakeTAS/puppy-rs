@@ -1,9 +1,9 @@
 #pragma once
 
+#include "api.h"
+
 #include <concord/discord.h>
 #include <concord/log.h>
-
-#include "api.h"
 
 /**
  * Prepare commands for the bot

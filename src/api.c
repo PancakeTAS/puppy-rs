@@ -1,13 +1,18 @@
-#define NEKOSBEST_IMPL
-#include "api.h"
 
+#define NEKOSBEST_IMPL
+#include <nekosbest.h>
+
+#include <concord/discord.h>
+#include <concord/log.h>
 #include <string.h>
 #include <errno.h>
+
+#include "api.h"
 
 #define SET_PNG(endpoint_name, endpoint_description, endpoint_message) \
     if (strcmp(bot_endpoint->name, endpoint_name) == 0) { \
         bot_endpoint->type = PNG; \
-        bot_endpoint->description = endpoint_description; \
+        bot_endpoint->description = strdup(endpoint_description); \
         bot_endpoint->message = endpoint_message; \
     }
 

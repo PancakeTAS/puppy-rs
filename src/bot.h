@@ -7,6 +7,7 @@
 
 #include <concord/discord.h>
 #include <concord/log.h>
+
 #include "api.h"
 #include "commands.h"
 

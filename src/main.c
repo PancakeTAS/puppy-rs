@@ -3,9 +3,8 @@
  * Main entry point for the bot
  */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <signal.h>
+#include <stdlib.h>
 
 #include "bot.h"
 

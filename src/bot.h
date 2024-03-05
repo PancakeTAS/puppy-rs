@@ -1,6 +1,6 @@
 /**
  * \file
- * This file contains the bots main behavior. 
+ * This file contains the bots main behavior.
  */
 
 #pragma once
@@ -12,7 +12,7 @@
 
 /**
  * Initialize the discord bot
- * 
+ *
  * \param client Discord client
  * \param app_id Application ID
  */

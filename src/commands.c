@@ -1,5 +1,8 @@
 #include "commands.h"
 
+#include <string.h>
+#include <errno.h>
+
 static endpoint_list *all_endpoints;
 
 static void on_interaction(struct discord *client, const struct discord_interaction *event) {
@@ -17,45 +20,49 @@ static void on_interaction(struct discord *client, const struct discord_interact
         return;
     }
 
-    // fetch result
+    // fetch result from api
     endpoint_result bot_result;
-    download_picture(&bot_result, endpoint);
+    int i = download_picture(&bot_result, endpoint);
+    if (i) {
+        log_error("[COMMANDS] Failed to fetch %s: %d", endpoint->name, i);
+        return;
+    }
 
-    struct discord_attachment attachment = {
-        .content = bot_result.file,
-        .size = bot_result.file_len,
-        .filename = endpoint->type == PNG ? "x.png" : "x.gif"
-    };
+    // prepare response message
+    char* message = malloc(2001);
+    if (!message) {
+        log_error("[COMMANDS] Failed to allocate memory for message");
+        return;
+    }
 
-    struct discord_attachments attachments = {
-        .array = &attachment,
-        .size = 1
-    };
+    if (endpoint->type == GIF_TARGET)
+        snprintf(message, 2000, bot_result.message, event->member->user->id, atoll(event->data->options->array[0].value));
+    else
+        snprintf(message, 2000, bot_result.message, event->member->user->id);
 
     // send response
-    struct discord_interaction_callback_data data = {
-        .content = malloc(2001),
-        .attachments = &attachments,
-    };
-    printf("%s", bot_result.message);
-    if (endpoint->type == GIF_TARGET)
-        snprintf(data.content, 2000, bot_result.message, event->member->user->id, atoll(event->data->options->array[0].value));
-    else
-        snprintf(data.content, 2000, bot_result.message, event->member->user->id);
-
-    struct discord_interaction_response params = {
+    discord_create_interaction_response(client, event->id, event->token, &(struct discord_interaction_response) {
         .type = DISCORD_INTERACTION_CHANNEL_MESSAGE_WITH_SOURCE,
-        .data = &data,
-    };
-
-    discord_create_interaction_response(client, event->id, event->token, &params, NULL);
+        .data = &(struct discord_interaction_callback_data) {
+            .content = message,
+            .attachments = &(struct discord_attachments) {
+                .array = &(struct discord_attachment) {
+                    .content = bot_result.file,
+                    .size = bot_result.file_len,
+                    .filename = endpoint->type == PNG ? "x.png" : "x.gif"
+                },
+                .size = 1
+            }
+        }
+    }, NULL);
+    log_info("[COMMANDS] Succesfully processed /%s", endpoint->name);
 
     // free resources
-    free(bot_result.message);
-    free(bot_result.file);
+    free_result(&bot_result);
+    free(message);
 }
 
-void prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list *endpoints) {
+int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list *endpoints) {
     all_endpoints = endpoints;
 
     // create command options
@@ -71,6 +78,13 @@ void prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list
 
     // create command params
     struct discord_application_command* command_params = calloc(endpoints->len, sizeof(struct discord_application_command));
+    if (!command_params) {
+        log_trace("[COMMANDS] calloc() failed: %d", strerror(errno));
+
+        return 1;
+    }
+    log_trace("[COMMANDS] calloc() success");
+
     for (int i = 0; i < endpoints->len; i++) {
         endpoint_info *info = endpoints->endpoints[i];
 
@@ -84,16 +98,16 @@ void prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list
         if (info->type == GIF_TARGET)
             command_params[i].options = &options;
 
-        log_info("[COMMANDS] Registering /%s", command_params[i].name);
+        log_debug("[COMMANDS] Created command /%s", command_params[i].name);
     }
 
     // create commands
-    struct discord_application_commands commands = {
+    discord_set_on_interaction_create(client, on_interaction);
+    discord_bulk_overwrite_global_application_commands(client, app_id, &(struct discord_application_commands) {
         .array = command_params,
         .size = endpoints->len,
-    };
+    }, NULL);
+    log_info("[COMMANDS] Successfully created %d commands", endpoints->len);
 
-    discord_bulk_overwrite_global_application_commands(client, app_id, &commands, NULL);
-    discord_set_on_interaction_create(client, on_interaction);
-    log_info("[COMMANDS] SUCCESS - Created all commands");
+    return 0;
 }

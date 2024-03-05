@@ -54,4 +54,18 @@ int fetch_endpoints(endpoint_list *all_endpoints);
  * \param result Result to store data
  * \param endpoint Endpoint to fetch
  */
-void download_picture(endpoint_result *result, endpoint_info *endpoint);
+int download_picture(endpoint_result *result, endpoint_info *endpoint);
+
+/**
+ * Free the memory of an endpoint list.
+ *
+ * \param list Endpoint list to free
+ */
+void free_endpoints(endpoint_list *list);
+
+/**
+ * Free the memory of an endpoint result.
+ *
+ * \param result Endpoint result to free
+ */
+void free_result(endpoint_result *result);

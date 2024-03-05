@@ -7,9 +7,11 @@
 
 /**
  * Prepare commands for the bot
- * 
+ *
  * \param client The discord client
  * \param app_id The application id
- * \param endpoints The list of endpoints 
+ * \param endpoints The list of endpoints
+ *
+ * \return 0 on success, 1 on failure
  */
-void prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list *endpoints);
+int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list *endpoints);

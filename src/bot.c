@@ -12,6 +12,15 @@ void init(struct discord *client, u64snowflake app_id) {
     }
     log_info("[BOT] Fetched nekos.best API endpoints");
 
+    // ensure cache validity
+    if (ensure_cache_validity(&all_endpoints)) {
+        log_fatal("[BOT] Failed to ensure cache validity");
+
+        discord_shutdown(client);
+        return;
+    }
+    log_info("[BOT] Ensured cache validity");
+
     // prepare commands
     log_info("[BOT] Initializing slash commands...");
     if (prepare_commands(client, app_id, &all_endpoints)) {

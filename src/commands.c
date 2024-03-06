@@ -19,9 +19,9 @@ static void on_interaction(struct discord *client, const struct discord_interact
         return;
     }
 
-    // fetch result from api
-    endpoint_result bot_result;
-    int i = download_picture(&bot_result, endpoint);
+    // fetch result from cache
+    cache_file bot_cache;
+    int i = grab_file(&bot_cache, endpoint);
     if (i) {
         log_error("[COMMANDS] Failed to fetch %s: %d", endpoint->name, i);
         return;
@@ -35,9 +35,9 @@ static void on_interaction(struct discord *client, const struct discord_interact
     }
 
     if (endpoint->type == GIF_TARGET)
-        snprintf(message, 2000, bot_result.message, event->member->user->id, atoll(event->data->options->array[0].value));
+        snprintf(message, 2000, bot_cache.message, event->member->user->id, atoll(event->data->options->array[0].value));
     else
-        snprintf(message, 2000, bot_result.message, event->member->user->id);
+        snprintf(message, 2000, bot_cache.message, event->member->user->id);
 
     // send response
     discord_create_interaction_response(client, event->id, event->token, &(struct discord_interaction_response) {
@@ -46,8 +46,8 @@ static void on_interaction(struct discord *client, const struct discord_interact
             .content = message,
             .attachments = &(struct discord_attachments) {
                 .array = &(struct discord_attachment) {
-                    .content = bot_result.file,
-                    .size = bot_result.file_len,
+                    .content = bot_cache.data,
+                    .size = bot_cache.len,
                     .filename = endpoint->type == PNG ? "x.png" : "x.gif"
                 },
                 .size = 1
@@ -57,8 +57,17 @@ static void on_interaction(struct discord *client, const struct discord_interact
     log_info("[COMMANDS] Succesfully processed /%s", endpoint->name);
 
     // free resources
-    free_result(&bot_result);
+    free_cache_file(&bot_cache);
     free(message);
+
+    // ensure cache validity
+    if (ensure_cache_validity(all_endpoints)) {
+        log_fatal("[COMMANDS] Failed to re-ensure cache validity");
+
+        discord_shutdown(client);
+        return;
+    }
+    log_info("[COMMANDS] Re-ensured cache validity");
 }
 
 int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list *endpoints) {

@@ -9,6 +9,7 @@
 #include <concord/log.h>
 
 #include "api.h"
+#include "cache.h"
 #include "commands.h"
 
 /**

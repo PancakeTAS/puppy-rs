@@ -85,7 +85,7 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
         SET_GIF_NO_TARGET("pout", "<@%1$ld> is pouting!");
         SET_GIF_NO_TARGET("nom", "<@%1$ld> is nomming!");
         SET_GIF_NO_TARGET("shrug", "<@%1$ld> is shrugging!");
-        SET_GIF_NO_TARGET("sleep", "<@%1$ld> is sleeping!");
+        SET_GIF_NO_TARGET("sleep", "<@%1$ld> is eepy!");
         SET_GIF_NO_TARGET("smile", "<@%1$ld> is smiling!");
         SET_GIF_NO_TARGET("smug", "<@%1$ld> is smugging!");
         SET_GIF_NO_TARGET("stare", "<@%1$ld> is staring!");

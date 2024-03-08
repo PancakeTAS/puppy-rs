@@ -27,13 +27,7 @@ static void on_interaction(struct discord *client, const struct discord_interact
         return;
     }
 
-    // prepare response message
-    char* message = malloc(2001);
-    if (!message) {
-        log_error("[COMMANDS] Failed to allocate memory for message");
-        return;
-    }
-
+    char message[2001];
     if (endpoint->type == GIF_TARGET)
         snprintf(message, 2000, bot_cache.message, event->member->user->id, atoll(event->data->options->array[0].value));
     else
@@ -58,7 +52,6 @@ static void on_interaction(struct discord *client, const struct discord_interact
 
     // free resources
     free_cache_file(&bot_cache);
-    free(message);
 
     // ensure cache validity
     if (ensure_cache_validity(all_endpoints)) {

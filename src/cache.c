@@ -16,15 +16,12 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
     }
 
     // ensure endpoint is cached
-    char* filename = malloc(64);
-    char* messagefilename = malloc(64);
+    char filename[64];
+    char messagefilename[64];
     sprintf(filename, "%s/%s.%s", CACHE_DIR, endpoint->name, endpoint->type == PNG ? "png" : "gif");
     sprintf(messagefilename, "%s/%s.txt", CACHE_DIR, endpoint->name);
     if (stat(filename, &st) == -1 || stat(messagefilename, &st) == -1) {
         log_trace("[CACHE] stat() failed: %s", strerror(errno));
-
-        free(filename);
-        free(messagefilename);
         return 1;
     }
     log_trace("[CACHE] stat() success: %p", filename);
@@ -34,9 +31,6 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
     FILE* messagefile = fopen(messagefilename, "r");
     if (!file || !messagefile) {
         log_trace("[CACHE] fopen() failed: %s", strerror(errno));
-
-        free(filename);
-        free(messagefilename);
         return 1;
     }
     log_trace("[CACHE] fopen() success: %p", file);
@@ -46,12 +40,10 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
     cache_file->len = ftell(file);
     fseek(file, 0, SEEK_SET);
     cache_file->data = malloc(cache_file->len);
-    cache_file->message = calloc(1, 2001);
+    memset(cache_file->message, 0, 2001);
     if (!cache_file->data) {
         log_trace("[CACHE] malloc() failed: %s", strerror(errno));
-
         fclose(file);
-        free(filename);
         return 1;
     }
 
@@ -65,10 +57,6 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
     remove(filename);
     remove(messagefilename);
 
-    // cleanup resources
-    free(filename);
-    free(messagefilename);
-
     return 0;
 }
 
@@ -79,8 +67,8 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
         mkdir(CACHE_DIR, 0700);
 
     // check if cache is valid
-    char* filename = malloc(64);
-    char* messagefilename = malloc(64);
+    char filename[64];
+    char messagefilename[64];
     for (int i = 0; i < bot_endpoints->len; i++) {
         sprintf(filename, "%s/%s.%s", CACHE_DIR, bot_endpoints->endpoints[i]->name, bot_endpoints->endpoints[i]->type == PNG ? "png" : "gif");
         sprintf(messagefilename, "%s/%s.txt", CACHE_DIR, bot_endpoints->endpoints[i]->name);
@@ -94,9 +82,6 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
         FILE* messagefile = fopen(messagefilename, "w");
         if (!file || !messagefile) {
             log_trace("[CACHE] fopen() failed: %s", strerror(errno));
-
-            free(filename);
-            free(messagefilename);
             return 1;
         }
         log_trace("[CACHE] fopen() success");
@@ -109,8 +94,6 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
 
             fclose(file);
             fclose(messagefile);
-            free(filename);
-            free(messagefilename);
             return 1;
         }
         log_trace("[CACHE] download_picture() success");
@@ -126,10 +109,6 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
 
         log_info("[CACHE] Fetched new %s result in cache", bot_endpoints->endpoints[i]->name);
     }
-
-    // cleanup resources
-    free(filename);
-    free(messagefilename);
 
     return 0;
 }

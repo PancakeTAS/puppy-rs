@@ -12,7 +12,7 @@
 
 /// Cache file data
 typedef struct {
-    char* message; /*!< Message to send with the file */
+    char message[2001]; /*!< Message to send with the file */
     char* data; /*!< Data of the file */
     long len; /*!< Length of the file */
 } cache_file;

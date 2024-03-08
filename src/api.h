@@ -21,8 +21,8 @@ typedef struct {
     nekos_format format; /*!< Format of the endpoint */
 
     endpoint_type type; /*!< Type of endpoint */
-    char* description; /*!< Description of endpoint */
-    char* message; /*!< Message to send when the endpoint is called */
+    char description[64]; /*!< Description of endpoint */
+    char message[2001]; /*!< Message to send when the endpoint is called */
 } endpoint_info;
 
 /** Endpoint list */
@@ -33,7 +33,7 @@ typedef struct {
 
 /** Endpoint result */
 typedef struct {
-    char* message; /*!< Formatted response message */
+    char message[2001]; /*!< Formatted response message */
     char* file; /*!< Data of the file */
     int file_len; /*!< Length of the file */
 } endpoint_result;

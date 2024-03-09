@@ -46,6 +46,7 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
         fclose(file);
         return 1;
     }
+    log_trace("[CACHE] malloc() success");
 
     // read cache file
     fread(cache_file->data, cache_file->len, 1, file);
@@ -70,8 +71,8 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
     char filename[64];
     char messagefilename[64];
     for (int i = 0; i < bot_endpoints->len; i++) {
-        sprintf(filename, "%s/%s.%s", CACHE_DIR, bot_endpoints->endpoints[i]->name, bot_endpoints->endpoints[i]->type == PNG ? "png" : "gif");
-        sprintf(messagefilename, "%s/%s.txt", CACHE_DIR, bot_endpoints->endpoints[i]->name);
+        sprintf(filename, "%s/%s.%s", CACHE_DIR, bot_endpoints->endpoints[i].name, bot_endpoints->endpoints[i].type == PNG ? "png" : "gif");
+        sprintf(messagefilename, "%s/%s.txt", CACHE_DIR, bot_endpoints->endpoints[i].name);
 
         // check if endpoint has a cache
         if (!stat(filename, &st))
@@ -88,7 +89,7 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
 
         // fetch image from api
         endpoint_result bot_result;
-        int status = download_picture(&bot_result, bot_endpoints->endpoints[i]);
+        int status = download_picture(&bot_result, &bot_endpoints->endpoints[i]);
         if (status) {
             log_trace("[CACHE] download_picture() failed: %d", status);
 
@@ -107,7 +108,7 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
         // free
         free_result(&bot_result);
 
-        log_info("[CACHE] Fetched new %s result in cache", bot_endpoints->endpoints[i]->name);
+        log_info("[CACHE] Fetched new %s result in cache", bot_endpoints->endpoints[i].name);
     }
 
     return 0;

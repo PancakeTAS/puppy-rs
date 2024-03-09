@@ -27,7 +27,7 @@ typedef struct {
 
 /** Endpoint list */
 typedef struct {
-    endpoint_info** endpoints; /*!< Array of endpoints */
+    endpoint_info* endpoints; /*!< Array of endpoints */
     int len; /*!< Length of array */
 } endpoint_list;
 

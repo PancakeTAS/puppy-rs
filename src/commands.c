@@ -8,8 +8,8 @@ static void on_interaction(struct discord *client, const struct discord_interact
     // find endpoint
     endpoint_info *endpoint = NULL;
     for (int i = 0; i < all_endpoints->len; i++) {
-        if (strcmp(all_endpoints->endpoints[i]->name, event->data->name) == 0) {
-            endpoint = all_endpoints->endpoints[i];
+        if (strcmp(all_endpoints->endpoints[i].name, event->data->name) == 0) {
+            endpoint = &all_endpoints->endpoints[i];
             break;
         }
     }
@@ -87,7 +87,7 @@ int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list 
     log_trace("[COMMANDS] calloc() success");
 
     for (int i = 0; i < endpoints->len; i++) {
-        endpoint_info *info = endpoints->endpoints[i];
+        endpoint_info *info = &endpoints->endpoints[i];
 
         command_params[i].default_permission = true;
         command_params[i].application_id = app_id;

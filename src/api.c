@@ -41,29 +41,20 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
 
     // create commands
     bot_endpoint_list->len = 0;
-    bot_endpoint_list->endpoints = (endpoint_info**) calloc(api_endpoint_list.len, sizeof(endpoint_info*));
+    bot_endpoint_list->endpoints = (endpoint_info*) calloc(api_endpoint_list.len, sizeof(endpoint_info));
     if (!bot_endpoint_list->endpoints) {
-        log_trace("[NEKOS_API] malloc() failed: %s", strerror(errno));
+        log_trace("[NEKOS_API] calloc() failed: %s", strerror(errno));
 
         nekos_free_endpoints(&api_endpoint_list);
         return 1;
     }
-    log_trace("[NEKOS_API] malloc() success: %p", bot_endpoint_list->endpoints);
+    log_trace("[NEKOS_API] calloc() success: %p", bot_endpoint_list->endpoints);
 
     for (size_t i = 0; i < api_endpoint_list.len; i++) {
         nekos_endpoint *api_endpoint = &api_endpoint_list.endpoints[i];
 
         // create endpoint info
-        endpoint_info* bot_endpoint = (endpoint_info*) calloc(1, sizeof(endpoint_info));
-        if (!bot_endpoint) {
-            log_trace("[NEKOS_API] malloc() failed: %s", strerror(errno));
-
-            nekos_free_endpoints(&api_endpoint_list);
-            free_endpoints(bot_endpoint_list);
-            return 1;
-        }
-        log_trace("[NEKOS_API] malloc() success: %p", bot_endpoint);
-
+        endpoint_info* bot_endpoint = &bot_endpoint_list->endpoints[bot_endpoint_list->len];
         bot_endpoint->name = strdup(api_endpoint->name);
         bot_endpoint->format = api_endpoint->format;
 
@@ -125,7 +116,6 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
 
         // add command
         log_debug("[NEKOS_API] Adding endpoint %s", bot_endpoint->name);
-        bot_endpoint_list->endpoints[bot_endpoint_list->len] = bot_endpoint;
         bot_endpoint_list->len++;
     }
 
@@ -187,10 +177,8 @@ int download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
 }
 
 void free_endpoints(endpoint_list *list) {
-    for (int i = 0; i < list->len; i++) {
-        free(list->endpoints[i]->name);
-        free(list->endpoints[i]);
-    }
+    for (int i = 0; i < list->len; i++)
+        free(list->endpoints[i].name);
     free(list->endpoints);
 }
 

@@ -68,6 +68,14 @@ static int initialize() {
  *   EXIT_FAILURE Bot failed to run
  */
 int main() {
+    // prepare discord bot
+    log_info("[MAIN] Preparing purrify discord bot...");
+    if (prepare()) {
+        log_fatal("[MAIN] Failed to prepare discord bot");
+
+        return EXIT_FAILURE;
+    }
+
     // initialize discord bot
     log_info("[MAIN] Initializing purrify discord bot...");
     if (initialize()) {

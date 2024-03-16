@@ -2,13 +2,12 @@
 
 endpoint_list all_endpoints;
 
-void init(struct discord *client, u64snowflake app_id) {
+int prepare() {
     // fetch endpoints
     if (fetch_endpoints(&all_endpoints)) {
         log_fatal("[BOT] Failed to fetch nekos.best API endpoints");
 
-        discord_shutdown(client);
-        return;
+        return 1;
     }
     log_info("[BOT] Fetched nekos.best API endpoints");
 
@@ -16,11 +15,14 @@ void init(struct discord *client, u64snowflake app_id) {
     if (ensure_cache_validity(&all_endpoints)) {
         log_fatal("[BOT] Failed to ensure cache validity");
 
-        discord_shutdown(client);
-        return;
+        return 1;
     }
     log_info("[BOT] Ensured cache validity");
 
+    return 0;
+}
+
+void init(struct discord *client, u64snowflake app_id) {
     // prepare commands
     log_info("[BOT] Initializing slash commands...");
     if (prepare_commands(client, app_id, &all_endpoints)) {

@@ -13,6 +13,13 @@
 #include "commands.h"
 
 /**
+ * Prepare the bot
+ *
+ * \return 0 on success, 1 on failure
+ */
+int prepare();
+
+/**
  * Initialize the discord bot
  *
  * \param client Discord client

@@ -13,10 +13,7 @@
  */
 #define CONFIG_FILE "config.json"
 
-/**
- * Discord client instance
- */
-static struct discord *discord_client = NULL;
+bool is_initialized = false; ///< Whether the bot has been initialized
 
 /**
  * Launch the bot. Called when bot is ready.
@@ -25,6 +22,9 @@ static struct discord *discord_client = NULL;
  * \param event Ready event
  */
 void on_ready(struct discord *client, const struct discord_ready *event) {
+    if (is_initialized) return;
+    is_initialized = true;
+
     init(client, event->application->id);
 }
 
@@ -35,29 +35,35 @@ void on_ready(struct discord *client, const struct discord_ready *event) {
  */
 void sigint_handler(int signum) {
     log_info("[MAIN] Received SIGINT, shutting down");
-    discord_shutdown(discord_client);
+    ccord_shutdown_async();
 }
 
-static int initialize() {
+/**
+ * Initialize discord client
+ *
+ * \return Discord client on success, NULL on failure
+ */
+static struct discord* initialize_discord() {
     // initialize concord
     CCORDcode code = ccord_global_init();
     if (code) {
         log_trace("[MAIN] ccord_global_init() failed: %d", code);
-        return 1;
+
+        return NULL;
     }
     log_trace("[MAIN] ccord_global_init() success");
 
-    // initialize discord client
-    discord_client = discord_config_init(CONFIG_FILE);
-    if (!discord_client) {
-        log_trace("[MAIN] discord_config_init() failed");
+    // create discord client
+    struct discord* client = discord_config_init(CONFIG_FILE);
+    if (!client) {
+        log_trace("[MAIN] discord_create() failed");
 
         ccord_global_cleanup();
-        return 1;
+        return NULL;
     }
-    log_trace("[MAIN] discord_config_init() success");
+    log_trace("[MAIN] discord_create() success");
 
-    return 0;
+    return client;
 }
 
 /**
@@ -68,17 +74,10 @@ static int initialize() {
  *   EXIT_FAILURE Bot failed to run
  */
 int main() {
-    // prepare discord bot
-    log_info("[MAIN] Preparing purrify discord bot...");
-    if (prepare()) {
-        log_fatal("[MAIN] Failed to prepare discord bot");
-
-        return EXIT_FAILURE;
-    }
-
     // initialize discord bot
-    log_info("[MAIN] Initializing purrify discord bot...");
-    if (initialize()) {
+    log_info("[MAIN] Initializing discord bot...");
+    struct discord* client = initialize_discord();
+    if (!client) {
         log_fatal("[MAIN] Failed to initialize discord bot");
 
         return EXIT_FAILURE;
@@ -87,12 +86,12 @@ int main() {
     // run discord bot
     log_info("[MAIN] Launching discord bot...");
     signal(SIGINT, sigint_handler);
-    discord_set_on_ready(discord_client, on_ready);
-    CCORDcode code = discord_run(discord_client);
+    discord_set_on_ready(client, on_ready);
+    CCORDcode code = discord_run(client);
 
     // cleanup discord bot
     log_info("[MAIN] Discord bot exited (%d), cleanup up", code);
-    discord_cleanup(discord_client);
+    discord_cleanup(client);
     ccord_global_cleanup();
     deinit();
     return EXIT_SUCCESS;

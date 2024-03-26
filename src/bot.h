@@ -16,9 +16,9 @@
  * Initialize the discord bot
  *
  * \param client Discord client
- * \param app_id Application ID
+ * \param event Ready event
  */
-void init(struct discord *client, u64snowflake app_id);
+void init(struct discord *client, const struct discord_ready *event);
 
 /**
  * Deinitialize the discord bot

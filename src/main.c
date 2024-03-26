@@ -25,7 +25,7 @@ void on_ready(struct discord *client, const struct discord_ready *event) {
     if (is_initialized) return;
     is_initialized = true;
 
-    init(client, event->application->id);
+    init(client, event);
 }
 
 /**

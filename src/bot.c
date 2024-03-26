@@ -32,6 +32,6 @@ void init(struct discord *client, u64snowflake app_id) {
     log_info("[BOT] Initialized slash commands");
 }
 
-void deinit() {
+void deinit(void) {
     free_endpoints(&all_endpoints);
 }

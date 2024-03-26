@@ -23,4 +23,4 @@ void init(struct discord *client, u64snowflake app_id);
 /**
  * Deinitialize the discord bot
  */
-void deinit();
+void deinit(void);

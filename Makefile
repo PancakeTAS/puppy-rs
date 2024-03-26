@@ -2,9 +2,9 @@ SOURCES := $(wildcard src/*.c)
 OBJECTS := $(SOURCES:.c=.o)
 TARGET = purrify
 
-CC = gcc
-CFLAGS = -Wno-unused-parameter -Wall -Wextra -Werror -std=gnu17 -pedantic -Inekos-best.c/src
-LDFLAGS = -pthread -ldiscord -lcurl -lcjson
+CC = clang
+CFLAGS = -Wall -Wextra -Werror -Wno-unused-parameter -std=gnu17 -pedantic -Inekos-best.c/src
+LDFLAGS = -ldiscord -lcurl -lcjson
 
 ifndef PROD
 CFLAGS += -g

@@ -43,7 +43,7 @@ void sigint_handler(int signum) {
  *
  * \return Discord client on success, NULL on failure
  */
-static struct discord* initialize_discord() {
+static struct discord* initialize_discord(void) {
     // initialize concord
     CCORDcode code = ccord_global_init();
     if (code) {
@@ -73,7 +73,7 @@ static struct discord* initialize_discord() {
  *   EXIT_SUCCESS Bot ran successfully \n
  *   EXIT_FAILURE Bot failed to run
  */
-int main() {
+int main(void) {
     // initialize discord bot
     log_info("[MAIN] Initializing discord bot...");
     struct discord* client = initialize_discord();

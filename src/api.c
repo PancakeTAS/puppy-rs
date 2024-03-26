@@ -112,7 +112,7 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
 
         // set default description
         if (!bot_endpoint->description[0])
-            snprintf(bot_endpoint->description, 64, DEFAULT_DESCRIPTION, bot_endpoint->name, bot_endpoint->format == NEKOS_PNG ? "image" : "gif");
+            snprintf(bot_endpoint->description, 64, DEFAULT_DESCRIPTION, bot_endpoint->name, api_endpoint->format == NEKOS_PNG ? "image" : "gif");
 
         // add command
         log_debug("[NEKOS_API] Adding endpoint %s", bot_endpoint->name);
@@ -143,7 +143,7 @@ int download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
     if (status) {
         log_trace("[NEKOS_API] nekos_download() failed: %d", status);
 
-        nekos_free_results(&api_results, bot_endpoint->format);
+        nekos_free_results(&api_results);
         return status;
     }
     log_trace("[NEKOS_API] nekos_download() success: %d bytes", api_response.len);
@@ -160,7 +160,7 @@ int download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
     if (!bot_result->file) {
         log_trace("[NEKOS_API] malloc() failed: %s", strerror(errno));
 
-        nekos_free_results(&api_results, bot_endpoint->format);
+        nekos_free_results(&api_results);
         nekos_free_http_response(&api_response);
         return 1;
     }
@@ -170,7 +170,7 @@ int download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
     bot_result->file_len = api_response.len;
 
     // free memory
-    nekos_free_results(&api_results, bot_endpoint->format);
+    nekos_free_results(&api_results);
     nekos_free_http_response(&api_response);
 
     return 0;

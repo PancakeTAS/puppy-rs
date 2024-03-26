@@ -13,7 +13,6 @@ CFLAGS += -O3 -march=native -mtune=native
 LDLAGS += -flto=auto
 endif
 
-
 .ONESHELL:
 
 %.o: %.c
@@ -34,7 +33,7 @@ debug: build/$(TARGET)
 
 leaks: build/$(TARGET)
 	cd build
-	valgrind --leak-check=full  ./$(TARGET)
+	valgrind --leak-check=full ./$(TARGET)
 
 clean:
 	rm -f build/$(TARGET) build/*.log $(OBJECTS)

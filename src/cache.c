@@ -24,7 +24,6 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
         log_trace("[CACHE] stat() failed: %s", strerror(errno));
         return 1;
     }
-    log_trace("[CACHE] stat() success: %p", filename);
 
     // open cache file
     FILE* file = fopen(filename, "r");
@@ -33,7 +32,6 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
         log_trace("[CACHE] fopen() failed: %s", strerror(errno));
         return 1;
     }
-    log_trace("[CACHE] fopen() success: %p", file);
 
     // create cache file buffer
     fseek(file, 0, SEEK_END);
@@ -46,7 +44,6 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
         fclose(file);
         return 1;
     }
-    log_trace("[CACHE] malloc() success");
 
     // read cache file
     fread(cache_file->data, cache_file->len, 1, file);
@@ -85,7 +82,6 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
             log_trace("[CACHE] fopen() failed: %s", strerror(errno));
             return 1;
         }
-        log_trace("[CACHE] fopen() success");
 
         // fetch image from api
         endpoint_result bot_result;
@@ -97,7 +93,6 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
             fclose(messagefile);
             return 1;
         }
-        log_trace("[CACHE] download_picture() success");
 
         // write to cache
         fwrite(bot_result.file, bot_result.file_len, 1, file);
@@ -108,7 +103,7 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
         // free
         free_result(&bot_result);
 
-        log_info("[CACHE] Fetched new %s result in cache", bot_endpoints->endpoints[i].name);
+        log_debug("[CACHE] Fetched new %s result in cache", bot_endpoints->endpoints[i].name);
     }
 
     return 0;

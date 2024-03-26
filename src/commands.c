@@ -60,7 +60,7 @@ static void on_interaction(struct discord *client, const struct discord_interact
         discord_shutdown(client);
         return;
     }
-    log_info("[COMMANDS] Re-ensured cache validity");
+    log_debug("[COMMANDS] Re-ensured cache validity");
 }
 
 int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list *endpoints) {
@@ -84,7 +84,6 @@ int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list 
 
         return 1;
     }
-    log_trace("[COMMANDS] calloc() success");
 
     for (int i = 0; i < endpoints->len; i++) {
         endpoint_info *info = &endpoints->endpoints[i];

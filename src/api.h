@@ -42,7 +42,7 @@ typedef struct {
  * Fetch all endpoints from nekos.best.
  *
  * \param all_endpoints Endpoint list to store data
- * \return 0 on success, -1 on failure
+ * \return 0 on success, 1 on failure
  */
 int fetch_endpoints(endpoint_list *all_endpoints);
 

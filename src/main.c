@@ -51,7 +51,6 @@ static struct discord* initialize_discord(void) {
 
         return NULL;
     }
-    log_trace("[MAIN] ccord_global_init() success");
 
     // create discord client
     struct discord* client = discord_config_init(CONFIG_FILE);
@@ -61,7 +60,6 @@ static struct discord* initialize_discord(void) {
         ccord_global_cleanup();
         return NULL;
     }
-    log_trace("[MAIN] discord_create() success");
 
     return client;
 }

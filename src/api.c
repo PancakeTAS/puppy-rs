@@ -37,7 +37,6 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
 
         return 1;
     }
-    log_trace("[NEKOS_API] nekos_endpoints() success: %d endpoints", api_endpoint_list.len);
 
     // create commands
     bot_endpoint_list->len = 0;
@@ -48,7 +47,6 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
         nekos_free_endpoints(&api_endpoint_list);
         return 1;
     }
-    log_trace("[NEKOS_API] calloc() success: %p", bot_endpoint_list->endpoints);
 
     for (size_t i = 0; i < api_endpoint_list.len; i++) {
         nekos_endpoint *api_endpoint = &api_endpoint_list.endpoints[i];
@@ -134,7 +132,6 @@ int download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
 
         return 1;
     }
-    log_trace("[NEKOS_API] nekos_category() success: %d result(s)", api_results.len);
 
     // download picture
     nekos_http_response api_response;
@@ -146,7 +143,6 @@ int download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
         nekos_free_results(&api_results);
         return status;
     }
-    log_trace("[NEKOS_API] nekos_download() success: %d bytes", api_response.len);
 
     strcpy(bot_result->message, bot_endpoint->message);
     int base = strlen(bot_result->message);
@@ -164,7 +160,6 @@ int download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
         nekos_free_http_response(&api_response);
         return 1;
     }
-    log_trace("[NEKOS_API] malloc() success: %p", bot_result->file);
 
     memcpy(bot_result->file, api_response.text, api_response.len);
     bot_result->file_len = api_response.len;

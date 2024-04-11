@@ -4,6 +4,7 @@
  */
 
 #include <signal.h>
+#include <string.h>
 #include <stdlib.h>
 
 #include "bot.h"
@@ -60,6 +61,27 @@ static struct discord* initialize_discord() {
 
         ccord_global_cleanup();
         return NULL;
+    }
+
+    // update log level based on config
+    char level[10];
+    struct ccord_szbuf_readonly log_level = discord_config_get_field(client, (char*[2]) {
+        "logging", "purrify_level"
+    }, 2);
+    snprintf(level, sizeof(level), "%.*s", (int) log_level.size, log_level.start);
+    level[sizeof(level) - 1] = '\0';
+    if (strcmp(level, "trace") == 0) {
+        log_set_level(LOG_TRACE);
+    } else if (strcmp(level, "debug") == 0) {
+        log_set_level(LOG_DEBUG);
+    } else if (strcmp(level, "info") == 0) {
+        log_set_level(LOG_INFO);
+    } else if (strcmp(level, "warn") == 0) {
+        log_set_level(LOG_WARN);
+    } else if (strcmp(level, "error") == 0) {
+        log_set_level(LOG_ERROR);
+    } else if (strcmp(level, "fatal") == 0) {
+        log_set_level(LOG_FATAL);
     }
 
     return client;

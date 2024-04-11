@@ -23,4 +23,4 @@ void init(struct discord *client, const struct discord_ready *event);
 /**
  * Deinitialize the discord bot
  */
-void deinit(void);
+void deinit();

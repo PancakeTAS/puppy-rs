@@ -70,6 +70,6 @@ void init(struct discord *client, const struct discord_ready *event) {
 
 }
 
-void deinit(void) {
+void deinit() {
     free_endpoints(&all_endpoints);
 }

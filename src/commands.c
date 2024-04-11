@@ -6,7 +6,17 @@
 
 static endpoint_list *all_endpoints;
 
+/**
+ * Handle interaction
+ *
+ * \param client
+ *   The discord client
+ *
+ * \param event
+ *   The interaction event
+ */
 static void on_interaction(struct discord *client, const struct discord_interaction *event) {
+
     // find endpoint
     endpoint_info *endpoint = NULL;
     for (int i = 0; i < all_endpoints->len; i++) {
@@ -17,23 +27,31 @@ static void on_interaction(struct discord *client, const struct discord_interact
     }
 
     if (!endpoint) {
-        log_error("COMMANDS", "Endpoint not found %s!", event->data->name);
+        log_error("COMMANDS", "Failed to find endpoint %s", event->data->name);
         return;
     }
+    log_trace("COMMANDS", "User requested endpoint %s", endpoint->name);
+
 
     // fetch result from cache
     cache_file bot_cache;
     int i = grab_file(&bot_cache, endpoint);
     if (i) {
-        log_error("COMMANDS", "Failed to fetch %s: %d", endpoint->name, i);
+        log_error("COMMANDS", "grab_file() failed: Unable to fetch %s from cache, reensuring cache validity", endpoint->name);
+
+        if (ensure_cache_validity(all_endpoints))
+            log_error("COMMANDS", "Failed to re-ensure cache validity, this is bad");
+
         return;
     }
+    log_debug("COMMANDS", "grab_file() success: Fetched %s from cache", endpoint->name);
 
     char message[2001];
     if (endpoint->type == GIF_TARGET)
         snprintf(message, 2000, bot_cache.message, event->member->user->id, atoll(event->data->options->array[0].value));
     else
         snprintf(message, 2000, bot_cache.message, event->member->user->id);
+
 
     // send response
     discord_create_interaction_response(client, event->id, event->token, &(struct discord_interaction_response) {
@@ -50,19 +68,20 @@ static void on_interaction(struct discord *client, const struct discord_interact
             }
         }
     }, NULL);
-    log_info("COMMANDS", "Succesfully processed /%s", endpoint->name);
+    log_trace("COMMANDS", "discord_create_interaction_response() success: Sent response to user");
 
     // free resources
     free_cache_file(&bot_cache);
 
+    log_info("COMMANDS", "Successfully processed %s endpoint request from %s", endpoint->name, event->member->user->username);
+
     // ensure cache validity
     if (ensure_cache_validity(all_endpoints)) {
-        log_fatal("COMMANDS", "Failed to re-ensure cache validity");
-
-        discord_shutdown(client);
+        log_error("COMMANDS", "Failed to re-ensure cache validity, this is bad");
         return;
     }
-    log_debug("COMMANDS", "Re-ensured cache validity");
+    log_trace("COMMANDS", "ensure_cache_validity() success: Cache validated");
+
 }
 
 int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list *endpoints) {
@@ -82,10 +101,10 @@ int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list 
     // create command params
     struct discord_application_command* command_params = calloc(endpoints->len, sizeof(struct discord_application_command));
     if (!command_params) {
-        log_trace("COMMANDS", "calloc() failed: %d", strerror(errno));
-
+        log_fatal("COMMANDS", "calloc() failed: %s", strerror(errno));
         return 1;
     }
+    log_trace("COMMANDS", "calloc() success: Command parameters created");
 
     for (int i = 0; i < endpoints->len; i++) {
         endpoint_info *info = &endpoints->endpoints[i];
@@ -100,7 +119,7 @@ int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list 
         if (info->type == GIF_TARGET)
             command_params[i].options = &options;
 
-        log_debug("COMMANDS", "Created command /%s", command_params[i].name);
+        log_debug("COMMANDS", "Initialized command parameters for /%s", info->name);
     }
 
     // create commands
@@ -109,10 +128,12 @@ int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list 
         .array = command_params,
         .size = endpoints->len,
     }, NULL);
-    log_info("COMMANDS", "Successfully created %d commands", endpoints->len);
+    log_trace("COMMANDS", "discord_bulk_overwrite_global_application_commands() success: Commands created");
 
     // cleanup
     free(command_params);
+
+    log_debug("COMMANDS", "Successfully initialized %d commands", endpoints->len);
 
     return 0;
 }

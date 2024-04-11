@@ -1,33 +1,98 @@
-/**
- * \file
- * Main entry point for the bot
- */
+/// \file main.c Main entry point for the bot
 
 #include <signal.h>
 #include <string.h>
 #include <stdlib.h>
 
-#include "bot.h"
+#include "api.h"
+#include "cache.h"
+#include "commands.h"
 #include "log.h"
 
-/**
- * Configuration file for the bot
- */
+/// Configuration file for the bot
 #define CONFIG_FILE "config.json"
 
-bool is_initialized = false; ///< Whether the bot has been initialized
+bool is_initialized = false; ///< Whether the bot has been initialized before
+endpoint_list all_endpoints; ///< List of all bot endpoints
+
+void do_update_status(struct discord *client, struct discord_response *response, const struct discord_guilds *guilds) {
+    // update status
+    struct discord_presence_update presence = {
+        .activities = &(struct discord_activities) {
+            .size = 1,
+            .array = &(struct discord_activity) {
+                .name = "purrify",
+                .state = malloc(48),
+                .type = DISCORD_ACTIVITY_CUSTOM
+            }
+        },
+        .status = "idle",
+        .afk = false,
+        .since = discord_timestamp(client)
+    };
+    snprintf(presence.activities->array->state, 48, "Serving %d guilds with %d endpoints.", guilds->size, all_endpoints.len);
+    discord_set_presence(client, &presence);
+    free(presence.activities->array->state);
+}
+
+/**
+ * Update bot status
+ *
+ * \param client
+ *   Discord client
+ * \param event
+ *   Timer event
+ */
+void update_status(struct discord *client, struct discord_timer *event) {
+    // get guild count
+    struct discord_ret_guilds ret = { .done = do_update_status };
+    discord_get_current_user_guilds(client, &ret);
+}
 
 /**
  * Launch the bot. Called when bot is ready.
  *
- * \param client Discord client
- * \param event Ready event
+ * \param client
+ *   Discord client
+ * \param event
+ *   Ready event
  */
 void on_ready(struct discord *client, const struct discord_ready *event) {
     if (is_initialized) return;
     is_initialized = true;
 
-    init(client, event);
+    // fetch endpoints
+    if (fetch_endpoints(&all_endpoints)) {
+        log_fatal("MAIN", "Failed to fetch nekos.best API endpoints");
+
+        ccord_shutdown_async();
+        return;
+    }
+    log_info("MAIN", "Fetched nekos.best endpoints");
+
+    // ensure cache validity
+    if (ensure_cache_validity(&all_endpoints)) {
+        log_fatal("MAIN", "Failed to ensure cache validity");
+
+        ccord_shutdown_async();
+        return;
+    }
+    log_info("MAIN", "Ensured cache validity");
+
+    // prepare commands
+    log_info("MAIN", "Initializing slash commands...");
+    if (prepare_commands(client, event->application->id, &all_endpoints)) {
+        log_fatal("MAIN", "Failed to initialize slash commands");
+
+        ccord_shutdown_async();
+        return;
+    }
+    log_info("MAIN", "Initialized slash commands");
+
+    // update status
+    log_info("MAIN", "Initializing status update timer...");
+    discord_timer_interval(client, update_status, NULL, NULL, 0, 60 * 60 * 1000, -1);
+    log_info("MAIN", "Initialized status update timer");
 }
 
 /**
@@ -112,8 +177,8 @@ int main() {
 
     // cleanup discord bot
     log_info("MAIN", "Discord bot exited (%d), cleanup up", code);
+    free_endpoints(&all_endpoints);
     discord_cleanup(client);
     ccord_global_cleanup();
-    deinit();
     return EXIT_SUCCESS;
 }

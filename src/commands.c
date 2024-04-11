@@ -1,5 +1,6 @@
 #include "commands.h"
 #include "log.h"
+#include "cache.h"
 
 #include <errno.h>
 

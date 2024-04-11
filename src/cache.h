@@ -5,8 +5,6 @@
 
 #pragma once
 
-#include <concord/discord.h>
-
 #include "api.h"
 
 /// Cache file data

@@ -1,5 +1,8 @@
 #include "bot.h"
 #include "log.h"
+#include "api.h"
+#include "cache.h"
+#include "commands.h"
 
 endpoint_list all_endpoints;
 

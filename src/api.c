@@ -3,11 +3,11 @@
 #include <nekosbest.h>
 
 #include <concord/discord.h>
-#include <concord/log.h>
 #include <string.h>
 #include <errno.h>
 
 #include "api.h"
+#include "log.h"
 
 #define SET_PNG(endpoint_name, endpoint_description, endpoint_message) \
     if (strcmp(bot_endpoint->name, endpoint_name) == 0) { \
@@ -33,7 +33,7 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
     nekos_endpoint_list api_endpoint_list;
     nekos_status api_status = nekos_endpoints(&api_endpoint_list);
     if (api_status) {
-        log_trace("[NEKOS_API] nekos_endpoints() failed: %d", api_status);
+        log_trace("NEKOS_API", "nekos_endpoints() failed: %d", api_status);
 
         return 1;
     }
@@ -42,7 +42,7 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
     bot_endpoint_list->len = 0;
     bot_endpoint_list->endpoints = (endpoint_info*) calloc(api_endpoint_list.len, sizeof(endpoint_info));
     if (!bot_endpoint_list->endpoints) {
-        log_trace("[NEKOS_API] calloc() failed: %s", strerror(errno));
+        log_trace("NEKOS_API", "calloc() failed: %s", strerror(errno));
 
         nekos_free_endpoints(&api_endpoint_list);
         return 1;
@@ -104,7 +104,7 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
 
         // unknown endpoint
         if (!bot_endpoint->message[0]) {
-            log_warn("[NEKOS_API] Unknown endpoint %s", bot_endpoint->name);
+            log_warn("NEKOS_API", "Unknown endpoint %s", bot_endpoint->name);
             continue;
         }
 
@@ -113,7 +113,7 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
             snprintf(bot_endpoint->description, 64, DEFAULT_DESCRIPTION, bot_endpoint->name, api_endpoint->format == NEKOS_PNG ? "image" : "gif");
 
         // add command
-        log_debug("[NEKOS_API] Adding endpoint %s", bot_endpoint->name);
+        log_debug("NEKOS_API", "Adding endpoint %s", bot_endpoint->name);
         bot_endpoint_list->len++;
     }
 
@@ -128,7 +128,7 @@ int download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
     nekos_result_list api_results;
     nekos_status status = nekos_category(&api_results, &(nekos_endpoint) { .name = bot_endpoint->name, .format = bot_endpoint->format }, 1);
     if (status) {
-        log_trace("[NEKOS_API] nekos_category() failed: %d", status);
+        log_trace("NEKOS_API", "nekos_category() failed: %d", status);
 
         return 1;
     }
@@ -138,7 +138,7 @@ int download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
     nekos_result* api_result = &api_results.responses[0];
     status = nekos_download(&api_response, api_result->url);
     if (status) {
-        log_trace("[NEKOS_API] nekos_download() failed: %d", status);
+        log_trace("NEKOS_API", "nekos_download() failed: %d", status);
 
         nekos_free_results(&api_results);
         return status;
@@ -154,7 +154,7 @@ int download_picture(endpoint_result *bot_result, endpoint_info *bot_endpoint) {
     // create response file
     bot_result->file = (char*) malloc(api_response.len);
     if (!bot_result->file) {
-        log_trace("[NEKOS_API] malloc() failed: %s", strerror(errno));
+        log_trace("NEKOS_API", "malloc() failed: %s", strerror(errno));
 
         nekos_free_results(&api_results);
         nekos_free_http_response(&api_response);

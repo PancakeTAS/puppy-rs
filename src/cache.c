@@ -3,6 +3,7 @@
 #define CACHE_DIR "cache"
 
 #include "api.h"
+#include "log.h"
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -21,7 +22,7 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
     sprintf(filename, "%s/%s.%s", CACHE_DIR, endpoint->name, endpoint->type == PNG ? "png" : "gif");
     sprintf(messagefilename, "%s/%s.txt", CACHE_DIR, endpoint->name);
     if (stat(filename, &st) == -1 || stat(messagefilename, &st) == -1) {
-        log_trace("[CACHE] stat() failed: %s", strerror(errno));
+        log_trace("CACHE", "stat() failed: %s", strerror(errno));
         return 1;
     }
 
@@ -29,7 +30,7 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
     FILE* file = fopen(filename, "r");
     FILE* messagefile = fopen(messagefilename, "r");
     if (!file || !messagefile) {
-        log_trace("[CACHE] fopen() failed: %s", strerror(errno));
+        log_trace("CACHE", "fopen() failed: %s", strerror(errno));
         return 1;
     }
 
@@ -40,7 +41,7 @@ int grab_file(cache_file *cache_file, endpoint_info *endpoint) {
     cache_file->data = malloc(cache_file->len);
     memset(cache_file->message, 0, 2001);
     if (!cache_file->data) {
-        log_trace("[CACHE] malloc() failed: %s", strerror(errno));
+        log_trace("CACHE", "malloc() failed: %s", strerror(errno));
         fclose(file);
         return 1;
     }
@@ -79,7 +80,7 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
         FILE* file = fopen(filename, "w");
         FILE* messagefile = fopen(messagefilename, "w");
         if (!file || !messagefile) {
-            log_trace("[CACHE] fopen() failed: %s", strerror(errno));
+            log_trace("CACHE", "fopen() failed: %s", strerror(errno));
             return 1;
         }
 
@@ -87,7 +88,7 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
         endpoint_result bot_result;
         int status = download_picture(&bot_result, &bot_endpoints->endpoints[i]);
         if (status) {
-            log_trace("[CACHE] download_picture() failed: %d", status);
+            log_trace("CACHE", "download_picture() failed: %d", status);
 
             fclose(file);
             fclose(messagefile);
@@ -103,7 +104,7 @@ int ensure_cache_validity(endpoint_list *bot_endpoints) {
         // free
         free_result(&bot_result);
 
-        log_debug("[CACHE] Fetched new %s result in cache", bot_endpoints->endpoints[i].name);
+        log_debug("CACHE", "Fetched new %s result in cache", bot_endpoints->endpoints[i].name);
     }
 
     return 0;

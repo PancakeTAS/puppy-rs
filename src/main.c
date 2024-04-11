@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include "bot.h"
+#include "log.h"
 
 /**
  * Configuration file for the bot
@@ -34,7 +35,7 @@ void on_ready(struct discord *client, const struct discord_ready *event) {
  * \param signum Signal number
  */
 void sigint_handler(int signum) {
-    log_info("[MAIN] Received SIGINT, shutting down");
+    log_info("MAIN", "Received SIGINT, shutting down");
     ccord_shutdown_async();
 }
 
@@ -47,7 +48,7 @@ static struct discord* initialize_discord() {
     // initialize concord
     CCORDcode code = ccord_global_init();
     if (code) {
-        log_trace("[MAIN] ccord_global_init() failed: %d", code);
+        log_trace("MAIN", "ccord_global_init() failed: %d", code);
 
         return NULL;
     }
@@ -55,7 +56,7 @@ static struct discord* initialize_discord() {
     // create discord client
     struct discord* client = discord_config_init(CONFIG_FILE);
     if (!client) {
-        log_trace("[MAIN] discord_create() failed");
+        log_trace("MAIN", "discord_create() failed");
 
         ccord_global_cleanup();
         return NULL;
@@ -73,22 +74,22 @@ static struct discord* initialize_discord() {
  */
 int main() {
     // initialize discord bot
-    log_info("[MAIN] Initializing discord bot...");
+    log_info("MAIN", "Initializing discord bot...");
     struct discord* client = initialize_discord();
     if (!client) {
-        log_fatal("[MAIN] Failed to initialize discord bot");
+        log_fatal("MAIN", "Failed to initialize discord bot");
 
         return EXIT_FAILURE;
     }
 
     // run discord bot
-    log_info("[MAIN] Launching discord bot...");
+    log_info("MAIN", "Launching discord bot...");
     signal(SIGINT, sigint_handler);
     discord_set_on_ready(client, on_ready);
     CCORDcode code = discord_run(client);
 
     // cleanup discord bot
-    log_info("[MAIN] Discord bot exited (%d), cleanup up", code);
+    log_info("MAIN", "Discord bot exited (%d), cleanup up", code);
     discord_cleanup(client);
     ccord_global_cleanup();
     deinit();

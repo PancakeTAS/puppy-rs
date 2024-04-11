@@ -1,4 +1,5 @@
 #include "commands.h"
+#include "log.h"
 
 #include <errno.h>
 
@@ -15,7 +16,7 @@ static void on_interaction(struct discord *client, const struct discord_interact
     }
 
     if (!endpoint) {
-        log_error("[COMMANDS] Endpoint not found %s!", event->data->name);
+        log_error("COMMANDS", "Endpoint not found %s!", event->data->name);
         return;
     }
 
@@ -23,7 +24,7 @@ static void on_interaction(struct discord *client, const struct discord_interact
     cache_file bot_cache;
     int i = grab_file(&bot_cache, endpoint);
     if (i) {
-        log_error("[COMMANDS] Failed to fetch %s: %d", endpoint->name, i);
+        log_error("COMMANDS", "Failed to fetch %s: %d", endpoint->name, i);
         return;
     }
 
@@ -48,19 +49,19 @@ static void on_interaction(struct discord *client, const struct discord_interact
             }
         }
     }, NULL);
-    log_info("[COMMANDS] Succesfully processed /%s", endpoint->name);
+    log_info("COMMANDS", "Succesfully processed /%s", endpoint->name);
 
     // free resources
     free_cache_file(&bot_cache);
 
     // ensure cache validity
     if (ensure_cache_validity(all_endpoints)) {
-        log_fatal("[COMMANDS] Failed to re-ensure cache validity");
+        log_fatal("COMMANDS", "Failed to re-ensure cache validity");
 
         discord_shutdown(client);
         return;
     }
-    log_debug("[COMMANDS] Re-ensured cache validity");
+    log_debug("COMMANDS", "Re-ensured cache validity");
 }
 
 int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list *endpoints) {
@@ -80,7 +81,7 @@ int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list 
     // create command params
     struct discord_application_command* command_params = calloc(endpoints->len, sizeof(struct discord_application_command));
     if (!command_params) {
-        log_trace("[COMMANDS] calloc() failed: %d", strerror(errno));
+        log_trace("COMMANDS", "calloc() failed: %d", strerror(errno));
 
         return 1;
     }
@@ -98,7 +99,7 @@ int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list 
         if (info->type == GIF_TARGET)
             command_params[i].options = &options;
 
-        log_debug("[COMMANDS] Created command /%s", command_params[i].name);
+        log_debug("COMMANDS", "Created command /%s", command_params[i].name);
     }
 
     // create commands
@@ -107,7 +108,7 @@ int prepare_commands(struct discord *client, u64snowflake app_id, endpoint_list 
         .array = command_params,
         .size = endpoints->len,
     }, NULL);
-    log_info("[COMMANDS] Successfully created %d commands", endpoints->len);
+    log_info("COMMANDS", "Successfully created %d commands", endpoints->len);
 
     // cleanup
     free(command_params);

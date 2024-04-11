@@ -4,7 +4,6 @@
 #include "cache.h"
 
 #include <concord/discord.h>
-#include <concord/log.h>
 
 /**
  * Prepare commands for the bot

@@ -1,4 +1,5 @@
 #include "bot.h"
+#include "log.h"
 
 endpoint_list all_endpoints;
 
@@ -37,36 +38,36 @@ void update_status(struct discord *client, struct discord_timer *event) {
 void init(struct discord *client, const struct discord_ready *event) {
     // fetch endpoints
     if (fetch_endpoints(&all_endpoints)) {
-        log_fatal("[BOT] Failed to fetch nekos.best API endpoints");
+        log_fatal("BOT", "Failed to fetch nekos.best API endpoints");
 
         discord_shutdown(client);
         return;
     }
-    log_info("[BOT] Fetched nekos.best API endpoints");
+    log_info("BOT", "Fetched nekos.best API endpoints");
 
     // ensure cache validity
     if (ensure_cache_validity(&all_endpoints)) {
-        log_fatal("[BOT] Failed to ensure cache validity");
+        log_fatal("BOT", "Failed to ensure cache validity");
 
         discord_shutdown(client);
         return;
     }
-    log_info("[BOT] Ensured cache validity");
+    log_info("BOT", "Ensured cache validity");
 
     // prepare commands
-    log_info("[BOT] Initializing slash commands...");
+    log_info("BOT", "Initializing slash commands...");
     if (prepare_commands(client, event->application->id, &all_endpoints)) {
-        log_fatal("[BOT] Failed to initialize slash commands");
+        log_fatal("BOT", "Failed to initialize slash commands");
 
         discord_shutdown(client);
         return;
     }
-    log_info("[BOT] Initialized slash commands");
+    log_info("BOT", "Initialized slash commands");
 
     // update status
-    log_info("[BOT] Initializing status update timer...");
+    log_info("BOT", "Initializing status update timer...");
     discord_timer_interval(client, update_status, NULL, NULL, 0, 60 * 60 * 1000, -1);
-    log_info("[MAIN] Initialized status update timer");
+    log_info("MAIN", "Initialized status update timer");
 
 }
 

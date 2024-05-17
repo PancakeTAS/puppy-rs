@@ -167,7 +167,6 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
         SET_GIF_NO_TARGET("confused", "<@%1$ld> is confused!");
         SET_GIF_NO_TARGET("drool", "<@%1$ld> is drooling!");
         SET_GIF_NO_TARGET("evillaugh", "<@%1$ld> is laughing evilly!");
-        SET_GIF_NO_TARGET("lick", "<@%1$ld> is licking!");
         SET_GIF_NO_TARGET("love", "<@%1$ld> is in love!");
         SET_GIF_NO_TARGET("mad", "<@%1$ld> is mad!");
         SET_GIF_NO_TARGET("nervous", "<@%1$ld> is nervous!");
@@ -176,6 +175,7 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
         SET_GIF_NO_TARGET("scared", "<@%1$ld> is scared!");
         SET_GIF_NO_TARGET("shy", "<@%1$ld> is shy!");
         SET_GIF_NO_TARGET("surprised", "<@%1$ld> is surprised!");
+        SET_GIF_TARGET("lick", "<@%1$ld> licked <@%2$ld>!");
         SET_GIF_TARGET("bite", "<@%1$ld> bit <@%2$ld>!");
         SET_GIF_TARGET("cuddle", "<@%1$ld> cuddled with <@%2$ld>!");
         SET_GIF_TARGET("handhold", "<@%1$ld> is holding <@%2$ld>'s hand!");
@@ -187,7 +187,6 @@ int fetch_endpoints(endpoint_list *bot_endpoint_list) {
         SET_GIF_TARGET("slap", "<@%1$ld> slapped <@%2$ld>!");
         SET_GIF_TARGET("tickle", "<@%1$ld> tickled <@%2$ld>!");
         SET_GIF_TARGET("angrystare", "<@%1$ld> is angrily staring at <@%2$ld>!");
-        SET_GIF_TARGET("brofist", "<@%1$ld> is brofisting <@%2$ld>!");
         SET_GIF_TARGET("nuzzle", "<@%1$ld> is nuzzling <@%2$ld>!");
         SET_GIF_TARGET("peek", "<@%1$ld> is peeking at <@%2$ld>!");
         SET_GIF_TARGET("pinch", "<@%1$ld> pinched <@%2$ld>!");

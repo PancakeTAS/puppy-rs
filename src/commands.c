@@ -46,7 +46,7 @@ static void on_interaction(struct discord *client, const struct discord_interact
     log_debug("COMMANDS", "grab_file() success: Fetched %s from cache", endpoint->name);
 
     char message[2001];
-    if (endpoint->type == GIF_TARGET)
+    if (endpoint->type == GIF_TARGET && event->data->options->size > 0 && event->data->options->array[0].value)
         snprintf(message, 2000, bot_cache.message, event->member->user->id, atoll(event->data->options->array[0].value));
     else
         snprintf(message, 2000, bot_cache.message, event->member->user->id);

@@ -6,21 +6,6 @@
 
 static endpoint_list *all_endpoints;
 
-static void do_interaction_response(struct discord *client, struct discord_response *response, const struct discord_interaction_response *event_response) {
-    log_trace("COMMANDS", "discord_create_interaction_response() success: Sent response to user");
-
-    // free resources
-    free_cache_file(response->data);
-    free(response->data);
-
-    // ensure cache validity
-    if (ensure_cache_validity(all_endpoints)) {
-        log_error("COMMANDS", "Failed to re-ensure cache validity, this is bad");
-        return;
-    }
-    log_trace("COMMANDS", "ensure_cache_validity() success: Cache validated");
-}
-
 /**
  * Handle interaction
  *
@@ -49,44 +34,52 @@ static void on_interaction(struct discord *client, const struct discord_interact
 
 
     // fetch result from cache
-    cache_file* bot_cache = calloc(1, sizeof(cache_file));
-    int i = grab_file(bot_cache, endpoint);
+    cache_file bot_cache;
+    int i = grab_file(&bot_cache, endpoint);
     if (i) {
         log_error("COMMANDS", "grab_file() failed: Unable to fetch %s from cache, reensuring cache validity", endpoint->name);
 
         if (ensure_cache_validity(all_endpoints))
             log_error("COMMANDS", "Failed to re-ensure cache validity, this is bad");
-
-        free(bot_cache);
         return;
     }
     log_debug("COMMANDS", "grab_file() success: Fetched %s from cache", endpoint->name);
 
     char message[2001];
     if (endpoint->type == GIF_TARGET)
-        snprintf(message, 2000, bot_cache->message, event->member->user->id, atoll(event->data->options->array[0].value));
+        snprintf(message, 2000, bot_cache.message, event->member->user->id, atoll(event->data->options->array[0].value));
     else
-        snprintf(message, 2000, bot_cache->message, event->member->user->id);
+        snprintf(message, 2000, bot_cache.message, event->member->user->id);
 
 
     // send response
-    struct discord_ret_interaction_response ret = { .done = do_interaction_response, .data = bot_cache };
     discord_create_interaction_response(client, event->id, event->token, &(struct discord_interaction_response) {
         .type = DISCORD_INTERACTION_CHANNEL_MESSAGE_WITH_SOURCE,
         .data = &(struct discord_interaction_callback_data) {
             .content = message,
             .attachments = &(struct discord_attachments) {
                 .array = &(struct discord_attachment) {
-                    .content = bot_cache->data,
-                    .size = bot_cache->len,
+                    .content = bot_cache.data,
+                    .size = bot_cache.len,
                     .filename = endpoint->type == PNG ? "x.png" : "x.gif"
                 },
                 .size = 1
             }
         }
-    }, &ret);
+    }, NULL);
+    log_trace("COMMANDS", "discord_create_interaction_response() success: Sent response to user");
+
+    // free resources
+    free_cache_file(&bot_cache);
 
     log_info("COMMANDS", "Successfully processed %s endpoint request from %s", endpoint->name, event->member->user->username);
+
+    // ensure cache validity
+    if (ensure_cache_validity(all_endpoints)) {
+        log_error("COMMANDS", "Failed to re-ensure cache validity, this is bad");
+        return;
+    }
+    log_trace("COMMANDS", "ensure_cache_validity() success: Cache validated");
 
 }
 

@@ -7,7 +7,7 @@ set(CMAKE_C_EXTENSIONS ON)
 
 file(GLOB SOURCES "src/*.c")
 
-add_compile_options(-Wall -Wextra -Werror -Wno-unused-parameter -pedantic -fmacro-prefix-map=${CMAKE_SOURCE_DIR}/src/=)
+add_compile_options(-Wall -Wextra -Werror -Wno-unused-parameter -fmacro-prefix-map=${CMAKE_SOURCE_DIR}/src/=)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
   add_compile_options(-g)
 else()
@@ -16,6 +16,7 @@ else()
 endif()
 
 include_directories(nekos-best.c/src)
+include_directories(otakugifs.c/src)
 
 add_executable(purrify ${SOURCES})
 

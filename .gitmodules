@@ -1,3 +1,6 @@
 [submodule "nekos-best.c"]
 	path = nekos-best.c
 	url = https://github.com/PancakeTAS/nekos-best.c
+[submodule "otakugifs.c"]
+	path = otakugifs.c
+	url = https://github.com/PancakeTAS/otakugifs.c

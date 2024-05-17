@@ -11,6 +11,7 @@ static void do_interaction_response(struct discord *client, struct discord_respo
 
     // free resources
     free_cache_file(response->data);
+    free(response->data);
 
     // ensure cache validity
     if (ensure_cache_validity(all_endpoints)) {
@@ -56,6 +57,7 @@ static void on_interaction(struct discord *client, const struct discord_interact
         if (ensure_cache_validity(all_endpoints))
             log_error("COMMANDS", "Failed to re-ensure cache validity, this is bad");
 
+        free(bot_cache);
         return;
     }
     log_debug("COMMANDS", "grab_file() success: Fetched %s from cache", endpoint->name);

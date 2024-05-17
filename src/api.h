@@ -1,4 +1,4 @@
-/// \file api.h This file interfaces with the nekos.best api to fetch images and gifs.
+/// \file api.h This file interfaces with multiple apis to fetch images and gifs.
 
 #pragma once
 
@@ -16,6 +16,7 @@ typedef enum {
 typedef struct {
     char* name; //!< Name of endpoint to fetch
     nekos_format format; //!< Format of the endpoint
+    int api; //!< API to fetch from (bit 1: nekos.best, bit 2: otakugifs.xyz)
 
     endpoint_type type; //!< Type of endpoint
     char description[64]; //!< Description of endpoint
@@ -34,7 +35,7 @@ typedef struct {
 } endpoint_result; //!< Result of an endpoint
 
 /**
- * Fetch all endpoints from nekos.best.
+ * Fetch all endpoints from all apis.
  *
  * \param all_endpoints
  *   Endpoint list to store data

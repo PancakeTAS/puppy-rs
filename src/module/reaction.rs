@@ -119,7 +119,7 @@ impl Module for ReactionModule {
     }
 
     async fn handle(&mut self, ctx: serenity::all::Context, cmd: CommandInteraction) -> Result<(), anyhow::Error> {
-        debug!(target: "module/reaction", "handling command {} executed by @{}", cmd.data.name, cmd.user.id);
+        debug!(target: "module/reaction", "handling command {} executed by @{}", cmd.data.name, cmd.user.name);
 
         // get requested reaction
         let (options, reaction) = if cmd.data.name.starts_with("reaction") {
@@ -173,7 +173,7 @@ impl Module for ReactionModule {
 
         if !cmd.data.name.starts_with("reaction") {
             message += format!(
-                " • [Add me to your user/guild!](<https://discord.com/oauth2/authorize?client_id={}>)",
+                " • [Add me to your user/guild](<https://discord.com/oauth2/authorize?client_id={}>)",
                 cmd.application_id.get()
             ).as_str();
         }
@@ -189,8 +189,7 @@ impl Module for ReactionModule {
                     .image(image_url)
                     .color(color)
                 )
-            )
-        ).await.context("failed to send response")?;
+        )).await.context("failed to send response")?;
 
         // refresh cache
         self.backend_manager.refresh_cache(backend, endpoint).await?;

@@ -62,7 +62,7 @@ impl ReactionModule {
 #[async_trait]
 impl Module for ReactionModule {
 
-    async fn init(&mut self, config: &Configuration) -> Result<Vec<CreateCommand>, anyhow::Error> {
+    async fn init(&mut self, _: &serenity::all::Context, config: &Configuration) -> Result<Vec<CreateCommand>, anyhow::Error> {
         info!(target: "module/reaction", "initializing reaction module");
         self.reactions = config.reactions.clone();
 
@@ -120,7 +120,7 @@ impl Module for ReactionModule {
         let mut backend_info = backend_info.splitn(2, "/");
         let (backend, endpoint): (&str, &str) = (backend_info.next().context("no backend")?, backend_info.next().context("no endpoint")?);
 
-        info!(target: "module/reaction", "user @{} ran /reaction {} on @{}", user, reaction.name, target);
+        info!(target: "module/reaction", "user @{} ran /reaction {} on <@{}>", cmd.user.name, reaction.name, target);
 
         // fetch reaction gif
         let image_url = self.backend_manager.get_cached(backend, endpoint)

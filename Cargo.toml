@@ -1,5 +1,5 @@
 [package]
-name = "puppyrs"
+name = "puppy-rs"
 version = "0.1.0"
 edition = "2021"
 
@@ -14,3 +14,5 @@ serde_yml = "0.0.12"
 log = "0.4"
 colog = "1.3"
 clap = "4.5"
+colored = "2.1"
+chrono = "0.4"

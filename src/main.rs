@@ -2,7 +2,9 @@ use std::{fs::File, path::PathBuf, str::FromStr};
 
 use anyhow::Context;
 use clap::{Arg, ArgAction, Command};
-use log::LevelFilter;
+use colog::format::CologStyle;
+use colored::Colorize;
+use log::{Level, LevelFilter};
 use module::reaction::Reaction;
 use serde::Deserialize;
 
@@ -13,9 +15,28 @@ pub mod module;
 /// Configuration file structure
 #[derive(Deserialize)]
 pub struct Configuration {
+    pub status_messages: Vec<String>,
     pub reactions: Vec<Reaction>,
     pub discord_token: String,
     pub log_level: String
+}
+
+pub struct CustomPrefixToken;
+
+impl CologStyle for CustomPrefixToken {
+    fn prefix_token(&self, level: &Level) -> String {
+        format!(
+            "[{}] [{}]",
+            chrono::Local::now().format("%d.%m.%Y %H:%M:%S"),
+            match level {
+                Level::Error => "E".red(),
+                Level::Warn => "W".yellow(),
+                Level::Info => "*".green(),
+                Level::Debug => "D".blue(),
+                Level::Trace => "T".purple(),
+            }
+        )
+    }
 }
 
 #[tokio::main]
@@ -60,7 +81,9 @@ async fn main() -> Result<(), anyhow::Error> {
         .filter_module("module/reaction/backend/otakugifs", level)
         .filter_module("module/reaction/backend", level)
         .filter_module("module/reaction", level)
+        .filter_module("module/status", level)
         .filter_module("bot", level)
+        .format(colog::formatter(CustomPrefixToken))
         .init();
 
     // create the bot

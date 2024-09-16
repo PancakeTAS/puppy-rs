@@ -5,7 +5,7 @@ use log::{info, warn};
 use serenity::{all::{Command, CommandInteraction, EventHandler, GatewayIntents, Interaction}, async_trait, Client};
 use tokio::sync::RwLock;
 
-use crate::{module::{reaction::ReactionModule, status::StatusModule, Module}, Configuration};
+use crate::{module::{random::RandomModule, reaction::ReactionModule, status::StatusModule, Module}, Configuration};
 
 ///
 /// The bot struct
@@ -107,6 +107,10 @@ pub async fn launch_bot(config: Configuration) -> Result<(), anyhow::Error> {
     info!(target: "bot", "creating status module");
     let status_module = Box::new(StatusModule::new());
     modules.push(status_module);
+
+    info!(target: "bot", "creating random module");
+    let random_module = Box::new(RandomModule::new());
+    modules.push(random_module);
 
     let bot = Bot {
         config: Arc::new(RwLock::new(config)),

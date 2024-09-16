@@ -5,7 +5,7 @@ use clap::{Arg, ArgAction, Command};
 use colog::format::CologStyle;
 use colored::Colorize;
 use log::{Level, LevelFilter};
-use module::reaction::Reaction;
+use module::{random::Random, reaction::Reaction};
 use serde::Deserialize;
 
 pub mod bot;
@@ -16,6 +16,7 @@ pub mod module;
 #[derive(Deserialize)]
 pub struct Configuration {
     pub status_messages: Vec<String>,
+    pub random: Random,
     pub reactions: Vec<Reaction>,
     pub discord_token: String,
     pub log_level: String

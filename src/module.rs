@@ -2,6 +2,7 @@ use serenity::{all::{CommandInteraction, Context, CreateCommand}, async_trait};
 
 use crate::Configuration;
 
+pub mod random;
 pub mod reaction;
 pub mod status;
 

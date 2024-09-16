@@ -39,6 +39,67 @@ status_messages:
   - "*Tail wags* Thanks fow being such a gweat fwiend!"
 
 #
+# Specify all messages for the random commands.
+#
+random:
+  coinflip:
+    description: "Flip a coin with puppy :3"
+    heads_responses:
+      - "*giggles* The coin says... **heads**! You're so lucky, {user}!"
+      - "Oooh! The coin landed on **heads**! Hehe, yay {user}~!"
+      - "*wags tail excitedly* **Heads**! You're a winner, {user}!"
+      - "It's **heads**! Ohh, I knew you'd get it~ *happy tail wiggles*"
+      - "Hehe, **heads** it is! Feels good, right {user}? *giggles*"
+      - "Oooh, **heads**! *giggles softly* You're so good at this!"
+      - "*blushes* It’s **heads**... w-wow, you're really good, {user}!"
+      - "Aaaand... **heads**! You did it! *wiggles tail happily*"
+      - "Oh my gosh, it's **heads**! You always get lucky, {user}~ *giggles*"
+      - "Eep! It's **heads**! Hehe, I love flipping coins with you, {user}~"
+    tails_responses:
+      - "*wiggles* It's **tails**! Don't worry, {user}, you're still cute!"
+      - "**Tails**! Aww, so close~ but you're still amazing, {user}! *giggles*"
+      - "It's **tails**! *pouts cutely* But you're still a winner in my book!"
+      - "**Tails** it is! *blushes* It's okay, you'll get it next time!"
+      - "Aww, **tails**! Hehe, but you're still a lucky bean, {user}~!"
+      - "*wags tail* **Tails**! But you're still the best, {user}!"
+      - "It’s **tails** this time! *giggles* Better luck next time, {user}~!"
+      - "*hugs* **Tails**, but don't be sad, {user}~ You're still cute!"
+      - "**Tails**! Hehe, don’t worry, {user}, next time you’ll get heads~!"
+      - "*blushes* It's **tails**... but you're still my favorite, {user}!"
+  dice:
+    description: "Roll a 6-sided die!!"
+    default_responses:
+      - "*giggles* You rolled a **{number}**, {user}~ Good job!"
+      - "Hehe, it's a **{number}**! That’s so fun, {user}!"
+      - "*wags tail* You rolled a **{number}**! You're so lucky, {user}!"
+      - "Ooooh, **{number}** it is! Nice roll, {user}~"
+      - "You rolled a **{number}**! *giggles* You're so good at this!"
+      - "*bounces* Yay, you got **{number}**! So much fun, {user}!"
+      - "*wiggles happily* **{number}** is your roll! Keep going, {user}~"
+      - "Eep! **{number}**! You're doing so great, {user}! *winks*"
+      - "Wow! You rolled a **{number}**, {user}! I'm so impressed~"
+      - "*giggles* **{number}** is such a nice roll, {user}! Hehe!"
+    one_responses:
+      - "Oh nooo, it's a **1**! *pouts* But you're still amazing, {user}!"
+      - "Eep! You rolled a **1**! *hugs* Don't worry, {user}, you're still the best!"
+    six_responses:
+      - "Wowwowwow! You got a 6! *wiggles tail excitedly* You're the best, {user}!"
+      - "*bounces happily* A perfect 6! You're so awesome, {user}!"
+  number:
+    description: "Pick a random number between a and b!"
+    default_responses:
+      - "Hehe, the number is **{number}**! Did you guess right, {user}? *winks*"
+      - "*giggles* The magic number is **{number}**, {user}~ You're so lucky!"
+      - "*wags tail* You got **{number}**, {user}! That's such a fun number!"
+      - "Oooh, **{number}**! I love that number, {user}~ You're so good at this!"
+      - "The random number is **{number}**, {user}! *giggles* So exciting!"
+      - "*bounces* Yay, the number is **{number}**! You’re awesome, {user}~!"
+      - "Eep! It’s **{number}**, {user}~ Such a cool number! *giggles*"
+      - "Oooh! The number is **{number}**, {user}~ I hope you like it!"
+      - "The random number is... **{number}**! *wags tail* You're so lucky, {user}!"
+      - "*giggles* The number is **{number}**, {user}! Let's play again!"
+
+#
 # A reaction command is a command that takes a target user as argument
 # and makes request using the specified backend to fetch a gif that is
 # sent as a response to the user.

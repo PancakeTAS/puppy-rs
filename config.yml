@@ -1,3 +1,6 @@
+discord_token: <token>
+log_level: info
+
 #
 # Specify all statuses that the bot can have.
 #
@@ -35,9 +38,6 @@ status_messages:
   - "Ooh, I wuv when you give me attention! *blushes*"
   - "*Tail wags* Thanks fow being such a gweat fwiend!"
 
-discord_token: <token>
-log_level: info
-
 #
 # A reaction command is a command that takes a target user as argument
 # and makes request using the specified backend to fetch a gif that is
@@ -58,6 +58,7 @@ reactions:
     backends:
       - "nekos.best/baka"
     description: Call someone a 'baka' (dummy)!
+    alias: false
     default_responses:
       - "{user} calls {target} a 'baka!'"
       - "{user} blushes and calls {target} a 'baka!'"
@@ -82,6 +83,7 @@ reactions:
       - "nekos.best/nom"
       - "otakugifs.xyz/nom"
     description: Bite someone!
+    alias: false
     default_responses:
       - "{user} gently bites {target}, nom nom nom~"
       - "{user} nibbles on {target}!"
@@ -112,6 +114,7 @@ reactions:
       - "otakugifs.xyz/blush"
       - "otakugifs.xyz/shy"
     description: Blush at someone.. uwu
+    alias: true
     default_responses:
       - "{user}'s cheeks turn pink as they blush at {target}'s sweet words."
       - "{user} is embarrassed, as they blush furiously at {target}~"
@@ -142,6 +145,7 @@ reactions:
       - "nekos.best/yawn"
       - "otakugifs.xyz/yawn"
     description: Show how bored you are!
+    alias: false
     default_responses:
       - "{user} looks at {target} with a bored expression."
       - "{user} sighs out of boredom while looking at {target}."
@@ -165,6 +169,7 @@ reactions:
       - "nekos.best/cry"
       - "otakugifs.xyz/cry"
     description: Show your tears and cry!
+    alias: false
     default_responses:
       - "{user} starts crying in front of {target}."
       - "{user} bursts into tears and looks at {target}."
@@ -189,6 +194,7 @@ reactions:
       - "otakugifs.xyz/cuddle"
       - "otakugifs.xyz/nuzzle"
     description: Cuddle with someone!
+    alias: true
     default_responses:
       - "{user} snuggles close to {target}."
       - "{user} curls up on {target}'s lap."
@@ -218,6 +224,7 @@ reactions:
       - "nekos.best/dance"
       - "otakugifs.xyz/dance"
     description: Show off your dancing skills!
+    alias: false
     default_responses:
       - "{user} starts dancing in front of {target}."
       - "{user} dances excitedly around {target}."
@@ -241,6 +248,7 @@ reactions:
       - "nekos.best/facepalm"
       - "otakugifs.xyz/facepalm"
     description: Facepalm in disbelief!
+    alias: false
     default_responses:
       - "{user} facepalms while looking at {target}."
       - "{user} sighs and facepalms at {target}."
@@ -263,6 +271,7 @@ reactions:
     backends:
       - "nekos.best/feed"
     description: Feed someone!
+    alias: false
     default_responses:
       - "{user} feeds {target} something delicious!"
       - "{user} gently offers some food to {target}."
@@ -286,6 +295,7 @@ reactions:
       - "nekos.best/handhold"
       - "otakugifs.xyz/handhold"
     description: Hold someone’s hand sweetly!
+    alias: false
     default_responses:
       - "{user} gently holds {target}’s hand."
       - "{user} takes {target}’s hand with a smile."
@@ -308,6 +318,7 @@ reactions:
     backends:
       - "nekos.best/handshake"
     description: Offer a handshake to someone!
+    alias: false
     default_responses:
       - "{user} offers {target} a firm handshake."
       - "{user} extends their hand for a handshake with {target}."
@@ -331,6 +342,7 @@ reactions:
       - "nekos.best/highfive"
       - "otakugifs.xyz/highfive"
     description: Give someone a high five!
+    alias: false
     default_responses:
       - "{user} gives {target} a big high five!"
       - "{user} high-fives {target} enthusiastically!"
@@ -354,6 +366,7 @@ reactions:
       - "nekos.best/hug"
       - "otakugifs.xyz/hug"
     description: Give hugs to someone!
+    alias: true
     default_responses:
       - "{user} gives {target} a big, warm hug~"
       - "{user} wraps their arms around {target}!"
@@ -382,6 +395,7 @@ reactions:
     backends:
       - "nekos.best/kick"
     description: Grrrr!! Kick someone!
+    alias: false
     default_responses:
       - "{user} kicks {target}."
       - "{user} gives {target} a strong kick."
@@ -402,6 +416,7 @@ reactions:
       - "nekos.best/peck"
       - "otakugifs.xyz/airkiss"
     description: Give someone a kiss!
+    alias: true
     default_responses:
       - "{user} gives {target} a gentle kiss on the cheek"
       - "{user} plants a soft kiss on {target}"
@@ -431,6 +446,7 @@ reactions:
       - "nekos.best/laugh"
       - "otakugifs.xyz/laugh"
     description: Laugh out loud!
+    alias: false
     default_responses:
       - "{user} bursts out laughing at {target}."
       - "{user} laughs uncontrollably at {target}."
@@ -454,6 +470,7 @@ reactions:
       - "nekos.best/nod"
       - "otakugifs.xyz/yes"
     description: Nod in agreement!
+    alias: false
     default_responses:
       - "{user} nods at {target} with a smile."
       - "{user} nods in agreement with {target}."
@@ -477,6 +494,7 @@ reactions:
       - "nekos.best/nope"
       - "otakugifs.xyz/no"
     description: Shake your head and say nope!
+    alias: false
     default_responses:
       - "{user} shakes their head and says, 'Nope!' to {target}."
       - "{user} refuses something from {target} with a big 'Nope!'"
@@ -500,6 +518,7 @@ reactions:
       - "nekos.best/pat"
       - "otakugifs.xyz/pat"
     description: Pat someone’s head!
+    alias: true
     default_responses:
       - "{user} gently pats {target}."
       - "{user} ruffles {target}'s hair playfully while patting them."
@@ -529,6 +548,7 @@ reactions:
       - "nekos.best/peek"
       - "otakugifs.xyz/peek"
     description: Peek at someone!
+    alias: false
     default_responses:
       - "{user} peeks shyly at {target}."
       - "{user} sneaks a peek at {target}."
@@ -558,6 +578,7 @@ reactions:
       - "otakugifs.xyz/poke"
       - "otakugifs.xyz/pinch"
     description: Poke someone gently!
+    alias: false
     default_responses:
       - "{user} pokes {target}."
       - "{user} gives {target} a poke!"
@@ -583,6 +604,7 @@ reactions:
       - "nekos.best/pout"
       - "otakugifs.xyz/pout"
     description: Pout at someone cutely!
+    alias: false
     default_responses:
       - "{user} pouts and crosses their arms, looking away from {target}."
       - "{user} pouts cutely at {target}."
@@ -613,6 +635,7 @@ reactions:
       - "otakugifs.xyz/punch"
       - "otakugifs.xyz/smack"
     description: Punch someone, grrr!!
+    alias: false
     default_responses:
       - "{user} punches {target}."
       - "{user} gives {target} a punch."
@@ -641,6 +664,7 @@ reactions:
     backends:
       - "nekos.best/shoot"
     description: Shoot someone with a gun, what is wrong with you?
+    alias: false
     default_responses:
       - "{user} aims and 'pew pew!' shoots {target}."
       - "{user} shoots {target}!"
@@ -664,6 +688,7 @@ reactions:
       - "nekos.best/shrug"
       - "otakugifs.xyz/shrug"
     description: Shrug it off~
+    alias: false
     default_responses:
       - "{user} shrugs nonchalantly at {target}."
       - "{user} gives {target} a shrug."
@@ -687,6 +712,7 @@ reactions:
       - "nekos.best/slap"
       - "otakugifs.xyz/slap"
     description: Slap someone (me plz OwO)
+    alias: false
     default_responses:
       - "{user} slaps {target}."
       - "{user} gives {target} a slap"
@@ -718,6 +744,7 @@ reactions:
       - "otakugifs.xyz/sleep"
       - "otakugifs.xyz/yawn"
     description: Let someone know you're sleepy!
+    alias: false
     default_responses:
       - "{user} yawns softly and curls up next to {target}."
       - "{user} rubs their eyes and lays down beside {target}, ready for sleep."
@@ -748,6 +775,7 @@ reactions:
       - "otakugifs.xyz/smile"
       - "otakugifs.xyz/happy"
     description: Give a cute smile~
+    alias: false
     default_responses:
       - "{user} smiles brightly at {target}."
       - "{user} gives {target} a warm smile."
@@ -771,6 +799,7 @@ reactions:
       - "nekos.best/smug"
       - "otakugifs.xyz/smug"
     description: Show off a smug look!
+    alias: false
     default_responses:
       - "{user} looks at {target} with a smug expression."
       - "{user} flashes a smug grin at {target}."
@@ -794,6 +823,7 @@ reactions:
       - "nekos.best/stare"
       - "otakugifs.xyz/stare"
     description: Stare at someone... O.O
+    alias: false
     default_responses:
       - "{user} stares at {target} with wide eyes."
       - "{user} gives {target} a playful stare."
@@ -816,6 +846,7 @@ reactions:
     backends:
       - "nekos.best/think"
     description: Think deeply about something!
+    alias: false
     default_responses:
       - "{user} looks deep in thought, pondering {target}."
       - "{user} taps their chin, thinking about {target}."
@@ -839,6 +870,7 @@ reactions:
       - "nekos.best/thumbsup"
       - "otakugifs.xyz/thumbsup"
     description: Give someone a thumbs-up!
+    alias: false
     default_responses:
       - "{user} gives {target} a big thumbs-up!"
       - "{user} nods at {target} and gives a thumbs-up."
@@ -862,6 +894,7 @@ reactions:
       - "nekos.best/tickle"
       - "otakugifs.xyz/tickle"
     description: Tickle someone!
+    alias: false
     default_responses:
       - "{user} tickles {target} mischievously!"
       - "{user} sneaks up and tickles {target}!"
@@ -891,6 +924,7 @@ reactions:
       - "nekos.best/wave"
       - "otakugifs.xyz/wave"
     description: Wave to someone!
+    alias: false
     default_responses:
       - "{user} waves at {target}."
       - "{user} waves happily at {target}."
@@ -914,6 +948,7 @@ reactions:
       - "nekos.best/wink"
       - "otakugifs.xyz/wink"
     description: Wink at someone!
+    alias: false
     default_responses:
       - "{user} winks at {target}."
       - "{user} gives {target} a cheeky wink."
@@ -937,6 +972,7 @@ reactions:
       - "nekos.best/yeet"
       - "otakugifs.xyz/yeet"
     description: Yeet someone!
+    alias: false
     default_responses:
       - "{user} yeets {target} across the room!"
       - "{user} grabs {target} and yeets them!"

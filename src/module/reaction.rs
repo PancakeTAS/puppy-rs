@@ -16,6 +16,8 @@ pub struct Reaction {
     pub name: String,
     /// Description of the reaction
     pub description: String,
+    /// Whether the reaction should have an alias
+    pub alias: bool,
     /// List of backends to fetch the reaction from
     pub backends: Vec<String>,
     /// List of responses when using the command as usual
@@ -30,6 +32,8 @@ pub struct Reaction {
 pub struct ReactionModule {
     /// List of reactions
     reactions: Vec<Reaction>,
+    /// List of reaction names with aliases
+    aliases: Vec<String>,
     /// Backend manager
     backend_manager: backend::BackendManager
 }
@@ -53,6 +57,7 @@ impl ReactionModule {
 
         Ok(Self {
             reactions: Vec::new(),
+            aliases: Vec::new(),
             backend_manager
         })
     }
@@ -71,7 +76,7 @@ impl Module for ReactionModule {
 
         // split reactions into commands of 25 options
         let mut index = 0;
-        Ok(self.reactions.chunks(25).map(|batch| {
+        let mut commands: Vec<CreateCommand> = self.reactions.chunks(25).map(|batch| {
             // create command name
             index += 1;
             let index_str = index.to_string();
@@ -89,25 +94,49 @@ impl Module for ReactionModule {
                             .add_sub_option(CreateCommandOption::new(CommandOptionType::User, "user", "The target user.").required(true))
                     }).collect()
                 )
-        }).collect())
+        }).collect();
+
+        // create individual commands for reactions with alias
+        let mut aliases: Vec<String> = Vec::new();
+        self.reactions.iter().filter(|r| r.alias).for_each(|r| {
+            let description = format!("[Alias for /reaction {}] {}", r.name, r.description);
+            info!(target: "module/reaction", "creating alias command '{}'", r.name);
+            commands.push(CreateCommand::new(r.name.clone())
+                .description(description)
+                .integration_types(vec![InstallationContext::User, InstallationContext::Guild])
+                .contexts(vec![InteractionContext::PrivateChannel, InteractionContext::Guild, InteractionContext::BotDm])
+                .add_option(CreateCommandOption::new(CommandOptionType::User, "user", "The target user.").required(true))
+            );
+            aliases.push(r.name.clone());
+        });
+
+        self.aliases = aliases;
+        Ok(commands)
     }
 
     fn handles(&self, cmd: &CommandInteraction) -> bool {
-        cmd.data.name.starts_with("reaction")
+        cmd.data.name.starts_with("reaction") || self.aliases.contains(&cmd.data.name)
     }
 
     async fn handle(&mut self, ctx: serenity::all::Context, cmd: CommandInteraction) -> Result<(), anyhow::Error> {
         debug!(target: "module/reaction", "handling command {} executed by @{}", cmd.data.name, cmd.user.id);
 
         // get requested reaction
-        let subcommand = cmd.data.options.get(0)
-            .context("no subcommand")?;
-        let options = match &subcommand.value {
-            CommandDataOptionValue::SubCommand(o) => Some(o),
-            _ => None
-        }.context("invalid subcommand")?;
-        let reaction = self.reactions.iter().find(|r| r.name == subcommand.name)
-            .context("unknown reaction")?;
+        let (options, reaction) = if cmd.data.name.starts_with("reaction") {
+            let subcommand = cmd.data.options.get(0)
+                .context("no subcommand")?;
+            let options = match &subcommand.value {
+                CommandDataOptionValue::SubCommand(o) => Some(o),
+                _ => None
+            }.context("invalid subcommand")?;
+            let reaction = self.reactions.iter().find(|r| r.name == subcommand.name)
+                .context("unknown reaction")?;
+            (options, reaction)
+        } else {
+            let reaction = self.reactions.iter().find(|r| r.name == cmd.data.name)
+                .context("unknown reaction")?;
+            (&cmd.data.options, reaction)
+        };
 
         // get user and target
         let user = cmd.user.id;

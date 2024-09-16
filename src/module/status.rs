@@ -1,5 +1,5 @@
 use anyhow::anyhow;
-use log::info;
+use log::{debug, info};
 use rand::seq::SliceRandom;
 use serenity::{all::{ActivityData, CommandInteraction, CreateCommand, OnlineStatus}, async_trait};
 
@@ -42,7 +42,7 @@ impl Module for StatusModule {
             loop {
                 let status = status_messages.choose(&mut rand::thread_rng()).unwrap();
 
-                info!(target: "module/status", "setting status to: {}", status);
+                debug!(target: "module/status", "setting status to: {}", status);
                 ctx.set_presence(Some(ActivityData::custom(status)), OnlineStatus::Online);
 
                 tokio::time::sleep(tokio::time::Duration::from_secs(60 * 5)).await;

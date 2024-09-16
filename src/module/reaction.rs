@@ -167,9 +167,16 @@ impl Module for ReactionModule {
                 .context("no default response")?
         };
 
-        let message = message.replace("{user}", format!("<@{}>", user.get()).as_str())
+        let mut message = message.replace("{user}", format!("<@{}>", user.get()).as_str())
             .replace("{target}", format!("<@{}>", target.get()).as_str())
             + format!("\n-# From: {} • [Source](<{}>)", backend, image_url).as_str();
+
+        if !cmd.data.name.starts_with("reaction") {
+            message += format!(
+                " • [Add me to your user/guild!](<https://discord.com/oauth2/authorize?client_id={}>)",
+                cmd.application_id.get()
+            ).as_str();
+        }
 
         let color = crate::color::rand();
 

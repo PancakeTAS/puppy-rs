@@ -5,7 +5,7 @@ use log::{info, warn};
 use serenity::{all::{Command, CommandInteraction, EventHandler, GatewayIntents, Interaction}, async_trait, Client};
 use tokio::sync::RwLock;
 
-use crate::{module::{reaction::ReactionModule, Module}, Configuration};
+use crate::{module::{reaction::ReactionModule, status::StatusModule, Module}, Configuration};
 
 ///
 /// The bot struct
@@ -57,7 +57,7 @@ impl EventHandler for Bot {
         let mut commands = vec![];
         for module in modules.iter_mut() {
             commands.extend(
-                module.init(&config).await
+                module.init(&ctx, &config).await
                 .expect("failed to initialize module")
             );
         }
@@ -68,7 +68,6 @@ impl EventHandler for Bot {
 
         info!(target: "bot", "bot is ready: {}", ready.user.name);
     }
-
 
     async fn interaction_create(&self, ctx: serenity::all::Context, interaction: Interaction) {
         if let Interaction::Command(command) = interaction {
@@ -104,6 +103,10 @@ pub async fn launch_bot(config: Configuration) -> Result<(), anyhow::Error> {
     info!(target: "bot", "creating reaction module");
     let reaction_module = Box::new(ReactionModule::new()?);
     modules.push(reaction_module);
+
+    info!(target: "bot", "creating status module");
+    let status_module = Box::new(StatusModule::new());
+    modules.push(status_module);
 
     let bot = Bot {
         config: Arc::new(RwLock::new(config)),

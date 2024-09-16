@@ -3,6 +3,7 @@ use serenity::{all::{CommandInteraction, Context, CreateCommand}, async_trait};
 use crate::Configuration;
 
 pub mod reaction;
+pub mod status;
 
 /// The module trait.
 #[async_trait]
@@ -19,7 +20,7 @@ pub trait Module: Send + Sync {
     ///
     /// A vector of command creation requests
     ///
-    async fn init(&mut self, config: &Configuration) -> Result<Vec<CreateCommand>, anyhow::Error>;
+    async fn init(&mut self, ctx: &Context, config: &Configuration) -> Result<Vec<CreateCommand>, anyhow::Error>;
 
     ///
     /// Check if the module handles the command

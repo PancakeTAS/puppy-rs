@@ -1,3 +1,40 @@
+#
+# Specify all statuses that the bot can have.
+#
+status_messages:
+  - "*Pwease pet me, I’m so wonewy!*"
+  - "Feeling suuuper cute today! *giggles*"
+  - "*Puppy eyes* Pwease notice me, Senpai!"
+  - "Just wagging my tail and dreaming of belly wubs!"
+  - "*Barks softly* Hewe’s a widdle woof for you! UwU"
+  - "Cuddles and snuggles aways make me feew happy!"
+  - "Wanna pway with me? *bounces excitedly*"
+  - "*Sniffs around* Looking for fwends to pway with!"
+  - "I’m a good puppy, pwease give me pets! :3"
+  - "*Shivers with excitement* So many fun things to do!"
+  - "Squeeee! I wuv you so much! *wiggles paws*"
+  - "Cuddly and cozy, just like a fluffy puppy! *nuzzles*"
+  - "Can I have a tummy wub, pwease? *rolls over*"
+  - "*Twirls around* Wheeee! Let’s have some fun!"
+  - "Ooh! Look at me being adowable! *paws to face*"
+  - "I’m wagging my tail just fow you! *wags tail*"
+  - "Feeling wike the cutest puppy in the wowld today!"
+  - "*Puppy dog eyes* Aww, pwease give me some attention!"
+  - "I’m all about cuddwes and cuteness! *giggles*"
+  - "Barking with joy and wiggling my wittle butt! UwU"
+  - "*Playful bark* Anyone want to pway with me?"
+  - "I’m a smowwy wittle pup with a big heart! *smiles*"
+  - "Wooking fow belly wubs and snuggwes! *whines softly*"
+  - "Happy as a puppy with a new toy! *plays excitedly*"
+  - "Just a fluffy widdle puppy being adowable! *wags tail*"
+  - "*Squee* I’m so happy to be hewe with you!"
+  - "Do you want to pway fetch? *wags tail furiously*"
+  - "Feeling snuggly and warm! *snuggles up*"
+  - "*Barks* Gimme pets and cuddles, pwease!"
+  - "I’m ready for some snuggles and wubs! *wiggles excitedly*"
+  - "Ooh, I wuv when you give me attention! *blushes*"
+  - "*Tail wags* Thanks fow being such a gweat fwiend!"
+
 discord_token: <token>
 log_level: info
 

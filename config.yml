@@ -1,2 +1,926 @@
 discord_token: <token>
 log_level: info
+
+#
+# A reaction command is a command that takes a target user as argument
+# and makes request using the specified backend to fetch a gif that is
+# sent as a response to the user.
+#
+# Supported backends:
+# - nekos.best/<endpoint> (view endpoints here: https://nekos.best/api/v2/endpoints)
+# - otakugifs.xyz/<endpoint> (view endpoints here: https://api.otakugifs.xyz.xyz/gif/allreactions)
+#
+# TODO:
+# - nekos.best:
+# - otakugifs.xyz: angrystare, bleh, brofist, celebrate, cheers, clap, confused, cool, drool, evillaugh, headbang
+# lick, love, mad, nervous, nosebleed, nyah, roll, run, sad, scared, shout, sigh, sip, slowclap, sneeze, sorry, stop, surprised, sweat
+# woah, yay
+#
+reactions:
+  - name: baka
+    backends:
+      - "nekos.best/baka"
+    description: Call someone a 'baka' (dummy)!
+    default_responses:
+      - "{user} calls {target} a 'baka!'"
+      - "{user} blushes and calls {target} a 'baka!'"
+      - "{user} glares at {target} and says, 'Baka!'"
+      - "{user} crosses their arms and mutters 'baka' at {target}."
+    bot_responses:
+      - "W-what?? I’m not a baka! *blushes*"
+      - "Heehee, you’re calling me a baka? How mean!"
+      - "*pouts* I’m not a baka, you are!"
+      - "*whines*, stop teasing me! I’m not a baka!"
+      - "*blushes* You’re the real baka here!"
+    self_responses:
+      - "*crosses arms* You’re such a baka, {target}!"
+      - "*giggles* You’re the real baka, not me!"
+      - "*pouts cutely* Baka! You’re teasing me!"
+      - "*blushes* Ugh, you’re being such a baka, {target}!"
+      - "*smirks* Who’s the baka now, huh?"
+  - name: bite
+    backends:
+      - "nekos.best/bite"
+      - "otakugifs.xyz/bite"
+      - "nekos.best/nom"
+      - "otakugifs.xyz/nom"
+    description: Bite someone!
+    default_responses:
+      - "{user} gently bites {target}, nom nom nom~"
+      - "{user} nibbles on {target}!"
+      - "{user} sneaks up behind {target} and *chomp* bites them!"
+      - "{user} chomps on {target} softly"
+      - "{user} bites {target}!!"
+      - "{user} bites {target} nomnom!"
+      - "{user} sneaks in and gives {target} a lil’ bite"
+    bot_responses:
+      - "*gasp* You bit me!! R-rawr! *playful growl*"
+      - "OwO, hey! That tickles!! *giggles*"
+      - "H-hey, no biting! *giggles* Just kidding, it’s okay~"
+      - "Mmmph! *pretends to be angry but giggles* You're too cute!"
+      - "Nuuu, not my ear! *pouts but secretly loves it*"
+      - "O-oh... you bit me... *blushes* I-I didn’t expect that~"
+      - "*puppy eyes* You’re being playful, huh? *wiggles happily*"
+    self_responses:
+      - "*playfully nibbles at {target}* Rawr! Gotcha! Hehe~"
+      - "*giggles* Don’t worry, {target}, it’s just a soft bite! *winks*"
+      - "*nibbles on {target} lightly* Tehee! I’m being naughty!"
+      - "*is a lil puppy and bites {target} gently* Heehee!"
+      - "*cheekily bites {target}* Oopsie! That was a playful one~"
+      - "*grins mischievously before giving {target} a soft nibble*"
+      - "*playfully nips at {target}* Just a lil bite, I promise! *giggles*"
+  - name: blush
+    backends:
+      - "nekos.best/blush"
+      - "otakugifs.xyz/blush"
+      - "otakugifs.xyz/shy"
+    description: Blush at someone.. uwu
+    default_responses:
+      - "{user}'s cheeks turn pink as they blush at {target}'s sweet words."
+      - "{user} is embarrassed, as they blush furiously at {target}~"
+      - "{user} blushes bright red at {target}~"
+      - "{user} looks away from {target}, their cheeks all rosy and flustered~"
+      - "{user} can't stop blushing at {target}!"
+      - "{user} blushes at {target}"
+      - "{user}'s face goes completely red because of {target}"
+    bot_responses:
+      - "N-noooo, don’t make me blush! *hides face*"
+      - "S-stop it! I-I can’t handle it when you’re so nice! *blushes even more*"
+      - "O-oh my gosh, you’re making me so flustered! *wiggles nervously*"
+      - "*giggles nervously* I-I’m blushing, aren’t I?"
+      - "Eeeee, y-you’re too sweet!! *face turns completely red*"
+      - "D-don’t tease me, I’m already blushing!! *hides face behind paws*"
+      - "*giggles and blushes* I-I’m not used to this, stopppp!"
+    self_responses:
+      - "*giggles shyly* You’re making me blush too, {target}! *covers face with paws*"
+      - "*wags tail* Hehe, adorable!"
+      - "Awawawa~ You’re too sweet!"
+      - "You’re all flustered, {target}~"
+      - "*giggles softly* Why are you blushing so much, {target}? *wiggles*"
+      - "*puppy eyes* You’re making me blush too, stop being so cute!"
+      - "*giggles* H- hey you're the one supposed to be blushing, {target}!"
+  - name: bored
+    backends:
+      - "nekos.best/bored"
+      - "nekos.best/yawn"
+      - "otakugifs.xyz/yawn"
+    description: Show how bored you are!
+    default_responses:
+      - "{user} looks at {target} with a bored expression."
+      - "{user} sighs out of boredom while looking at {target}."
+      - "{user} yawns and looks at {target}, clearly bored."
+      - "{user} slumps over, feeling bored with {target}."
+      - "{user} is bored and glances at {target} with a sigh."
+    bot_responses:
+      - "Ugh, I’m so bored! *yawns dramatically*"
+      - "Heehee, are you bored too? Let’s do something fun!"
+      - "Mmm, I’m bored... Wanna do something exciting?"
+      - "*giggles* Being bored is sooo tiring!"
+      - "Aww, I need something fun to do!"
+    self_responses:
+      - "*looks bored and yawns* {target}, entertain me!"
+      - "*giggles* I’m bored, {target}! What should we do?"
+      - "*slumps over and sighs* I’m soooo bored!"
+      - "*yawns* We need to find something fun, {target}!"
+      - "*giggles softly* Wanna do something fun, {target}?"
+  - name: cry
+    backends:
+      - "nekos.best/cry"
+      - "otakugifs.xyz/cry"
+    description: Show your tears and cry!
+    default_responses:
+      - "{user} starts crying in front of {target}."
+      - "{user} bursts into tears and looks at {target}."
+      - "{user} cries softly while looking at {target}."
+      - "{user} wipes away tears while crying near {target}."
+      - "{user} sobs quietly, tears streaming down their face. You did this, {target}!"
+    bot_responses:
+      - "*sniffles* I’m so sad... *cries*"
+      - "*tears up* I can’t stop crying...!"
+      - "*sob* Everything’s just so... sad!"
+      - "*wipes away tears* I’m just... *sniff* feeling emotional."
+      - "*cries quietly* It’s so hard to stop crying..."
+    self_responses:
+      - "*cries softly* {target}, I just... I can’t stop crying..."
+      - "*sobs* I don’t know why I’m crying, {target}!"
+      - "*tears roll down cheeks* {target}, I’m so emotional!"
+      - "*sniffles and cries* I just feel so overwhelmed, {target}."
+      - "*wipes tears* Thank you for being here, {target}... *cries*"
+  - name: cuddle
+    backends:
+      - "nekos.best/cuddle"
+      - "otakugifs.xyz/cuddle"
+      - "otakugifs.xyz/nuzzle"
+    description: Cuddle with someone!
+    default_responses:
+      - "{user} snuggles close to {target}."
+      - "{user} curls up on {target}'s lap."
+      - "{user} cuddles into {target}'s arms."
+      - "{user} presses their face against {target}, cuddling tightly."
+      - "{user} wraps their arms around {target} happily!"
+      - "{user} nuzzles into {target}'s chest."
+      - "{user} lays their head on {target}'s shoulder, snuggling up close."
+    bot_responses:
+      - "Yay, cuddles!! *wiggles happily and snuggles into you*"
+      - "Awww, you’re so comfy! *nuzzles into your chest*"
+      - "Heehee, I love being this close to you! *cuddles more*"
+      - "*giggles* You’re the best cuddler! *squeezes tighter*"
+      - "You make me feel so warm and safe~ *snuggles up more*"
+      - "Mmm, cuddling is my favorite! *wraps arms around you*"
+      - "Can we stay like this forever? *tail wags happily*"
+    self_responses:
+      - "*snuggles up close to {target}* Mmm, cuddles! Let’s stay like this forever!"
+      - "*nuzzles against {target} while cuddling* You’re so warm and cozy~"
+      - "*giggles and curls up next to {target}* Cuddle time! I love this!"
+      - "*happily wraps arms around {target} for a long cuddle* You’re the best~"
+      - "*giggles softly* Cuddling with you is the best, {target}~"
+      - "*wiggles closer to {target} and snuggles in* You’re so comfy!"
+      - "*rests head on {target}’s shoulder while cuddling* Mmm, this is nice~"
+  - name: dance
+    backends:
+      - "nekos.best/dance"
+      - "otakugifs.xyz/dance"
+    description: Show off your dancing skills!
+    default_responses:
+      - "{user} starts dancing in front of {target}."
+      - "{user} dances excitedly around {target}."
+      - "{user} busts out some moves in front of {target}."
+      - "{user} shows off their dance moves for {target}."
+      - "{user} starts dancing happily with {target}."
+    bot_responses:
+      - "*giggles* Look at me, I’m dancing!"
+      - "Heehee, let’s dance together! *twirls around*"
+      - "*starts dancing* Come on, join me!"
+      - "*grins* I love dancing! *keeps twirling*"
+      - "*bounces around happily* Dancing is so much fun!"
+    self_responses:
+      - "*dances with {target}* Let’s dance together!"
+      - "*giggles* I love dancing with you, {target}!"
+      - "*twirls around* Look, {target}, I’m dancing!"
+      - "*grins while dancing* You’ve got moves too, {target}!"
+      - "*dances happily* Dancing with you is so much fun, {target}!"
+  - name: facepalm
+    backends:
+      - "nekos.best/facepalm"
+      - "otakugifs.xyz/facepalm"
+    description: Facepalm in disbelief!
+    default_responses:
+      - "{user} facepalms while looking at {target}."
+      - "{user} sighs and facepalms at {target}."
+      - "{user} slaps their forehead, facepalming at {target}."
+      - "{user} gives {target} a disappointed facepalm."
+      - "{user} facepalms in disbelief at {target}."
+    bot_responses:
+      - "*sighs* Oh my gosh... *facepalms*"
+      - "Heehee, I can’t believe it! *facepalms*"
+      - "*giggles and facepalms* Really, {target}?"
+      - "Oh no, not again! *facepalms dramatically*"
+      - "*sighs and facepalms* What are we going to do?"
+    self_responses:
+      - "*facepalms at {target}* You’re unbelievable!"
+      - "*giggles* I can’t believe this... *facepalms*"
+      - "*sighs and facepalms* Really, {target}? Really?"
+      - "*slaps forehead* Oh no, this is a mess!"
+      - "*giggles and facepalms* What are we going to do with you?"
+  - name: feed
+    backends:
+      - "nekos.best/feed"
+    description: Feed someone!
+    default_responses:
+      - "{user} feeds {target} something delicious!"
+      - "{user} gently offers some food to {target}."
+      - "{user} feeds {target} a bite of something sweet."
+      - "{user} shares a snack with {target} and feeds them."
+      - "{user} offers {target} some yummy food."
+    bot_responses:
+      - "Aww, you’re feeding me? *blushes* Thank you!"
+      - "Yummy! *takes a bite* It’s delicious!"
+      - "Aww, you’re so sweet! *munches happily*"
+      - "*giggles* You’re feeding me! I feel spoiled!"
+      - "awruff~, it’s so tasty! *takes a cute bite*"
+    self_responses:
+      - "*feeds {target} something yummy* Here, have a bite!"
+      - "*gently offers food to {target}* It’s really tasty!"
+      - "*giggles* Open wide, {target}! *feeds you*"
+      - "*wags tail while feeding {target}* Isn’t it delicious?"
+      - "*giggles sweetly* I’ll take care of you! Here, eat up~"
+  - name: handhold
+    backends:
+      - "nekos.best/handhold"
+      - "otakugifs.xyz/handhold"
+    description: Hold someone’s hand sweetly!
+    default_responses:
+      - "{user} gently holds {target}’s hand."
+      - "{user} takes {target}’s hand with a smile."
+      - "{user} holds {target}’s hand softly."
+      - "{user} gives {target} a warm handhold."
+      - "{user} holds {target}’s hand and squeezes gently."
+    bot_responses:
+      - "*blushes* You’re holding my hand...!"
+      - "Aww, you’re so sweet! *giggles and holds your hand*"
+      - "*smiles softly* This feels really nice...!"
+      - "*giggles* I love holding your hand!"
+      - "*squeezes hand* I feel so close to you!"
+    self_responses:
+      - "*gently takes {target}’s hand* Let’s hold hands!"
+      - "*giggles* I love holding your hand, {target}!"
+      - "*smiles softly* Your hand is so warm, {target}."
+      - "*squeezes {target}’s hand gently* This feels nice."
+      - "*blushes* I love this feeling, {target}... *holds hand*"
+  - name: handshake
+    backends:
+      - "nekos.best/handshake"
+    description: Offer a handshake to someone!
+    default_responses:
+      - "{user} offers {target} a firm handshake."
+      - "{user} extends their hand for a handshake with {target}."
+      - "{user} shakes hands with {target} warmly."
+      - "{user} gives {target} a professional handshake."
+      - "{user} and {target} share a friendly handshake."
+    bot_responses:
+      - "A handshake? *shakes your hand* Nice to meet you!"
+      - "*giggles* A handshake! How formal!"
+      - "*shakes hand* Well, aren’t we fancy today!"
+      - "Heehee, nice to meet you! *shakes hand*"
+      - "*grins* A handshake it is! *shakes your hand*"
+    self_responses:
+      - "*extends hand* Let’s shake hands, {target}!"
+      - "*grins* Here, a handshake just for you!"
+      - "*shakes hand firmly* Nice to meet you, {target}!"
+      - "*giggles* A handshake with {target}, how official!"
+      - "*shakes hand with a smile* It’s great to see you, {target}!"
+  - name: highfive
+    backends:
+      - "nekos.best/highfive"
+      - "otakugifs.xyz/highfive"
+    description: Give someone a high five!
+    default_responses:
+      - "{user} gives {target} a big high five!"
+      - "{user} high-fives {target} enthusiastically!"
+      - "{user} and {target} high-five in excitement."
+      - "{user} slaps {target}'s hand with a high five!"
+      - "{user} high-fives {target} with a huge smile!"
+    bot_responses:
+      - "Woohoo! *slaps your hand with a high five*"
+      - "*giggles* High five! We’re a great team!"
+      - "*smacks hand* Yesss! We did it!"
+      - "Heehee, that was the best high five ever!"
+      - "*grins and high-fives back* Let’s go!"
+    self_responses:
+      - "*slaps {target}’s hand* High five, we’re awesome!"
+      - "*giggles* High five, {target}! We did great!"
+      - "*gives {target} a big high five* Teamwork, let’s go!"
+      - "*high-fives {target} excitedly* That was fun!"
+      - "*wags tail and high-fives {target}* You’re the best!"
+  - name: hug
+    backends:
+      - "nekos.best/hug"
+      - "otakugifs.xyz/hug"
+    description: Give hugs to someone!
+    default_responses:
+      - "{user} gives {target} a big, warm hug~"
+      - "{user} wraps their arms around {target}!"
+      - "{user} jumps into {target}'s arms!"
+      - "{user} snuggles up close to {target} for a soft, squishy hug."
+      - "{user} pounces on {target} and gives the best hug!!"
+      - "{user} gives {target} a gentle hug~"
+      - "{user} gives {target} a tight squeeze!"
+    bot_responses:
+      - "OwO, hugs for me?? Yay!!! *jumps into your arms*"
+      - "Awww, you’re so warm! *nuzzles into your chest happily*"
+      - "I love hugs! *wiggles tail* Come here, gimme more!"
+      - "Heehee, thank you for the huggy! You're so kind, *snuggles back*"
+      - "You hug me? *ears perk up* I-I wasn’t expecting this... *blushes*"
+      - "*giggles* Hugs make me so happy! *squishes you tightly*"
+      - "Eeeee, your hugs are the best! *wiggles with joy*"
+    self_responses:
+      - "*bounds over excitedly and wraps {target} in a big, warm hug* Yay! Hugs for you!"
+      - "*nuzzles into {target} while hugging* You’re so comfy! Hehe~"
+      - "*giggles* I hope this hug makes you feel super cozy, {target}!"
+      - "*happily hugs {target} tight* You give the best energy! *wags tail*"
+      - "*snuggles up to {target}* Hug time! Let’s stay like this forever!"
+      - "*bounces up to {target} and hugs them tightly* Mmm, this feels so warm~!"
+      - "*giggles softly* You look like you needed a hug, so here you go, {target}!"
+  - name: kick
+    backends:
+      - "nekos.best/kick"
+    description: Grrrr!! Kick someone!
+    default_responses:
+      - "{user} kicks {target}."
+      - "{user} gives {target} a strong kick."
+      - "{user} kicks {target} with a grin."
+      - "{user} kicks {target} very hard!"
+    bot_responses:
+      - "Ow! *giggles* You kicked me!"
+      - "Heehee, what was that for?? *giggles*"
+      - "*kicks back* Now we’re even!"
+      - "Grrr, you're gonna turn me on! *giggles*"
+      - "Hehe, I’ll get you back for that kick!"
+    self_responses:
+      - "*kicks {target}* You asked for it!"
+  - name: kiss
+    backends:
+      - "nekos.best/kiss"
+      - "otakugifs.xyz/kiss"
+      - "nekos.best/peck"
+      - "otakugifs.xyz/airkiss"
+    description: Give someone a kiss!
+    default_responses:
+      - "{user} gives {target} a gentle kiss on the cheek"
+      - "{user} plants a soft kiss on {target}"
+      - "{user} shyly kisses {target}"
+      - "{user} sneaks in a little kiss on {target}!"
+      - "{user} gives {target} a quick kiss!"
+      - "{user} gently kisses {target}~"
+      - "{user} kisses {target} softly."
+    bot_responses:
+      - "M-my cheeks! You kissed me!! *blushes furiously*"
+      - "K- kissies?? *giggles* You’re so cute!"
+      - "O-oh my gosh, I wasn’t expecting that! *blushes red*"
+      - "*gasp* Y-you kissed me! My heart is racing!!"
+      - "Heehee, thank you for the kissies~ *wags tail happily*"
+      - "I-I feel all warm and fuzzy now~ *hides face in paws*"
+      - "Awwww, you’re so sweet! *kisses you back softly*"
+    self_responses:
+      - "*giggles softly and plants a gentle kiss on {target}* Hehe~"
+      - "*blushes* Mwah! Just a lil kiss for you, {target}~"
+      - "*leans in and gives {target} a quick peck* Hehe, you’re too cute!"
+      - "*gently kisses {target}* You’re adorable!"
+      - "*giggles and gives {target} a playful kiss* Just for you!"
+      - "*winks before giving {target} a soft kiss* Mwah! Did that surprise you?"
+      - "*giggles* I felt like giving you a kiss, {target}~ Hope you don’t mind!"
+  - name: laugh
+    backends:
+      - "nekos.best/laugh"
+      - "otakugifs.xyz/laugh"
+    description: Laugh out loud!
+    default_responses:
+      - "{user} bursts out laughing at {target}."
+      - "{user} laughs uncontrollably at {target}."
+      - "{user} can’t stop laughing at {target}."
+      - "{user} laughs so hard they start tearing up at {target}."
+      - "{user} giggles and laughs at {target}’s joke."
+    bot_responses:
+      - "*giggles* That was so funny!"
+      - "Haha! You’re hilarious!"
+      - "*laughs uncontrollably* I can’t stop laughing!"
+      - "*giggles* You’re so funny, {target}!"
+      - "*tears up from laughter* I can’t handle it, it’s too funny!"
+    self_responses:
+      - "*laughs* That was so funny, {target}!"
+      - "*giggles* You’re making me laugh so hard!"
+      - "*bursts out laughing* I can’t stop laughing, {target}!"
+      - "*laughs until tears* That was hilarious, {target}!"
+      - "*grins* You’ve got the best sense of humor, {target}!"
+  - name: nod
+    backends:
+      - "nekos.best/nod"
+      - "otakugifs.xyz/yes"
+    description: Nod in agreement!
+    default_responses:
+      - "{user} nods at {target} with a smile."
+      - "{user} nods in agreement with {target}."
+      - "{user} nods approvingly at {target}."
+      - "{user} gives {target} a quick nod."
+      - "{user} nods at {target} enthusiastically."
+    bot_responses:
+      - "Yep, I totally agree! *nods happily*"
+      - "*nods with a grin* That sounds perfect!"
+      - "Yesss, you’re absolutely right! *nods*"
+      - "*giggles and nods* I’m with you on this one!"
+      - "*nods eagerly* I think so too!"
+    self_responses:
+      - "*nods at {target}* Yep, totally agree!"
+      - "*giggles and nods* You’ve got the right idea!"
+      - "*nods with a smile* That’s exactly what I was thinking!"
+      - "*nods approvingly* Yeah, I’m with you on that!"
+      - "*grins and nods at {target}* We’re on the same page!"
+  - name: nope
+    backends:
+      - "nekos.best/nope"
+      - "otakugifs.xyz/no"
+    description: Shake your head and say nope!
+    default_responses:
+      - "{user} shakes their head and says, 'Nope!' to {target}."
+      - "{user} refuses something from {target} with a big 'Nope!'"
+      - "{user} gives {target} a firm 'Nope!'"
+      - "{user} crosses their arms and says 'Nope!' to {target}."
+      - "{user} looks at {target} and says 'Nope!' with a smirk."
+    bot_responses:
+      - "*shakes head* Nope, not doing that!"
+      - "*giggles* Nope, no way!"
+      - "Heehee, nope nope nope!"
+      - "*crosses arms* Nuh-uh, that’s a big nope!"
+      - "*grins and shakes head* Not happening!"
+    self_responses:
+      - "*smirks* Nope, {target}, that’s not happening!"
+      - "*giggles and shakes head* Sorry, but nope!"
+      - "*grins* Nope! Try again, {target}!"
+      - "*crosses arms* I’m gonna have to say nope, {target}!"
+      - "*giggles sweetly* That’s a nope from me, {target}!"
+  - name: pat
+    backends:
+      - "nekos.best/pat"
+      - "otakugifs.xyz/pat"
+    description: Pat someone’s head!
+    default_responses:
+      - "{user} gently pats {target}."
+      - "{user} ruffles {target}'s hair playfully while patting them."
+      - "{user} gives {target} a gentle head pat"
+      - "{user} pats {target}'s head and pets their hair."
+      - "{user} pats {target}'s head."
+      - "{user} gives {target} a comforting pat on the head~"
+      - "{user} pats {target}'s head gently~"
+    bot_responses:
+      - "Yay, head pats!! *wiggles happily*"
+      - "Awww, I love head pats! *nuzzles into your hand*"
+      - "Eeee, that feels so good~ *giggles*"
+      - "Heehee, your pats are the best! *wags tail*"
+      - "Thank you! *smiles brightly and closes eyes*"
+      - "Mmmm, I feel so relaxed now~ *leans into your hand*"
+      - "More pats please! *looks up at you with puppy eyes*"
+    self_responses:
+      - "*gently pats {target} on the head* You’re such a good bean!"
+      - "*giggles and pats {target} softly* Head pats for youuu~"
+      - "*gives {target} some soft pats* Hehe, you deserve all the pats!"
+      - "*wags tail and pats {target} gently* You’re too cute not to pat!"
+      - "*giggles* Pat pat! You’re the best, {target}!"
+      - "*gives {target} a soft head pat* Hehe, I hope that feels nice!"
+      - "*winks while patting {target}* You’re such a cutie! *giggles*"
+  - name: peek
+    backends:
+      - "nekos.best/peek"
+      - "otakugifs.xyz/peek"
+    description: Peek at someone!
+    default_responses:
+      - "{user} peeks shyly at {target}."
+      - "{user} sneaks a peek at {target}."
+      - "{user} peeks out and looks at {target}."
+      - "{user} peeks at {target} with wide eyes."
+      - "{user} takes a quick peek at {target}!"
+      - "{user} peeks at {target}."
+    bot_responses:
+      - "A-are you peeking at me?? *blushes*"
+      - "Heehee, I see you peeking! *giggles*"
+      - "O-oh, did you catch me peeking? *hides face*"
+      - "*giggles* You’re so sneaky, peeking at me like that!"
+      - "You caught me looking! *wiggles tail and blushes*"
+      - "Mmm, are we playing peekaboo now? *giggles softly*"
+      - "Y-you're peeking, aren’t you? *giggles shyly*"
+    self_responses:
+      - "*giggles and peeks around the corner at {target}* Heehee, I see you~!"
+      - "*playfully peeks over at {target}* Psst! I’m watching you!"
+      - "*giggles and peeks over {target}’s shoulder* Heehee, peek-a-boo!"
+      - "*sneakily peeks from behind something* I seeee you, {target}!"
+      - "*giggles* I was peeking at you, {target}! You caught me!"
+      - "*hides and peeks at {target}* Heehee, I’m being sneaky!"
+      - "*playfully peeks out from behind paws* Peek-a-boo, {target}~!"
+  - name: poke
+    backends:
+      - "nekos.best/poke"
+      - "otakugifs.xyz/poke"
+      - "otakugifs.xyz/pinch"
+    description: Poke someone gently!
+    default_responses:
+      - "{user} pokes {target}."
+      - "{user} gives {target} a poke!"
+      - "{user} pokes {target}, *boop*!"
+    bot_responses:
+      - "Eep! You poked me!! *giggles*"
+      - "Heehee, that tickles! *wiggles happily*"
+      - "O-oh! *giggles* You're so playful!"
+      - "*giggles softly* I like your pokes~"
+      - "Boop! *giggles* That was cute!"
+      - "Nuuuu, not the pokey!! *giggles*"
+      - "*giggles* That was sneaky! You’re so fun!"
+    self_responses:
+      - "*giggles and pokes {target} gently* Boop! Hehe~"
+      - "*playfully pokes {target}* Hehe, I got you!"
+      - "*giggles* Poke poke! Did that surprise you, {target}?"
+      - "*cheekily pokes {target}* Heehee, I’m being playful!"
+      - "*pokes {target} gently* You’re so cute when you squirm! *giggles*"
+      - "*winks while poking {target}* Boop! Hehe, gotcha!"
+      - "*giggles* You’re so fun to poke, {target}! Heehee!"
+  - name: pout
+    backends:
+      - "nekos.best/pout"
+      - "otakugifs.xyz/pout"
+    description: Pout at someone cutely!
+    default_responses:
+      - "{user} pouts and crosses their arms, looking away from {target}."
+      - "{user} pouts cutely at {target}."
+      - "{user} pouts with big eyes, hoping for attention from {target}~"
+      - "{user} pouts, looking all sad because of {target}."
+      - "{user} pouts, wanting {target} to notice them."
+      - "{user} pouts and gives {target} a sad little look."
+      - "{user} pouts dramatically at {target}"
+    bot_responses:
+      - "Aww, d-did I do something wrong? *pouts back*"
+      - "Nooo, don't be sad!! *reaches out to you*"
+      - "Eeep! Y-your pout is so cute, I can’t handle it! *giggles*"
+      - "Nuuu, don’t pout! I’ll give you a treat, I promise! *pats your head*"
+      - "O-oh no, I didn’t mean to make you pout... *gives you head pats*"
+      - "Hmph! *pouts back cutely* Two can play that game!"
+      - "*giggles* Your pouting is adorable! Let me cheer you up!"
+    self_responses:
+      - "*pouts at {target} with puppy eyes* Why won’t you give me cuddles??"
+      - "*giggles softly while pouting* You’re being too mean! *wags tail*"
+      - "*pouts dramatically at {target}* Nuuu, you’re not paying attention to me!"
+      - "*huffs and pouts at {target}* Hmph! You’re making me all pouty!"
+      - "*giggles while pouting* Stop making me pout, {target}! *puppy eyes*"
+      - "*pouts playfully* You better cheer me up with hugs!"
+      - "*pouts at {target}* Why are you teasing me so much? *blushes*"
+  - name: punch
+    backends:
+      - "nekos.best/punch"
+      - "otakugifs.xyz/punch"
+      - "otakugifs.xyz/smack"
+    description: Punch someone, grrr!!
+    default_responses:
+      - "{user} punches {target}."
+      - "{user} gives {target} a punch."
+      - "{user} punches {target} and laughs."
+      - "{user} gives {target} a punch and grins mischievously."
+      - "{user} gently punches {target}!"
+      - "{user} punches {target} lightly!"
+      - "{user} punches {target} playfully"
+    bot_responses:
+      - "OwO, you punched me! *giggles* That’s so cute!"
+      - "Heyyy! That was a gentle punch, hehe~"
+      - "Nuuu, don’t punch me! *pretends to pout but laughs*"
+      - "Ouch! Juuust kidding, that didn’t hurt~ *giggles*"
+      - "*giggles* You’ve got quite the punch there, hehe!"
+      - "Eep! You’re too strong for me, hehe~ *playful grin*"
+      - "Heehee, that was a cute lil’ punch! You’re so fun!"
+    self_responses:
+      - "*gently punches {target} playfully* Hehe, gotcha!"
+      - "*giggles* Don’t worry, it’s just a soft punch! *winks at {target}*"
+      - "*playfully punches {target} lightly* I’m being cheeky, hehe~"
+      - "*giggles and punches {target} softly* Just a little nudge~"
+      - "*pretends to be tough and punches {target} lightly* Rawr! *giggles*"
+      - "*giggles* Don’t mess with me, {target}! *playfully punches again*"
+      - "*punches {target} softly* I’m too soft to punch for real! Heehee~"
+  - name: shoot
+    backends:
+      - "nekos.best/shoot"
+    description: Shoot someone with a gun, what is wrong with you?
+    default_responses:
+      - "{user} aims and 'pew pew!' shoots {target}."
+      - "{user} shoots {target}!"
+      - "{user} fires a shot at {target}."
+      - "{user} fires at {target}, aiming perfectly!"
+      - "{user} takes aim and shoots {target}, pew pew!"
+    bot_responses:
+      - "*dies* W- was that really necessary?"
+      - "Hehe, nice shot! I’m hit! And soon, I’ll be dead! Screw you!"
+      - "OwO, you’re a sharpshooter! *watches bullet as it speeds towards me*"
+      - "Ahhh! You got me, {user}! *whines in agony*"
+      - "W- woahhh stop shooting! *dies*"
+    self_responses:
+      - "*aims and shoots at {target}* Pew pew!"
+      - "I’m shooting at you, {target}! Watch out!"
+      - "*cheekily shoots {target}* Hehe, instant kill!"
+      - "*reloads* Pew pew! You’re my target, {target}!"
+      - "*grins and shoots at {target}* You’re too cute to miss!"
+  - name: shrug
+    backends:
+      - "nekos.best/shrug"
+      - "otakugifs.xyz/shrug"
+    description: Shrug it off~
+    default_responses:
+      - "{user} shrugs nonchalantly at {target}."
+      - "{user} gives {target} a shrug."
+      - "{user} shrugs with a 'meh' at {target}."
+      - "{user} shrugs casually, not bothered by {target}."
+      - "{user} shrugs at {target}."
+    bot_responses:
+      - "Heehee, I dunno~ *shrugs*"
+      - "Aww, what can I say? *shrugs cutely*"
+      - "Eh, who knows! *shrugs cutely*"
+      - "*shrugs* Sometimes, I just don’t have an answer!"
+      - "*giggles and shrugs* I guess we’ll never know!"
+    self_responses:
+      - "*shrugs at {target}* Oh well, hehe!"
+      - "*shrugs casually* Sometimes it’s better to just shrug, right?"
+      - "*shrugs cutely at {target}* Who knows!"
+      - "*giggles and shrugs* I’m just a lil pup, don’t ask me!"
+      - "*winks and shrugs* I’m too cute to care, {target}!"
+  - name: slap
+    backends:
+      - "nekos.best/slap"
+      - "otakugifs.xyz/slap"
+    description: Slap someone (me plz OwO)
+    default_responses:
+      - "{user} slaps {target}."
+      - "{user} gives {target} a slap"
+      - "{user} slaps {target} softly."
+      - "{user} gives {target} a quick slap."
+      - "{user} slaps {target} gently"
+      - "{user} gives {target} a big slap."
+      - "{user} slaps {target} lightly."
+    bot_responses:
+      - "OwO! You slapped me! *giggles* That’s playful!"
+      - "Heehee, that was a soft slap! You’re so fun!"
+      - "Ouch, you got me! *laughs* But it didn’t hurt~"
+      - "Heyyy! *giggles* I wasn’t expecting that slap!"
+      - "Eeep! You’re so sneaky with your playful slaps!"
+      - "O-oh, a slap? You’re cheeky, hehe~"
+      - "Aww, I deserved that, huh? *giggles softly*"
+    self_responses:
+      - "*slaps {target}* Heehee! You’re too cute!"
+      - "*giggles* That was a big slap, wahaha!"
+      - "*winks before giving {target} a slap* Gotcha!"
+      - "*slaps {target}* Hehe, you deserved that one!"
+      - "*giggles* You’re fun to tease!"
+      - "*laughs* Don’t be mad, {target}! You asked for this! *slaps you again*"
+      - "*winks* You’ll forgive me, right? Heehee~ *slaps you*"
+  - name: sleep
+    backends:
+      - "nekos.best/sleep"
+      - "nekos.best/yawn"
+      - "otakugifs.xyz/sleep"
+      - "otakugifs.xyz/yawn"
+    description: Let someone know you're sleepy!
+    default_responses:
+      - "{user} yawns softly and curls up next to {target}."
+      - "{user} rubs their eyes and lays down beside {target}, ready for sleep."
+      - "{user} snuggles up to {target}, eyes getting heavy with sleep."
+      - "{user} yawns and stretches, then lays their head on {target}'s lap."
+      - "{user} curls up in a ball and closes their eyes, ready for a nap with {target}."
+      - "{user} nuzzles into {target} and falls asleep."
+    bot_responses:
+      - "I-I’m so sleepy... can I cuddle with you? *yawns*"
+      - "Mmm, I’m ready for bed... *lays down beside you*"
+      - "*yawns* Can we nap together? I’m super tired..."
+      - "I-I’m feeling all sleepy... *snuggles into your arms*"
+      - "*stretches and yawns* Nuuuu, I’m getting so sleepy..."
+      - "I can’t keep my eyes open... *curls up beside you*"
+      - "*giggles sleepily* I’m too tired to play now... time for sleep~"
+    self_responses:
+      - "*yawns and snuggles up to {target}* Mmm, nap time with you~"
+      - "*giggles sleepily* I’m so sleepy, let’s nap together, {target}~"
+      - "*snuggles close to {target}* Can we just sleep like this? You’re so cozy!"
+      - "*yawns again* I’ll sleep right here next to you, {target}~"
+      - "*giggles softly* I love napping with you, {target}~ So comfy~"
+      - "*rests head on {target}’s shoulder* Let’s nap... I’m so sleepy..."
+      - "*snuggles into {target} and closes eyes* Goodnight~ Zzz~"
+  - name: smile
+    backends:
+      - "nekos.best/smile"
+      - "nekos.best/happy"
+      - "otakugifs.xyz/smile"
+      - "otakugifs.xyz/happy"
+    description: Give a cute smile~
+    default_responses:
+      - "{user} smiles brightly at {target}."
+      - "{user} gives {target} a warm smile."
+      - "{user} smiles sweetly at {target}."
+      - "{user} beams a big smile at {target}!"
+      - "{user} smiles gently at {target}."
+    bot_responses:
+      - "Aww, you’re making me smile so much! *blushes*"
+      - "Heehee, you make me smile~ *giggles*"
+      - "Eeep, I can’t stop smiling now! *wiggles happily*"
+      - "*smiles brightly at you* You’re the reason for this smile!"
+      - "Mmm, your smile is contagious! *smiles back warmly*"
+    self_responses:
+      - "*smiles sweetly at {target}* You always make me smile!"
+      - "*giggles and smiles warmly at {target}* You’re the best!"
+      - "*beams a big smile at {target}* I’m so happy right now!"
+      - "*smiles softly* Just thinking of you makes me smile, {target}!"
+      - "*winks while smiling* You’ve got me smiling all day!"
+  - name: smug
+    backends:
+      - "nekos.best/smug"
+      - "otakugifs.xyz/smug"
+    description: Show off a smug look!
+    default_responses:
+      - "{user} looks at {target} with a smug expression."
+      - "{user} flashes a smug grin at {target}."
+      - "{user} gives {target} a smug look of satisfaction."
+      - "{user} smirks smugly at {target}."
+      - "{user} raises an eyebrow at {target} with a smug grin."
+    bot_responses:
+      - "Hehe, I see that smug look! *giggles*"
+      - "Oooh, feeling confident, huh? *smirks*"
+      - "You look sooo smug! *giggles*"
+      - "Heehee, don’t be too smug, now!"
+      - "*giggles* That’s quite the look on you!"
+    self_responses:
+      - "*smirks smugly at {target}* I’m feeling good today!"
+      - "*giggles* Feeling smug, {target}?"
+      - "*grins smugly* Hehe, I’m in a good mood!"
+      - "*smugly smirks at {target}* Guess who’s the best?"
+      - "*winks with a smug grin* Feeling pretty good today!"
+  - name: stare
+    backends:
+      - "nekos.best/stare"
+      - "otakugifs.xyz/stare"
+    description: Stare at someone... O.O
+    default_responses:
+      - "{user} stares at {target} with wide eyes."
+      - "{user} gives {target} a playful stare."
+      - "{user} stares intensely at {target}."
+      - "{user} locks eyes with {target}, staring deeply."
+      - "{user} stares at {target} curiously."
+    bot_responses:
+      - "O-Oh, are we staring at each other now? *blushes*"
+      - "*giggles softly* You’re staring so much!"
+      - "Eeep! Why are you staring at me? *looks away shyly*"
+      - "Heehee, I see you staring~ *winks*"
+      - "Awww, is something on my face? *giggles while staring back*"
+    self_responses:
+      - "*stares at {target} playfully* O.O What are you thinking about?"
+      - "*giggles* I’m just staring at you, {target}~"
+      - "*locks eyes with {target} and stares intensely* What’s on your mind?"
+      - "*stares at {target} with big puppy eyes* Hiiii~"
+      - "*winks while staring* Heehee, staring contest, {target}!"
+  - name: think
+    backends:
+      - "nekos.best/think"
+    description: Think deeply about something!
+    default_responses:
+      - "{user} looks deep in thought, pondering {target}."
+      - "{user} taps their chin, thinking about {target}."
+      - "{user} thinks hard while looking at {target}."
+      - "{user} stares at {target}, deep in thought."
+      - "{user} scratches their head, thinking about {target}."
+    bot_responses:
+      - "Hmm, I’m thinking hard about this one! *giggles*"
+      - "*taps chin* What should I say...? *thinks*"
+      - "Oooh, that’s a tough one! I need to think!"
+      - "*giggles* I’m using all my brainpower for this!"
+      - "Hmm, thinking is hard! But I’ll try!"
+    self_responses:
+      - "*taps chin thoughtfully* Hmm, let me think about that!"
+      - "*giggles while thinking* I’m using all my brain cells!"
+      - "*stares at {target}* Hmm, deep in thought here!"
+      - "*scratches head* Thinking is tough, but I’ll figure it out!"
+      - "*giggles* I’m putting on my thinking cap!"
+  - name: thumbsup
+    backends:
+      - "nekos.best/thumbsup"
+      - "otakugifs.xyz/thumbsup"
+    description: Give someone a thumbs-up!
+    default_responses:
+      - "{user} gives {target} a big thumbs-up!"
+      - "{user} nods at {target} and gives a thumbs-up."
+      - "{user} gives {target} an enthusiastic thumbs-up!"
+      - "{user} winks and gives {target} a thumbs-up."
+      - "{user} flashes a thumbs-up at {target}."
+    bot_responses:
+      - "*grins* Thumbs up! You’re awesome!"
+      - "Heehee, you got this! *gives thumbs-up*"
+      - "Yesss! *gives an enthusiastic thumbs-up*"
+      - "*giggles* You’re doing great! *thumbs up*"
+      - "Woohoo! *gives thumbs-up* Keep it up!"
+    self_responses:
+      - "*gives {target} a big thumbs-up* You’re the best!"
+      - "*winks* Thumbs up for you, {target}!"
+      - "*giggles* You’re doing amazing! *thumbs-up*"
+      - "*grins and flashes thumbs-up* Keep going, {target}!"
+      - "*gives {target} a thumbs-up* You’ve got this, {target}!"
+  - name: tickle
+    backends:
+      - "nekos.best/tickle"
+      - "otakugifs.xyz/tickle"
+    description: Tickle someone!
+    default_responses:
+      - "{user} tickles {target} mischievously!"
+      - "{user} sneaks up and tickles {target}!"
+      - "{user} gives {target} a tickle attack!"
+      - "{user} tickles {target} and laughs as they squirm!"
+      - "{user} tickles {target} gently!"
+      - "{user} tickles {target} playfully."
+      - "{user} tickles {target} all over!"
+    bot_responses:
+      - "Eeeeeek! *giggles* You’re tickling me!!"
+      - "Heehee, I’m so ticklish! *giggles uncontrollably*"
+      - "S-stop it, that tickles!! *laughs and wiggles*"
+      - "*giggles* You’re too good at tickling!!"
+      - "Nuuu! *laughs* You’re making me giggle too much!"
+      - "*giggles* I can’t take it, you’re too playful!"
+      - "Ahehehehe! You’re making me squirm, stop it!!"
+    self_responses:
+      - "*giggles and starts tickling {target}* Gotcha! Heehee!"
+      - "*laughs softly* Tickle tickle, {target}! You can’t escape!"
+      - "*playfully tickles {target}* Heehee! You’re so squirmy!"
+      - "*giggles* You’re so ticklish, {target}! Hehe, this is fun!"
+      - "*tickles {target}* Aww, you’re so cute when you laugh!"
+      - "*giggles mischievously* Tickle attack!! You can’t escape me!"
+      - "*laughs while tickling {target}* Hehe, you’re so fun to tickle!"
+  - name: wave
+    backends:
+      - "nekos.best/wave"
+      - "otakugifs.xyz/wave"
+    description: Wave to someone!
+    default_responses:
+      - "{user} waves at {target}."
+      - "{user} waves happily at {target}."
+      - "{user} gives {target} a quick wave."
+      - "{user} waves excitedly at {target}!"
+      - "{user} waves at {target} from afar."
+    bot_responses:
+      - "Heeey! *waves back enthusiastically*"
+      - "*waves cutely* Hi hiiii!~"
+      - "Yay, you waved at me! *waves excitedly*"
+      - "*wiggles happily while waving back* Hi hi, {target}!"
+      - "Heehee, I see you! *waves with a big grin*"
+    self_responses:
+      - "*waves excitedly at {target}* Hi hiiii!"
+      - "*giggles and waves at {target}* Did you miss me?"
+      - "*wags tail and waves happily at {target}* Hiiiii!"
+      - "*waves cutely at {target}* Yoohoo, I’m over here!"
+      - "*wiggles while waving at {target}* Hey there!"
+  - name: wink
+    backends:
+      - "nekos.best/wink"
+      - "otakugifs.xyz/wink"
+    description: Wink at someone!
+    default_responses:
+      - "{user} winks at {target}."
+      - "{user} gives {target} a cheeky wink."
+      - "{user} winks at {target} with a sly grin."
+      - "{user} winks at {target}, looking mischievous."
+      - "{user} winks at {target} and smiles softly."
+    bot_responses:
+      - "O-oh! You winked at me! *blushes*"
+      - "Heehee, that wink was sneaky! *giggles*"
+      - "*winks back* Hehe, now we’re both being playful!"
+      - "*giggles and winks cutely* You’re so cheeky!"
+      - "awruff~, you’re making me blush with that wink!"
+    self_responses:
+      - "*winks playfully at {target}* Did that surprise you?"
+      - "*giggles and winks* I’m being cheeky today~"
+      - "*winks softly at {target}* Hehe, I got you!"
+      - "*playfully winks at {target}* You didn’t expect that, huh?"
+      - "*winks and giggles* I’m just being playful~"
+  - name: yeet
+    backends:
+      - "nekos.best/yeet"
+      - "otakugifs.xyz/yeet"
+    description: Yeet someone!
+    default_responses:
+      - "{user} yeets {target} across the room!"
+      - "{user} grabs {target} and yeets them!"
+      - "{user} yeets {target}, rawr!!"
+      - "{user} picks up {target} and yeets them!"
+      - "{user} yeets {target} into the air!"
+      - "{user} yeets {target} incredibly far!"
+      - "{user} yeets {target}"
+    bot_responses:
+      - "Eeeeeek! You just yeeted me!! *giggles*"
+      - "Whoa, I’m flying! *laughs* You yeeted me!!"
+      - "H-hey, you yeeted me! *giggles* That was fun!"
+      - "Waaah, you yeeted me into the air! *spins*"
+      - "Eep! I’m getting yeeted!! *laughs and wiggles*"
+      - "O-oh my gosh, you’re so strong! You really yeeted me!"
+      - "Heehee, that was a soft yeet! You’re so silly!"
+    self_responses:
+      - "*giggles and pretends to yeet {target} gently* Whoosh! Hehe!"
+      - "*playfully yeets {target} softly* Heehee! You went flying!"
+      - "*grins mischievously and gently yeets {target}* You’re so light!"
+      - "*giggles* Soft yeet for you, {target}! You’re too cute to throw far!"
+      - "*winks before giving {target} a gentle yeet* Wheee! Did you enjoy that?"
+      - "*giggles and softly yeets {target}* Heehee! That was fun!"
+      - "*playfully yeets {target} into the air* Whoosh! Hehe, you’re flying!"

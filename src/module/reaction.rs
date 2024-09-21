@@ -182,17 +182,19 @@ impl Module for ReactionModule {
 
         // send response
         trace!(target: "module/reaction", "sending response:\n{}\n{}", message, image_url);
-        cmd.create_response(&ctx.http, serenity::all::CreateInteractionResponse::Message(
+        let status = cmd.create_response(&ctx.http, serenity::all::CreateInteractionResponse::Message(
             CreateInteractionResponseMessage::new()
                 .content(message)
                 .embed(CreateEmbed::new()
                     .image(image_url)
                     .color(color)
                 )
-        )).await.context("failed to send response")?;
+        )).await;
 
         // refresh cache
         self.backend_manager.refresh_cache(backend, endpoint).await?;
+
+        status.context("failed to send response")?;
 
         Ok(())
     }

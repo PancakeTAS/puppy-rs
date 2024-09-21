@@ -83,6 +83,7 @@ async fn main() -> Result<(), anyhow::Error> {
         .filter_module("module/reaction/backend", level)
         .filter_module("module/reaction", level)
         .filter_module("module/status", level)
+        .filter_module("module/random", level)
         .filter_module("bot", level)
         .format(colog::formatter(CustomPrefixToken))
         .init();

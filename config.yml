@@ -1031,7 +1031,6 @@ reactions:
   - name: yeet
     backends:
       - "nekos.best/yeet"
-      - "otakugifs.xyz/yeet"
     description: Yeet someone!
     alias: false
     default_responses:

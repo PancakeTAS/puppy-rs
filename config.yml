@@ -108,13 +108,33 @@ random:
 # - nekos.best/<endpoint> (view endpoints here: https://nekos.best/api/v2/endpoints)
 # - otakugifs.xyz/<endpoint> (view endpoints here: https://api.otakugifs.xyz.xyz/gif/allreactions)
 #
-# TODO:
-# - nekos.best:
-# - otakugifs.xyz: angrystare, bleh, brofist, celebrate, cheers, clap, confused, cool, drool, evillaugh, headbang
-# lick, love, mad, nervous, nosebleed, nyah, roll, run, sad, scared, shout, sigh, sip, slowclap, sneeze, sorry, stop, surprised, sweat
-# woah, yay
+# Endpoints without a command:
+# - otakugifs.xyz: brofist, cheers, cool, headbang, nyah, roll, shout, sigh, sip, sneeze, sorry, stop, surprised, woah, yay
 #
 reactions:
+  - name: angrystare
+    backends:
+      - "otakugifs.xyz/angrystare"
+    description: Give someone an angry stare!
+    alias: false
+    default_responses:
+      - "{user} glares at {target} intensely! *angry noises*"
+      - "{user} gives {target} a harsh stare!"
+      - "{user} frowns at {target}, eyes full of frustration!"
+      - "{user} stares at {target}! Uh-oh!"
+      - "{user} gives {target} the most serious glare ever!"
+    bot_responses:
+      - "*pouts* Hmph! {user}, why you make me angry??!"
+      - "You betta say sowwy! *tail flicks*"
+      - "Hmph... I'm NOT amused!"
+      - "Wahh, {user}! You’re in twouble now! *grr*"
+      - "Why you do dis?? {user}, I thought we were fwens!!"
+    self_responses:
+      - "*growls* I’m mad at chu, {target}! Why you do dis?!"
+      - "*pouty glare* I’m not happy with you, {target}...!"
+      - "Hmph! You better say sowwy, {target}! *pouts and glares*"
+      - "*crosses arms* {target}, you did a bad thing! *glare intensifies*"
+      - "Grrrr! I’m so mad at chu right now, {target}! *tiny growl*"
   - name: baka
     backends:
       - "nekos.best/baka"
@@ -169,6 +189,29 @@ reactions:
       - "*cheekily bites {target}* Oopsie! That was a playful one~"
       - "*grins mischievously before giving {target} a soft nibble*"
       - "*playfully nips at {target}* Just a lil bite, I promise! *giggles*"
+  - name: bleh
+    backends:
+      - "otakugifs.xyz/bleh"
+    description: Stick your tongue out at someone!
+    alias: false
+    default_responses:
+      - "{user} sticks their tongue out at {target}! *bleh!*"
+      - "{user} goes 'blehhhh' at {target}!"
+      - "{user} sticks out their tongue at {target}!"
+      - "{user} goes all 'bleh' in front of {target}! *tehe*"
+      - "{user} gives {target} a cheeky 'blehhh'~"
+    bot_responses:
+      - "Blehhhhh! Is dat all you got, {user}? *wiggles ears*"
+      - "Heehee, {user}! I can go 'bleh' too! See? Blehh!"
+      - "Wawawa! Bleh! I stick my tongue out at chu too, {user}!"
+      - "*sticks out tongue* Blehh! You can’t stop me, {user}! *giggles*"
+      - "Blehhhh! {user}, I’m pwetty playful today! *grins*"
+    self_responses:
+      - "Bleh! *sticks out tongue* See, {target}? I’m just a cheeky pup!"
+      - "Heehee! Blehhhh! That’s me being playful, {target}!"
+      - "*sticks tongue out* Blehh~! I win this game, {target}!"
+      - "I’m feeling playful, {target}! *does a 'bleh' and bounces around*"
+      - "Blehhh! {target}, I bet I’m the best at this! *puppy eyes*"
   - name: blush
     backends:
       - "nekos.best/blush"
@@ -225,6 +268,53 @@ reactions:
       - "*slumps over and sighs* I’m soooo bored!"
       - "*yawns* We need to find something fun, {target}!"
       - "*giggles softly* Wanna do something fun, {target}?"
+  - name: clap
+    backends:
+      - "otakugifs.xyz/clap"
+      - "otakugifs.xyz/slowclap"
+    description: Give someone an applause!
+    alias: false
+    default_responses:
+      - "{user} claps for {target} enthusiastically!"
+      - "{user} applauds {target} with a big smile!"
+      - "{user} claps loudly for {target}! *cheers*"
+      - "{user} gives {target} a round of applause! *yay*"
+      - "{user} claps their hands for {target}, full of excitement!"
+    bot_responses:
+      - "Eeee! You’re clapping for me, {user}? I did good?! *blushes*"
+      - "Aww! You really mean it, {user}? Yay! *claps my own paws too*"
+      - "Omg, you clapped for me, {user}!! I feel soooo special!!"
+      - "*giggles* Wow, {user}, I didn’t expect that!! Fankies!! *wags tail*"
+      - "*ears perk up* You're clapping for me? Eeee, I feel so proud now!"
+    self_responses:
+      - "Wooo! You did it, {target}! *claps paws and wags tail*"
+      - "Yayyy! I’m so pwoud of you, {target}! *puppy claps*"
+      - "C’mon, everyone! Let’s give {target} a big round of applause!"
+      - "I’m clapping for you, {target}! You’re amazing!! *puppy claps*"
+      - "*giggles* I hope you can feel my excitement, {target}! *clap clap*"
+  - name: confused
+    backends:
+      - "otakugifs.xyz/confused"
+    description: Act confused!
+    alias: false
+    default_responses:
+      - "{user} tilts their head in confusion at {target}."
+      - "{user} looks puzzled while staring at {target}."
+      - "{user} raises an eyebrow, unsure what {target} meant."
+      - "{user} blinks at {target}, clearly confused!"
+      - "{user} scratches their head, looking confused at {target}."
+    bot_responses:
+      - "Uhhh... {user}, I dun get it! *tilts head*"
+      - "Ooh, {user}, I’m confused... What happened??"
+      - "*blinks* Wha-wha? {user}, can you explain it again? *tilts head*"
+      - "Eeep! I think I got a lil lost... Can you help me, {user}?"
+      - "Huh?? *scratches head* I’m not sure what you mean, {user}!"
+    self_responses:
+      - "*tilts head* Uhh, {target}, can you explain this to me...?"
+      - "Hehe, {target}, I’m sooo confused! What does it mean??"
+      - "*puppy blinks* Uh oh, {target}, I think I got lost again!"
+      - "I-I dunno what’s happening, {target}! Can you help?"
+      - "*looks at {target} all confused* I think I missed somethin’!"
   - name: cry
     backends:
       - "nekos.best/cry"
@@ -284,6 +374,7 @@ reactions:
     backends:
       - "nekos.best/dance"
       - "otakugifs.xyz/dance"
+      - "otakugifs.xyz/celebrate"
     description: Show off your dancing skills!
     alias: false
     default_responses:
@@ -304,6 +395,52 @@ reactions:
       - "*twirls around* Look, {target}, I’m dancing!"
       - "*grins while dancing* You’ve got moves too, {target}!"
       - "*dances happily* Dancing with you is so much fun, {target}!"
+  - name: drool
+    backends:
+      - "otakugifs.xyz/drool"
+    description: Drool over someone
+    alias: false
+    default_responses:
+      - "{user} starts drooling at the thought of {target}!"
+      - "{user} drools just a little while looking at {target}!"
+      - "{user} can’t stop drooling around {target}!"
+      - "{user} looks at {target}, drooling slightly."
+      - "{user} sees {target} and begins to drool!"
+    bot_responses:
+      - "Ohh, {user}, that looks soooo tasty! *drools*"
+      - "I-I can’t stop! That looks too delicious, {user}!! *starts drooling*"
+      - "Nom nom nom... can I have a bite, pwease, {user}? *puppy eyes*"
+      - "Oooh, {user}, I’m drooling so much!! Can I try it??"
+      - "Gulp! I wanna eat that so bad, {user}! *stomach rumbles*"
+    self_responses:
+      - "Oopsie! I started drooling, {target}, hehe! It’s just soooo tasty!"
+      - "Ohhh, {target}, I can’t help but drool... That looks so yummy!"
+      - "*giggles* I’m drooling all over the place, {target}! Must be tasty!"
+      - "*puppy eyes* I couldn’t help it, {target... it looks too good!!"
+      - "Oops! I drooled again, {target}! *giggles sheepishly*"
+  - name: evillaugh
+    backends:
+      - "otakugifs.xyz/evillaugh"
+    description: Let out an evil laugh!
+    alias: false
+    default_responses:
+      - "{user} cackles mischievously at {target}!"
+      - "{user} gives {target} a wicked little laugh!"
+      - "{user} grins mischievously, laughing at {target}!"
+      - "{user} lets out a silly and evil laugh at {target}!"
+      - "{user} giggles wickedly at {target}!"
+    bot_responses:
+      - ":( You’re being so mean, {user}! *pouts*"
+      - "Oh no, {user}, you’re being so evil! *puppy eyes*"
+      - "Eeeek! {user}, you’re scaring me with that laugh!"
+      - "Nooo, {user}, don’t be so evil! *whimpers*"
+      - "Oh my gosh, {user}, you’re so mischievous! *puppy eyes*"
+    self_responses:
+      - "Mwahaha! I’m the most mischievous pup ever, {target}!! *evil laugh*"
+      - "*giggles evilly* You didn’t see that coming, did ya, {target}?"
+      - "Heeheehee, I’ve been soooo sneaky, {target}! *cackles*"
+      - "You can’t outsmart me, {target}! *laughs wickedly*"
+      - "Eeeheehee, I’m too clever for ya, {target}! *puppyish cackle*"
   - name: facepalm
     backends:
       - "nekos.best/facepalm"
@@ -398,6 +535,32 @@ reactions:
       - "*shakes hand firmly* Nice to meet you, {target}!"
       - "*giggles* A handshake with {target}, how official!"
       - "*shakes hand with a smile* It’s great to see you, {target}!"
+  - name: happy
+    backends:
+      - "nekos.best/smile"
+      - "nekos.best/happy"
+      - "otakugifs.xyz/smile"
+      - "otakugifs.xyz/happy"
+    alias: false
+    description: Show how happy you are!
+    default_responses:
+      - "{user} smiles brightly at {target}!"
+      - "{user} looks super happy with {target}!"
+      - "{user} gives {target} the biggest, happiest grin!"
+      - "{user} is absolutely glowing with happiness around {target}!"
+      - "{user} beams at {target}, clearly very happy!"
+    bot_responses:
+      - "Hehe, {user}, you make me sooo happy! *wags tail excitedly*"
+      - "Wooo! I’m the happiest puppy! And it's all because of you, {user}!!"
+      - "I can’t stop smiling, {user}! You’re making me so happy! Eeee!"
+      - "Yip yip! You’re the best, {user}! I feel all warm and happy! *jumps*"
+      - "Pweeeease, can we stay happy together foreva, {user}? *giggles*"
+    self_responses:
+      - "I’m soooo happy to see you, {target}! *wiggles tail and bounces*"
+      - "Yay! Being around you makes me the happiest lil pup, {target}!"
+      - "*grins big* Hehe, {target}! I just can't help but be happy!"
+      - "You make me so happi, {target}! Let’s stay this way foreva!"
+      - "I’m waggin’ my tail soooo much! It’s ‘cause of you, {target}!!"
   - name: highfive
     backends:
       - "nekos.best/highfive"
@@ -526,6 +689,100 @@ reactions:
       - "*bursts out laughing* I can’t stop laughing, {target}!"
       - "*laughs until tears* That was hilarious, {target}!"
       - "*grins* You’ve got the best sense of humor, {target}!"
+  - name: lick
+    backends:
+      - "otakugifs.xyz/lick"
+    description: Give a lick!
+    alias: false
+    default_responses:
+      - "{user} gives {target} a lick! *slurp*"
+      - "{user} licks {target} playfully!"
+      - "{user} sneaks in and licks {target} cutely!"
+      - "{user} gives {target} a lil’ lick!"
+      - "{user} licks {target} with a cheeky smile!"
+    bot_responses:
+      - "Ehehe, do I taste good? *licks you back*"
+      - "Mmm, you’re so sweet! *gives you a lick*"
+      - "Heehee, I wanted to lick you! *wags tail*"
+      - "*giggles* Lick lick! You’re the best!"
+      - "*licks you playfully back* You’re so cute!"
+    self_responses:
+      - "Here’s a puppy lick for ya, {target}! *slurps*"
+      - "*licks cheek* Mwah! I licked ya, {target}! Heehee!"
+      - "*giggles* I licked you, {target}! How do you taste, hmm?"
+      - "*puppy lick* See, {target}? That’s my way of showing affection!"
+      - "I just wanted to lick you, {target}! *giggles*"
+  - name: love
+    backends:
+      - "otakugifs.xyz/love"
+    description: Express that you're in love!
+    alias: false
+    default_responses:
+      - "{user} gazes at {target} with heart eyes!"
+      - "{user} blushes deeply and stares lovingly at {target}."
+      - "{user} can’t stop thinking about {target}, love in their eyes!"
+      - "{user} is totally smitten with {target} and can’t stop smiling!"
+      - "{user} is head over heels for {target}, lost in their thoughts!"
+    bot_responses:
+      - "W-Wahh! {user}, you’re in love with me? *blushes hard* I don’t know what to say!!"
+      - "*blushes furiously* M-me? You l-love me, {user}? Eee! I’m so shy now!"
+      - "Hehe, y-you’re looking at me like that, {user}?! I feel so flustered now!"
+      - "Oooh! I feel all warm and fuzzy, {user}! You r-really love me?? *puppy blush*"
+      - "*blushes* Wahh! I-I didn’t know you felt this way, {user}!"
+    self_responses:
+      - "*blushes deeply* I-I love you, {target}... like a wot! *puppy heart eyes*"
+      - "*puppy sigh* I think about you all the time, {target}... I just can't help it!"
+      - "Ehehe... I’m sooo in love with you, {target}! I can’t hide it! *blushes*"
+      - "W-Whenever I see you, {target}, my heart goes all doki-doki... *giggles shyly*"
+      - "*swoons* You’re the best, {target}! I wuv you sooo much!!"
+  - name: mad
+    backends:
+      - "otakugifs.xyz/mad"
+    description: Show that you're mad!
+    alias: false
+    default_responses:
+      - "{user} glares at {target}, clearly upset!"
+      - "{user} crosses their arms and gives {target} a mad look."
+      - "{user} frowns deeply at {target}, clearly mad!"
+      - "{user} gives {target} a cold, angry stare!"
+      - "{user} huffs angrily, staring at {target}!"
+    bot_responses:
+      - "W-Wah! {user}, are you mad at me? I didn’t mean to make you upset! *ears droop*"
+      - "*sad puppy eyes* You’re mad at me, {user}? I’m sowwy! Pwease forgive me!!"
+      - "Hmph! {user}, you’re mad at me?? I didn’t mean to make you upset... *sniffles*"
+      - "*whimpers* {user}, don’t be mad at me! I’ll be a good girl, pwomise!"
+      - "*looks down* You’re angry with me, {user}?? B-but I just wanted to play..."
+    self_responses:
+      - "Grrr! I’m mad at you, {target}! You made me so frustrated!! *pouts*"
+      - "Hmph! I’m not talking to you, {target}... You made me mad!! *puppy grumble*"
+      - "*crosses arms* {target}, I’m so mad at chu! You better apologize!!"
+      - "*growls softly* I can’t believe you did that, {target}! I’m really upset!"
+      - "Grrrr, {target}! You’ve upset me a wot! I’m gonna stay mad now!!"
+  - name: nervous
+    backends:
+      - "otakugifs.xyz/nervous"
+      - "otakugifs.xyz/scared"
+      - "otakugifs.xyz/sweat"
+    description: Show that you're feeling nervous!
+    alias: false
+    default_responses:
+      - "{user} fidgets nervously while looking at {target}."
+      - "{user} blushes and looks away, clearly nervous around {target}."
+      - "{user} shifts uncomfortably, feeling nervous around {target}."
+      - "{user} avoids eye contact with {target}, looking super nervous!"
+      - "{user} stammers nervously, unsure how to act around {target}."
+    bot_responses:
+      - "Eeep! {user}, why are you so nervous around me? I won’t bite... maybe!"
+      - "*giggles nervously* {user}, why are you so shy? Am I that scary? *tilts head*"
+      - "Aww, {user}, you don’t need to be nervous around me! I’m just a fluffy puppy!"
+      - "Wahh! {user}, are you nervous ‘cause of me?? I feel so flustered too now!"
+      - "*blushes* {user}, you’re acting so nervy... It’s kinda cute! *giggles*"
+    self_responses:
+      - "U-umm, {target}, I feel r-really nervous around you... *blushes hard*"
+      - "*giggles shyly* I-I’m just so nervous! D-do you like me, {target}? *fidgets*"
+      - "Wahh! {target}, I’m so nervous... I-I dunno what to say! *twiddles paws*"
+      - "I-I don’t know what to do! You make me so nervy, {target}! *blushes furiously*"
+      - "*blushes* Eep! I feel so small next to you, {target}... so nervous!"
   - name: nod
     backends:
       - "nekos.best/nod"
@@ -574,6 +831,29 @@ reactions:
       - "*grins* Nope! Try again, {target}!"
       - "*crosses arms* I’m gonna have to say nope, {target}!"
       - "*giggles sweetly* That’s a nope from me, {target}!"
+  - name: nosebleed
+    backends:
+      - "otakugifs.xyz/nosebleed"
+    description: When you see something so intense, you get a nosebleed!
+    alias: false
+    default_responses:
+      - "{user}'s nose starts bleeding when they see {target}! *gasp*"
+      - "{user} covers their nose, shocked by {target}!"
+      - "{user}'s face goes red and their nose starts bleeding in front of {target}!"
+      - "{user} has a sudden nosebleed just from looking at {target}!"
+      - "{user} blushes hard and their nose starts to bleed after seeing {target}!"
+    bot_responses:
+      - "*gasps* Aahh, {user}, are you okay?? You’re nose is bleeding ‘cause of me?!"
+      - "W-Wah! {user}, your nose is bleeding!! What did I dooo? *flustered puppy panic*"
+      - "*blushes* Eeee! Did I make you feel that way, {user}?! I didn’t mean to!!"
+      - "*puppy flails* Oh no, {user}, I’m sowwy! I didn’t mean to cause your nosebleed!!"
+      - "*covers my face* I didn’t know I was that... intense, {user}! Oopsie!"
+    self_responses:
+      - "*nosebleed* Wahhh! You’re too much for me, {target}! *blushes uncontrollably*"
+      - "*covers nose* Ahhh! {target}, you’re soooo cute, I can’t handle it! *nosebleed*"
+      - "Oh no, {target}, I-I think I’m bleeding! It’s your fault for being so cute!!"
+      - "Eee! I’m having a nosebleed, {target}! You’re too stunning!! *flustered*"
+      - "*blushes hard* I-I think I need to sit down, {target}... You’re just too much!!"
   - name: pat
     backends:
       - "nekos.best/pat"
@@ -721,6 +1001,52 @@ reactions:
       - "*pretends to be tough and punches {target} lightly* Rawr! *giggles*"
       - "*giggles* Don’t mess with me, {target}! *playfully punches again*"
       - "*punches {target} softly* I’m too soft to punch for real! Heehee~"
+  - name: run
+    backends:
+      - "otakugifs.xyz/run"
+    description: Run away from someone!
+    alias: false
+    default_responses:
+      - "{user} takes off running in the opposite direction of {target}!"
+      - "{user} runs toward {target} at full speed!"
+      - "{user} bolts away from {target}, moving super fast!"
+      - "{user} dashes toward {target} as quickly as possible!"
+      - "{user} runs away from {target}, paws flying behind them!"
+    bot_responses:
+      - "Wait! {user}, why are you running away from me?? *puppy chases after*"
+      - "*giggles* You can’t escape me that easily, {user}! I’m faster than you!!"
+      - "*puppy paws tap* You’re running toward me, {user}? Yay! Come here!!"
+      - "Why are you running from me, {user}? I just wanna playyy! *chases*"
+      - "*giggles* Come back, {user}, don’t run away from me!"
+    self_responses:
+      - "Whee! I’m running toward you, {target}! Here I come!! *puppy zoomies*"
+      - "*dashes away* You can’t catch me, {target}! I’m too fast for ya! *giggles*"
+      - "I’m running away, {target}, try to catch me if you can!!"
+      - "*runs toward {target}* I missed you sooo much! Here I come!! *giggles*"
+      - "*runs in circles* Look how fast I am, {target}! Can you keep up?!"
+  - name: sad
+    backends:
+      - "otakugifs.xyz/sad"
+    description: Show that you're feeling sad...
+    alias: false
+    default_responses:
+      - "{user} looks down sadly at {target}."
+      - "{user} sniffles quietly, feeling sad around {target}."
+      - "{user} gives {target} a sad, teary-eyed look."
+      - "{user} looks away from {target}, feeling really down."
+      - "{user} sighs softly, clearly upset around {target}."
+    bot_responses:
+      - "*ears droop* Aww, {user}, why are you sad because of me? I didn’t mean to... *sniffles*"
+      - "N-no, {user}, don’t cry! I didn’t want to make you sad... *sniffle sniffle*"
+      - "*sad puppy eyes* Are you sad ‘cause of me, {user}? Pwease don’t be sad!!"
+      - "*whimpers* I feel bad now, {user}... I didn’t mean to hurt you..."
+      - "Oh nooo, {user}! You’re sad ‘cause of me? *sniffles* I’ll be a good girl now!"
+    self_responses:
+      - "*sniffles* I’m feeling really sad, {target}... Can you cheer me up? *puppy eyes*"
+      - "*whimpers* I-I’m so sad, {target}... Everything feels so heavy... *sniffle*"
+      - "*teary eyes* {target}, I feel sooo down... It’s hard to smile right now..."
+      - "*pouts* I don’t feel good, {target}... I just wanna cry... *sniffles*"
+      - "I-I feel like crying, {target}... I need a big hug... *sobs softly*"
   - name: shoot
     backends:
       - "nekos.best/shoot"

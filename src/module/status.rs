@@ -45,7 +45,7 @@ impl Module for StatusModule {
                 debug!(target: "module/status", "setting status to: {}", status);
                 ctx.set_presence(Some(ActivityData::custom(status)), OnlineStatus::Online);
 
-                tokio::time::sleep(tokio::time::Duration::from_secs(60 * 5)).await;
+                tokio::time::sleep(tokio::time::Duration::from_secs(60 * 30)).await;
             }
         });
 

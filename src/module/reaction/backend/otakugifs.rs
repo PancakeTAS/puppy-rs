@@ -48,6 +48,11 @@ impl Backend for OtakuGifs {
             endpoints.push(body[startname+1..endname].to_string());
             body = &body[endname+1..];
         }
+        if let Some(endname) = body.find("\"]") {
+            let startname = body[..endname].rfind("\"")
+                .context("unable to find start of endpoint name in response")?;
+            endpoints.push(body[startname+1..endname].to_string());
+        }
 
         // return endpoints
         trace!(target: "module/reaction/backend/otakugifs", "found endpoints: {:?}", endpoints);

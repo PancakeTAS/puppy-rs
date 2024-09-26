@@ -76,13 +76,13 @@ impl BackendManager {
         let mut caches = HashMap::new();
 
         // add backends
-        let nekosbest = nekosbest::NekosBest;
+        let nekosbest = nekosbest::NekosBest::new();
         let id = nekosbest.id();
         backends.insert(id, Box::new(nekosbest));
         caches.insert(id, HashMap::new());
         info!(target: "module/reaction/backend", "registered nekos.best backend");
 
-        let otakugifs = otakugifs::OtakuGifs;
+        let otakugifs = otakugifs::OtakuGifs::new();
         let id = otakugifs.id();
         backends.insert(id, Box::new(otakugifs));
         caches.insert(id, HashMap::new());

@@ -1,6 +1,9 @@
 use anyhow::{anyhow, Context, Error};
 use log::trace;
+use reqwest::header::USER_AGENT;
 use serenity::async_trait;
+
+use crate::BOT_USER_AGENT;
 
 use super::Backend;
 
@@ -10,7 +13,15 @@ const API_URL: &str = "https://api.otakugifs.xyz/gif";
 ///
 /// Simple and lightweight puppy-rs backend for fetching animated gifs off the otakugifs.xyz API
 ///
-pub struct OtakuGifs;
+pub struct OtakuGifs {
+    http: reqwest::Client
+}
+
+impl OtakuGifs {
+    pub fn new() -> Self {
+        Self { http: reqwest::Client::new() }
+    }
+}
 
 #[async_trait]
 impl Backend for OtakuGifs {
@@ -25,7 +36,7 @@ impl Backend for OtakuGifs {
 
         // make request
         trace!(target: "module/reaction/backend/otakugifs", "fetching endpoints from '{}'", url);
-        let response = reqwest::get(url).await
+        let response = self.http.get(url).header(USER_AGENT, BOT_USER_AGENT).send().await
             .context("failed to make web request to api")?;
         let status = response.status();
         let body = response.text().await
@@ -65,7 +76,7 @@ impl Backend for OtakuGifs {
 
         // make request
         trace!(target: "module/reaction/backend/otakugifs", "fetching gif from '{}'", url);
-        let response = reqwest::get(&url).await
+        let response = self.http.get(url).header(USER_AGENT, BOT_USER_AGENT).send().await
             .context("failed to make web request to api")?;
         let status = response.status();
         let body = response.text().await

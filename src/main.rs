@@ -12,6 +12,8 @@ pub mod bot;
 pub mod color;
 pub mod module;
 
+pub const BOT_USER_AGENT: &str = "puppy-rs/3.0.0 (gh/PancakeTAS/puppy-rs)";
+
 /// Configuration file structure
 #[derive(Deserialize)]
 pub struct Configuration {
